@@ -1,7 +1,11 @@
-# My neovim config
+# My GNU/Linux config files
+
+...
+
+## My neovim config
 * Space is the "Leader key"
 
-## Instalation
+### Instalation
 1. Clone repo
 2. Put init.lua ->  .config/nvim/init.lua
 3. Install packer: ```git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim```
