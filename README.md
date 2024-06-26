@@ -1,5 +1,12 @@
 # My GNU/Linux config files
 
+* HOME config files
+* i3 config files in i3config and i3status
+* picom compositor
+
+Cursor theme:
+https://github.com/ful1e5/Bibata_Cursor_Rainbow
+
 ...
 
 ## My neovim config
