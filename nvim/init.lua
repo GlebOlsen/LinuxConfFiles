@@ -7,13 +7,14 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- Add lualine.nvim
+  -- On line 17 you can set your own theme
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function()
       require('lualine').setup {
         options = {
-          theme = 'auto',
+          theme = 'powerline',
           section_separators = {'', ''},
           component_separators = {'|', '|'},
         },
@@ -140,6 +141,12 @@ require('packer').startup(function(use)
     augroup end
   ]])
 end)
+
+-- Set the background to be transparent
+vim.cmd [[
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight NonText guibg=NONE ctermbg=NONE
+]]
 
 -- Set key mappings for :Gitsigns
 vim.keymap.set("n", "<leader>gp", function() require('gitsigns').preview_hunk_inline() end, {})
