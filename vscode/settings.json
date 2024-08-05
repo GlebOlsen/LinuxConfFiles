@@ -1,0 +1,57 @@
+{
+    "telemetry.telemetryLevel": "off",
+    "workbench.startupEditor": "none",
+    "workbench.sideBar.location": "right",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.validate": [
+        "javascript",
+    ],
+    "workbench.colorCustomizations": {
+        "editorLineNumber.foreground": "#b3ff00",
+        "editorCursor.foreground": "#b3ff00",
+        "editor.lineHighlightBackground": "#ff00ff17",
+        "editorLineNumber.activeForeground": "#ff0000",
+        "scrollbarSlider.background": "#bbff0020",
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "#706060"
+    },
+    "workbench.colorTheme": "dragan",
+    "editor.showFoldingControls": "always",
+    "indentRainbow.lightIndicatorStyleLineWidth": 4,
+    "indentRainbow.tabmixColor": "rgba(128,32,96,1)",
+    "indentRainbow.errorColor": "rgba(128,32,32,1)",
+    "indentRainbow.updateDelay": 200,
+    "editor.wordWrap": "on",
+    "zenMode.hideLineNumbers": false,
+    "editor.glyphMargin": true,
+    "glassit.alpha": 235,
+    "editor.guides.bracketPairs": "active",
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.renderLineHighlight": "all",
+    "editor.minimap.side": "left",
+    "editor.scrollbar.verticalScrollbarSize": 20,
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false, // Web infra
+        "plaintext": false, // for `.env` files
+        "json": false, // for `local.json files
+        "markdown": false,  // For our documentation
+    },
+    "window.menuBarVisibility": "toggle",
+    "indentRainbow.indicatorStyle": "light",
+    "cSpell.userWords": [
+        "cookieconcent"
+    ],
+    "editor.minimap.showSlider": "always",
+    "editor.minimap.renderCharacters": false,
+    "editor.scrollbar.horizontal": "visible",
+    "editor.minimap.maxColumn": 100,
+    "currentPath.useAbsolutePath": true,
+    "extensions.ignoreRecommendations": true,
+    "editor.fontFamily": "'CaskaydiaMono Nerd Font','FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
+    "workbench.activityBar.location": "hidden",
+    "workbench.statusBar.visible": false,
+}
