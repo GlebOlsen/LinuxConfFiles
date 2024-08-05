@@ -13,7 +13,7 @@ https://github.com/ful1e5/Bibata_Cursor_Rainbow
 * Space is the "Leader key"
 
 
-## For LSP support:
+### For LSP support:
 * For C: clangd
 * For Python: npm install -g pyright
 
