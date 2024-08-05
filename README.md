@@ -24,3 +24,7 @@ https://github.com/ful1e5/Bibata_Cursor_Rainbow
 4. Install a nerd (Has to be a nerdfont) font:  CaskaydiaMono or FiraCode. If on WSL you'll have to install it on the windows only.
 5. Open nvim and run: ```:PackerInstall``` ```:PackerUpdate``` ```:PackerSync``` ```:PackerCompile```
 6. Enjoy
+
+## My vscode config
+Need to install: 
+Code spell checker, Current Path, Dragan theme, Error Lens, GitLens, Glassit, indent-rainbow, material icon theme.
