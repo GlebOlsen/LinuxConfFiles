@@ -12,6 +12,11 @@ https://github.com/ful1e5/Bibata_Cursor_Rainbow
 ## My neovim config
 * Space is the "Leader key"
 
+
+## For LSP support:
+* For C: clangd
+* For Python: npm install -g pyright
+
 ### Instalation
 1. Clone repo
 2. Put init.lua ->  .config/nvim/init.lua

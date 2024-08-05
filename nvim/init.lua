@@ -86,12 +86,14 @@ require('packer').startup(function(use)
   }
 
   -- Add nvim-lspconfig for LSP support
---  use {
---    'neovim/nvim-lspconfig',
---    config = function()
---      require('lspconfig').volar.setup {} -- this is example for vue
---    end
---  }
+  use {
+    'neovim/nvim-lspconfig',
+    config = function()
+      require('lspconfig').clangd.setup {} -- C support (Needs clangd)
+      require('lspconfig').pyright.setup {} -- python3 support (Needs npm install -g pyright)
+      -- require('lspconfig').volar.setup {} -- this is example for vue
+    end 
+}
 
   -- Add nvim-cmp for autocompletion
   use {
