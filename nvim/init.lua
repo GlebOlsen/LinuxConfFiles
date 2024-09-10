@@ -55,15 +55,6 @@ require('packer').startup(function(use)
     end
   }
 
-  -- Add nvim-spectre
-  use {
-    'windwp/nvim-spectre',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('spectre').setup()
-    end
-  }
-
   -- Add nvim-tree.lua
   use {
     'kyazdani42/nvim-tree.lua',
@@ -159,12 +150,6 @@ vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap('n', '<leader>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", {noremap = true, silent = true})
-
--- Set key mappings for :Spectre
-vim.api.nvim_set_keymap('n', '<leader>sr', "<cmd>lua require('spectre').open()<cr>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>sw', "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<leader>sw', "<cmd>lua require('spectre').open_visual()<cr>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>sp', "<cmd>lua require('spectre').open_file_search()<cr>", {noremap = true, silent = true})
 
 -- Set key mappings for :NvimTree
 vim.api.nvim_set_keymap('n', '<leader>e', ":NvimTreeToggle<CR>", {noremap = true, silent = true})
