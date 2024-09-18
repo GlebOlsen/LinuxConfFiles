@@ -9,16 +9,16 @@
         "javascript",
     ],
     "workbench.colorCustomizations": {
-        "editorLineNumber.foreground": "#b3ff00",
-        "editorCursor.foreground": "#b3ff00",
+        "editorCursor.foreground": "#ff00ff",
         "editor.lineHighlightBackground": "#ff00ff17",
+        // "editorLineNumber.foreground": "#476600",
         "editorLineNumber.activeForeground": "#ff0000",
-        "scrollbarSlider.background": "#bbff0020",
+        "scrollbarSlider.background": "#b3ff0020",
+        "scrollbarSlider.hoverBackground": "#00ffff40"
     },
     "editor.tokenColorCustomizations": {
         "comments": "#706060"
     },
-    "workbench.colorTheme": "dragan",
     "editor.showFoldingControls": "always",
     "indentRainbow.lightIndicatorStyleLineWidth": 4,
     "indentRainbow.tabmixColor": "rgba(128,32,96,1)",
@@ -27,31 +27,37 @@
     "editor.wordWrap": "on",
     "zenMode.hideLineNumbers": false,
     "editor.glyphMargin": true,
-    "glassit.alpha": 235,
+    "glassit.alpha": 255,
     "editor.guides.bracketPairs": "active",
     "workbench.iconTheme": "material-icon-theme",
     "editor.renderLineHighlight": "all",
-    "editor.minimap.side": "left",
-    "editor.scrollbar.verticalScrollbarSize": 20,
     "github.copilot.enable": {
         "*": true,
         "yaml": false, // Web infra
         "plaintext": false, // for `.env` files
         "json": false, // for `local.json files
-        "markdown": false,  // For our documentation
+        "markdown": false,  // For documentation
     },
     "window.menuBarVisibility": "toggle",
     "indentRainbow.indicatorStyle": "light",
-    "cSpell.userWords": [
-        "cookieconcent"
-    ],
-    "editor.minimap.showSlider": "always",
-    "editor.minimap.renderCharacters": false,
-    "editor.scrollbar.horizontal": "visible",
-    "editor.minimap.maxColumn": 100,
+    "editor.scrollbar.verticalScrollbarSize": 22,
+    "editor.scrollbar.horizontal": "auto",
     "currentPath.useAbsolutePath": true,
     "extensions.ignoreRecommendations": true,
+    "window.commandCenter": false,
+    "workbench.layoutControl.enabled": false,
+    "remote.SSH.remotePlatform": {
+        "DevVM": "linux"
+    },
+    // FONT SETTINGS:
     "editor.fontFamily": "'CaskaydiaMono Nerd Font','FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
-    "workbench.activityBar.location": "hidden",
-    "workbench.statusBar.visible": false,
+    "editor.fontSize": 15,
+    // MINIMAP:
+    // "editor.minimap.side": "left",
+    // "editor.minimap.showSlider": "always",
+    // "editor.minimap.maxColumn": 95,
+    // "editor.minimap.renderCharacters": false,
+    // "editor.minimap.size": "fit",
+    "editor.minimap.enabled": false,
+    "workbench.colorTheme": "Default Light Modern",
 }
