@@ -46,9 +46,6 @@
     "extensions.ignoreRecommendations": true,
     "window.commandCenter": false,
     "workbench.layoutControl.enabled": false,
-    "remote.SSH.remotePlatform": {
-        "DevVM": "linux"
-    },
     // FONT SETTINGS:
     "editor.fontFamily": "'CaskaydiaMono Nerd Font','FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
     "editor.fontSize": 15,
