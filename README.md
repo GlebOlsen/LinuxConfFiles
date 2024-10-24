@@ -1,17 +1,20 @@
 # My GNU/Linux config files
-
+That includes:
 * HOME config files
 * i3 config files in i3config and i3status
 * picom compositor
+* Scripts
 
 Cursor theme:
 https://github.com/ful1e5/Bibata_Cursor_Rainbow
+or
+https://github.com/nxll/miniature
 
-...
+Favorite font:
+https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
 
 ## My neovim config
 * Space is the "Leader key"
-
 
 ### For LSP support:
 * For C: clangd
