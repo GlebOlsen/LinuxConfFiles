@@ -1,0 +1,7 @@
+theme = "gruber-darker"
+
+[editor]
+cursorline = true
+
+[editor.soft-wrap]
+enable = true
