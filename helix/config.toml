@@ -1,7 +1,12 @@
-theme = "gruber-darker"
+theme = "iroaseta"
 
 [editor]
+line-number = "relative"
+true-color = true
 cursorline = true
+
+[editor.whitespace]
+render = { space = "none", tab = "all", newline = "all" }
 
 [editor.soft-wrap]
 enable = true
