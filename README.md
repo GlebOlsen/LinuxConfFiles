@@ -1,9 +1,15 @@
 # My GNU/Linux config files
-That includes:
-* HOME config files
-* i3 config files in i3config and i3status
-* picom compositor
+
+* Linux confix files
+	- i3wm
+	- others
+* Editor configs
+	- VSCODE
+	- NVIM
 * Scripts
+	- **fan.sh** Thinkpad fan control
+
+NixOS is in progress...
 
 Cursor theme:
 https://github.com/ful1e5/Bibata_Cursor_Rainbow
@@ -13,14 +19,21 @@ https://github.com/nxll/miniature
 Favorite font:
 https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
 
-## My neovim config
-* Space is the "Leader key"
+## Vscode Setup
+* Extentions 
+	- 8-Bit *(theme)*
+	- Code spell checker
+	- Current Path
+	- Error Lens
+	- material icon theme
+	- Power Mode *(Optional)*.
+* **Copy Settings.json file**
+* **Copy keybinding.json file**
 
-### For LSP support:
-* For C: clangd
-* For Python: npm install -g pyright
+## Neovim Setup
 
-### Instalation
+*Haven't maintained in some time and don't know if I will ever go back...*
+
 1. Clone repo
 2. Put init.lua ->  .config/nvim/init.lua
 3. Install packer: ```git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim```
@@ -28,6 +41,9 @@ https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
 5. Open nvim and run: ```:PackerInstall``` ```:PackerUpdate``` ```:PackerSync``` ```:PackerCompile```
 6. Enjoy
 
-## My vscode config
-Need to install: 
-Code spell checker, Current Path, Dragan theme, Error Lens, GitLens, Glassit, indent-rainbow, material icon theme.
+### My neovim config
+* Space is the "Leader key"
+
+### For LSP support:
+* For C: clangd
+* For Python: npm install -g pyright
