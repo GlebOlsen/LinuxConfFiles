@@ -6,6 +6,8 @@
 * Editor configs
 	- VSCODE
 	- NVIM
+    - Micro
+    - Helix
 * Scripts
 	- **fan.sh** Thinkpad fan control
 
@@ -31,8 +33,6 @@ https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
 * **Copy keybinding.json file**
 
 ## Neovim Setup
-
-*Haven't maintained in some time and don't know if I will ever go back...*
 
 1. Clone repo
 2. Put init.lua ->  .config/nvim/init.lua
