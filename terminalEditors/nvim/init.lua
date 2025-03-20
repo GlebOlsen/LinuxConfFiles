@@ -55,6 +55,9 @@ require('packer').startup(function(use)
     end
   }
 
+  -- Add spectre (For global search and replace)
+  use 'nvim-pack/nvim-spectre'
+
   -- Add nvim-tree.lua
   use {
     'kyazdani42/nvim-tree.lua',
@@ -169,14 +172,25 @@ require('packer').startup(function(use)
       augroup packer_user_config
         autocmd!
         autocmd BufWritePost init.lua lua if pcall(vim.cmd, 'source ' .. vim.fn.expand('<afile>')) then require('packer').sync() end
+	autocmd BufNewFile,BufRead Jenkinsfile setf groovy
       augroup end
     ]])
 end)
 
--- Set the background to be transparent
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
 
+-- Set key mappings for :Spectre
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>', {
+  desc = "Open Spectre"
+})
+vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current selection"
+})
+vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({path = "%:p"})<CR>', {
+    desc = "Search in current file"
+})
 
 -- Set key mappings for :Gitsigns
 vim.keymap.set("n", "<leader>gp", "<cmd>lua require('gitsigns').preview_hunk_inline()<CR>")
@@ -200,6 +214,22 @@ vim.opt.wrap = true
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.mouse = 'a'
 vim.opt.termguicolors = true
--- vim.opt.statusline = '%F' For normal VIM
+-- vim.opt.statusline = '%F' -- For normal VIM
 
+-- Set the background to be transparent
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
+
+-- Set whitespace
+vim.opt.list = true
+vim.opt.listchars = {
+  eol = '↵',	-- Symbol for newline
+  tab = '→ ',	-- Symbol for tab
+  space = '·',	-- Symbol for a regular space
+  trail = '•',	-- Symbol for trailing spaces
+}
+vim.api.nvim_set_hl(0, "Whitespace", { fg = "#777777" })
+
+-- Set cursor color
+vim.api.nvim_set_hl(0, "Cursor", { fg = "#B3FF00", bg = "#ff00aa" })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#49115b" })
