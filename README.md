@@ -13,22 +13,22 @@
 
 NixOS is in progress...
 
-Cursor theme:
+**Cursor theme:**
 https://github.com/ful1e5/Bibata_Cursor_Rainbow
-or
-https://github.com/nxll/miniature
+or https://github.com/nxll/miniature
 
-Favorite font:
+**Favorite font:**
 https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
+or ```Cartograph CF```
 
 ## Vscode Setup
 * Extentions 
 	- 8-Bit *(theme)*
+	- Material icon theme
 	- Code spell checker
 	- Current Path
 	- Error Lens
-	- material icon theme
-	- Power Mode *(Optional)*.
+	- Jumpy2
 * **Copy Settings.json file**
 * **Copy keybinding.json file**
 
