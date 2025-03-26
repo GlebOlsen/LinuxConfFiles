@@ -67,4 +67,12 @@
         "key": "ctrl+j ctrl+l",
         "command": "editor.action.joinLines"
     },
+    {
+        "key": "shift+alt+oem_plus",
+        "command": "workbench.action.increaseViewSize"
+    },
+    {
+        "key": "shift+alt+oem_minus",
+        "command": "workbench.action.decreaseViewSize"
+    }
 ]
