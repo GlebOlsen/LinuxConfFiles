@@ -23,7 +23,6 @@ or ```Cartograph CF```
 
 ## Vscode Setup
 * Extentions 
-	- 8-Bit *(theme)*
 	- Material icon theme
 	- Code spell checker
 	- Current Path
