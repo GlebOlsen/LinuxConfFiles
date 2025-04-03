@@ -15,7 +15,7 @@
         "jumpy2.labelFontColor": "#000000",
         "jumpy2.labelBackgroundColor": "#b3ff00",
         "jumpy2.labelBorderColor": "#00ff54",
-        "widget.shadow": "#00ffff",
+        "widget.shadow": "#b3ff00",
         "editorGutter.modifiedBackground": "#00ffff",
         "editorGutter.addedBackground": "#00ff00",
         "editorGutter.deletedBackground": "#ff0000",
@@ -169,5 +169,5 @@
     "jumpy2.achievements.active": false,
     "workbench.colorTheme": "Monokai",
     "workbench.layoutControl.enabled": false,
-    "editor.guides.bracketPairs": "active" // Remember center command palette
+    "workbench.activityBar.location": "hidden", // Remember center command palette
 }
