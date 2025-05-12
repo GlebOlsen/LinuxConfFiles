@@ -1,0 +1,76 @@
+/* Fully floating, black translucent bar with no weird edges */
+#waybar {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(0, 255, 255, 1); /* subtle white border */
+    border-radius: 10px;
+    font-family: "FiraCode Nerd Font", monospace;
+    font-size: 16px;
+    color: #cdd6f4;
+    box-shadow: none; /* remove shadows that create dark corners */
+}
+
+/* Shared module styling */
+* {
+    border: none;
+    padding: 0 4px;
+}
+
+/* Workspace styling */
+#workspaces button {
+    background: transparent;
+    color: #a6adc8;
+    margin: 0 4px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+#workspaces button.active {
+    background: #b3ff00;
+    color: #1e1e2e;
+    font-weight: bold;
+}
+
+#workspaces button:hover {
+    background: rgba(166, 173, 200, 0.2);
+}
+
+/* Module spacing */
+#clock, #cpu, #memory, #temperature, #network, #pulseaudio,
+#battery, #backlight, #tray, #mpd, #custom-media, #power-profiles-daemon {
+    margin: 0 5px;
+}
+
+/* Battery warning colors */
+#battery.warning {
+    color: #fab387;
+}
+
+#battery.critical {
+    color: #f38ba8;
+    font-weight: bold;
+}
+
+/* Muted audio */
+#pulseaudio.muted {
+    color: #f38ba8;
+}
+
+/* Idle inhibitor active */
+#idle_inhibitor.activated {
+    color: #a6e3a1;
+}
+
+/* MPD & custom media */
+#mpd.playing,
+#custom-media {
+    color: #94e2d5;
+}
+
+/* Tooltip (optional styling) */
+tooltip {
+    background: #000000;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+}

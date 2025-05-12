@@ -1,0 +1,71 @@
+window {
+    border: 2px solid transparent;
+    border-radius: 18px;
+    background:
+        linear-gradient(30deg, #1e1e2e, #1a2a3a) padding-box,
+        linear-gradient(90deg, #b3ff00, #00ffff) border-box;
+    font-family: "Fira Code", "monospace";
+    font-size: 18px;
+    padding: 18px;
+}
+
+/* Search entry box */
+#input {
+    background-color: rgba(0, 0, 0, 0);
+    color: #ffffff;
+    border: none;
+    border-radius: 18px;
+    padding: 10px 16px;
+    margin-bottom: 18px;
+    font-size: 20px;
+    outline: none;
+}
+
+/* List of entries */
+#entry {
+    background-color: transparent;
+    color: #bac2de;
+    border-radius: 10px;
+    padding: 10px 18px;
+    margin-bottom: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+/* Selected entry */
+#entry:selected {
+    background: linear-gradient(25deg, #b3ff00 0%, #00ffff 100%);
+    color: #000000;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px 0 rgba(179, 255, 0, 0.12);
+}
+
+#entry:selected #text {
+    color: #000000;
+}
+
+/* Entry text */
+#text {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+/* Entry icons (if you use them) */
+#icon {
+    margin-right: 12px;
+    color: #fab387;
+    font-size: 20px;
+}
+
+/* Scrollbar */
+#scroll {
+    background: transparent;
+}
+#scrollbar {
+    background: #313244;
+    border-radius: 8px;
+    min-width: 8px;
+}
+#scrollbar:vertical {
+    background: #313244;
+    border-radius: 8px;
+}
