@@ -1,5 +1,10 @@
-[eDP-1]
+[DP-3]
 path = "/home/div/pics/wallpapers/"
 sorting = "random"
-duration = "30s"
+duration = "20s"
 
+[HDMI-A-1]
+path = "/home/div/pics/wallpapersV/"
+sorting = "random"
+duration = "20s"
+mode = "center"
