@@ -1,0 +1,70 @@
+{
+	"assistant": {
+		"default_model": {
+			"provider": "ollama",
+			"model": "qwen3:8b"
+		},
+		"dock": "left",
+		"version": "2"
+	},
+	"vim_mode": false,
+	"git_panel": {
+		"dock": "right"
+	},
+	"project_panel": {
+		"dock": "right"
+	},
+	"telemetry": {
+		"metrics": false,
+		"diagnostics": true
+	},
+	"ui_font_size": 16,
+	"buffer_font_size": 16,
+	"ui_font_family": "Fira Code Nerd Font",
+	"buffer_font_family": "Fira Code Nerd Font",
+	"relative_line_numbers": true,
+	"soft_wrap": "editor_width",
+	"cursor_shape": "block",
+	"hard_tabs": true,
+	"tab_size": 4,
+	"toolbar": {
+		"quick_actions": false
+	},
+	"theme": {
+		"mode": "system",
+		"light": "Ayu Dark",
+		"dark": "One Dark"
+	},
+	"experimental.theme_overrides": {
+		"players": [
+			{
+				"cursor": "#b3ff00"
+			}
+		],
+		"background.appearance": "blurred",
+		"background": "#09090b77",
+		"panel.background": "#00000000",
+		"editor.background": "#00000000",
+		"tab_bar.background": "#00000000",
+		"terminal.background": "#00000000",
+		"toolbar.background": "#00000000",
+		"tab.inactive_background": "#00000000",
+		"tab.active_background": "#3f3f4650",
+		"border": "#7700ff66",
+		"status_bar.background": "#09090b00",
+		"title_bar.background": "#09090b77",
+		"border.variant": "#00000000",
+		"scrollbar.track.background": "#52525b20",
+		"scrollbar.track.border": "#00000000",
+		"scrollbar.thumb.background": "#52525b30",
+		"scrollbar.thumb.border": "#00000000",
+		"elevated_surface.background": "#90",
+		"surface.background": "#90",
+		"editor.active_line_number": "#ffffffcc",
+		"editor.gutter.background": "#00000000",
+		"editor.indent_guide": "#ffffff30",
+		"editor.indent_guide_active": "#ffffff80",
+		"editor.line_number": "#ffffffff",
+		"editor.active_line.background": "#ff00ff11"
+	}
+}
