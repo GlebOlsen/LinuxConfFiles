@@ -2,6 +2,7 @@
 
 * Linux confix files
 	- i3wm
+ 	- Hyprland 
 	- others
 * Editor configs
 	- VSCODE
