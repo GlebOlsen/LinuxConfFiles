@@ -9,7 +9,8 @@
     - Micro
     - Helix
 * Scripts
-	- **fan.sh** Thinkpad fan control
+	- **fan.sh** Thinkpad fan control 
+	- **bat.sh** Laptop battery control (if allowed)
 
 NixOS is in progress...
 
