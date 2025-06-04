@@ -1,235 +1,292 @@
--- Set the leader key to space
+-- -----------------------------------------------------------------------------
+-- 1. LEADER KEY
+-- -----------------------------------------------------------------------------
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
--- Initialize packer.nvim
-require('packer').startup(function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+-- -----------------------------------------------------------------------------
+-- 2. CORE NEOCIM OPTIONS
+-- -----------------------------------------------------------------------------
+local opt = vim.opt -- for conciseness
 
-  -- Add lualine.nvim
-  use {
+-- General
+opt.mouse = 'a'
+opt.clipboard = 'unnamedplus'
+opt.termguicolors = true
+
+-- Numbers
+opt.number = true
+opt.relativenumber = true
+opt.cursorline = true
+
+-- Indentation
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.expandtab = true
+opt.smartindent = true
+
+-- Search
+opt.ignorecase = true
+opt.smartcase = true
+opt.hlsearch = true
+
+-- Appearance
+opt.wrap = true
+opt.breakindent = true
+opt.scrolloff = 8 -- Keep cursor away from top/bottom edge
+
+-- Transparent Background
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) -- For floating windows
+vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2d2a2e" }) -- Subtle cursor line highlight
+
+-- Whitespace Characters
+opt.list = true
+opt.listchars = {
+  eol = '↵',
+  tab = '→ ',
+  space = '·',
+  trail = '•',
+}
+
+-- -----------------------------------------------------------------------------
+-- 3. GLOBAL KEYMAPS
+-- -----------------------------------------------------------------------------
+local keymap = vim.keymap
+local keymap_opts = { noremap = true, silent = true }
+
+-- File Explorer
+keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', keymap_opts)
+
+-- Telescope Fuzzy Finder
+keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = "Find Files" })
+keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = "Live Grep" })
+keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = "Find Buffers" })
+keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = "Help Tags" })
+
+-- Gitsigns
+keymap.set('n', '<leader>gp', '<cmd>Gitsigns preview_hunk_inline<CR>', { desc = "Preview Hunk" })
+keymap.set('n', '<leader>gt', '<cmd>Gitsigns toggle_current_line_blame<CR>', { desc = "Toggle Blame" })
+
+-- Spectre Search and Replace
+keymap.set('n', '<leader>S', '<cmd>Spectre<CR>', { desc = "Open Spectre" })
+keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = "Search Word" })
+keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = "Search Selection" })
+keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({path = "%:p"})<CR>', { desc = "Search in File" })
+
+-- -----------------------------------------------------------------------------
+-- 4. PLUGIN MANAGER (LAZY.NVIM)
+-- -----------------------------------------------------------------------------
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable',
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require('lazy').setup({
+  ---------------------
+  -- Core & UI
+  ---------------------
+  { 'nvim-lua/plenary.nvim' }, -- A dependency for many plugins
+
+  {
+    'folke/tokyonight.nvim',
+    lazy = false, -- Load this colorscheme on startup
+    priority = 1000, -- Make sure it's loaded before other plugins
+  },
+
+  {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function()
-      require('lualine').setup {
-        options = {
-          theme = 'powerline', -- Change lualine theme here
-          section_separators = {'', ''},
-          component_separators = {'|', '|'},
-        },
-        sections = {
-          lualine_a = {'mode'},
-          lualine_b = {'branch'},
-          lualine_c = {{'filename', path = 1}}, -- Use fullpath here
-          lualine_x = {'encoding', 'fileformat', 'filetype'},
-          lualine_y = {'progress'},
-          lualine_z = {'location'}
-        }
-      }
-    end
-  }
+    event = 'VeryLazy', -- Load on a delayed event after startup
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        theme = 'tokyonight',
+        section_separators = { '', '' },
+        component_separators = { '|', '|' },
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff' },
+        lualine_c = { { 'filename', path = 1, shorting_rule = 'absolute' } },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
+      },
+    },
+  },
 
-  -- Add gitsigns.nvim
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('gitsigns').setup {}
-    end
-  }
+  {
+    'nvim-tree/nvim-tree.lua',
+    cmd = 'NvimTreeToggle', -- Load only when you run the command
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      view = { side = 'right', width = 30 },
+      update_cwd = true,
+      hijack_netrw = true,
+    },
+  },
 
-  -- Add telescope.nvim
-  use {
+  ---------------------
+  -- Fuzzy Finding
+  ---------------------
+  {
     'nvim-telescope/telescope.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
+    cmd = 'Telescope',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  ---------------------
+  -- Git Integration
+  ---------------------
+  {
+    'lewis6991/gitsigns.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {},
+  },
+
+  ---------------------
+  -- Search & Replace
+  ---------------------
+  {
+    'nvim-pack/nvim-spectre',
+    cmd = 'Spectre',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  ---------------------
+  -- LSP & Completion
+  ---------------------
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+    },
     config = function()
-      require('telescope').setup {
-        defaults = {
-          mappings = {
-            i = {
-              ["<C-h>"] = "which_key"
-            }
-          }
-        }
-      }
-    end
-  }
+      -- THIS IS WHERE THE LSP.LUA CONTENT GOES --
+      local lspconfig = require('lspconfig')
+      local mason = require('mason')
+      local mason_lspconfig = require('mason-lspconfig')
 
-  -- Add spectre (For global search and replace)
-  use 'nvim-pack/nvim-spectre'
+      local on_attach = function(client, bufnr)
+        local map = vim.keymap.set
+        local opts = { noremap = true, silent = true, buffer = bufnr }
 
-  -- Add nvim-tree.lua
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function()
-      require'nvim-tree'.setup {
-        view = {
-          side = 'right',
-          width = 30,
-        },
-        hijack_netrw = true,
-        update_cwd = true,
-      }
-    end
-  }
-  -- Add nvim-lspconfig for LSP support
-    use {
-      'neovim/nvim-lspconfig',
-      config = function()
-        local capabilities = require('cmp_nvim_lsp').default_capabilities() -- Get capabilities from cmp-nvim-lsp
-
-        local on_attach = function(client, bufnr)
-            -- Add common keymaps, like gd (go to definition), K (hover), etc.
-             local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-             local opts = { noremap=true, silent=true }
-                buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-                buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-                buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-                buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-                buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-                buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-                buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-                buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-                buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-                buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-                buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-                buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-        end
-	
-	-- C/C++
-        require('lspconfig').clangd.setup {
-          capabilities = capabilities,
-          on_attach = on_attach
-        }
-
-        -- Python
-        require('lspconfig').pyright.setup {
-          capabilities = capabilities,
-          on_attach = on_attach
-        }
-
-        -- Add more language servers here
+        map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
+        map('n', 'K', vim.lsp.buf.hover, opts)
+        map('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
+        map('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
+        map('n', '<leader>D', '<cmd>Telescope lsp_type_definitions<CR>', opts)
+        map('n', '<leader>rn', vim.lsp.buf.rename, opts)
+        map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+        map('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
       end
-    }
 
-  -- Add nvim-cmp for autocompletion
-  use {
+      mason.setup()
+
+      mason_lspconfig.setup({
+        ensure_installed = {
+          'clangd',
+          'pyright',
+          'lua_ls',
+        },
+      })
+
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      mason_lspconfig.setup_handlers({
+        function(server_name)
+          lspconfig[server_name].setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+          })
+        end,
+      })
+    end,
+  },
+
+  {
     'hrsh7th/nvim-cmp',
-    requires = {
+    event = 'InsertEnter',
+    dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
       'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip'
+      'saadparwaiz1/cmp_luasnip',
+      'zbirenbaum/copilot-cmp',
     },
     config = function()
-      local cmp = require'cmp'
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
       cmp.setup({
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({ -- Use a preset for common mappings
+        snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+        mapping = cmp.mapping.preset.insert({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-n>'] = cmp.mapping.complete(), -- Changed to C-n.  More reliable.
-          ['<C-e>'] = cmp.mapping.abort(),   -- Use abort() directly
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<Tab>'] = cmp.mapping(function(fallback)  -- Example of a more complex mapping
-              if cmp.visible() then
-                  cmp.select_next_item()
-              elseif require('luasnip').expand_or_jumpable() then
-                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
-              else
-                  fallback()
-              end
-          end, { 'i', 's' }), -- i = insert mode, s = select mode
-          ['<S-Tab>'] = cmp.mapping(function(fallback) -- Shift-tab example
-              if cmp.visible() then
-                  cmp.select_prev_item()
-              elseif require('luasnip').jumpable(-1) then
-                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
-              else
-                  fallback()
-              end
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+            else fallback() end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then luasnip.jump(-1)
+            else fallback() end
           end, { 'i', 's' }),
         }),
-        sources = {
+        sources = cmp.config.sources({
+          { name = 'copilot' },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-          { name = 'buffer' },  -- Add buffer completions here
-          { name = 'path' }, -- add path completions
-        }
+          { name = 'buffer' },
+          { name = 'path' },
+        }),
       })
+    end,
+  },
+
+  ---------------------
+  -- GitHub Copilot
+  ---------------------
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-l>", -- Ctrl+L to accept suggestion
+            dismiss = "<C-h>",
+          },
+        },
+      })
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function ()
+      require("copilot_cmp").setup()
     end
-  }
-
-  -- Add an autocommand to compile packer whenever the init.lua file is saved
-    vim.cmd([[
-      augroup packer_user_config
-        autocmd!
-        autocmd BufWritePost init.lua lua if pcall(vim.cmd, 'source ' .. vim.fn.expand('<afile>')) then require('packer').sync() end
-	autocmd BufNewFile,BufRead Jenkinsfile setf groovy
-      augroup end
-    ]])
-end)
-
-
--- Set key mappings for :Spectre
-vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").open()<CR>', {
-  desc = "Open Spectre"
-})
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-    desc = "Search current word"
-})
-vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-    desc = "Search current selection"
-})
-vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({path = "%:p"})<CR>', {
-    desc = "Search in current file"
+  },
 })
 
--- Set key mappings for :Gitsigns
-vim.keymap.set("n", "<leader>gp", "<cmd>lua require('gitsigns').preview_hunk_inline()<CR>")
-vim.keymap.set("n", "<leader>gt", "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>")
-
--- Set key mappings for :Telescope
-vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", {})
-
--- Set key mappings for :NvimTree
-vim.api.nvim_set_keymap('n', '<leader>e', ":NvimTreeToggle<CR>", {noremap = true, silent = true})
-
--- Other configuration settings
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.smartindent = true
-vim.opt.cursorline = true
-vim.opt.wrap = true
-vim.opt.clipboard = 'unnamedplus'
-vim.opt.mouse = 'a'
-vim.opt.termguicolors = true
--- vim.opt.statusline = '%F' -- For normal VIM
-
--- Set the background to be transparent
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
-
--- Set whitespace
-vim.opt.list = true
-vim.opt.listchars = {
-  eol = '↵',	-- Symbol for newline
-  tab = '→ ',	-- Symbol for tab
-  space = '·',	-- Symbol for a regular space
-  trail = '•',	-- Symbol for trailing spaces
-}
-vim.api.nvim_set_hl(0, "Whitespace", { fg = "#777777" })
-
--- Set cursor color
-vim.api.nvim_set_hl(0, "Cursor", { fg = "#B3FF00", bg = "#ff00aa" })
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#49115b" })
+-- -----------------------------------------------------------------------------
+-- 5. SET THE COLOR SCHEME
+-- -----------------------------------------------------------------------------
+vim.cmd.colorscheme('tokyonight')
