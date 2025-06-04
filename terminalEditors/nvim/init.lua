@@ -219,23 +219,22 @@ require('lazy').setup({
 
       mason.setup()
 
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
       mason_lspconfig.setup({
         ensure_installed = {
           'clangd',
           'pyright',
           'lua_ls',
         },
-      })
-
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      mason_lspconfig.setup_handlers({
-        function(server_name)
-          lspconfig[server_name].setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-          })
-        end,
+        handlers = {
+          function(server_name)
+            lspconfig[server_name].setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+            })
+          end,
+        },
       })
     end,
   },
@@ -249,7 +248,7 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      'zbirenbaum/copilot-cmp',
+      -- 'zbirenbaum/copilot-cmp',
     },
     config = function()
       local cmp = require('cmp')
@@ -274,7 +273,7 @@ require('lazy').setup({
           end, { 'i', 's' }),
         }),
         sources = cmp.config.sources({
-          { name = 'copilot' },
+          -- { name = 'copilot' },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'buffer' },
@@ -284,31 +283,31 @@ require('lazy').setup({
     end,
   },
 
-  ---------------------
-  -- GitHub Copilot
-  ---------------------
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = {
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-l>", -- Ctrl+L to accept suggestion
-            dismiss = "<C-h>",
-          },
-        },
-      })
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function ()
-      require("copilot_cmp").setup()
-    end
-  },
+  -- ---------------------
+  -- -- GitHub Copilot
+  -- ---------------------
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({
+  --       suggestion = {
+  --         auto_trigger = true,
+  --         keymap = {
+  --           accept = "<C-l>",
+  --           dismiss = "<C-h>",
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function ()
+  --     require("copilot_cmp").setup()
+  --   end
+  -- },
 })
 
 -- -----------------------------------------------------------------------------
