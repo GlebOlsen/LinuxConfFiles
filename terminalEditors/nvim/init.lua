@@ -205,60 +205,60 @@ require('lazy').setup({
   ---------------------
   -- LSP & Completion
   ---------------------
-  {
-    'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-    },
-    config = function()
-      -- THIS IS WHERE THE LSP.LUA CONTENT GOES --
-      local lspconfig = require('lspconfig')
-      local mason = require('mason')
-      local mason_lspconfig = require('mason-lspconfig')
+  -- {
+  --   'neovim/nvim-lspconfig',
+  --   event = { 'BufReadPre', 'BufNewFile' },
+  --   dependencies = {
+  --     'williamboman/mason.nvim',
+  --     'williamboman/mason-lspconfig.nvim',
+  --   },
+  --   config = function()
+  --     -- THIS IS WHERE THE LSP.LUA CONTENT GOES --
+  --     local lspconfig = require('lspconfig')
+  --     local mason = require('mason')
+  --     local mason_lspconfig = require('mason-lspconfig')
 
-      local on_attach = function(client, bufnr)
-        local map = vim.keymap.set
-        local opts = { noremap = true, silent = true, buffer = bufnr }
+  --     local on_attach = function(client, bufnr)
+  --       local map = vim.keymap.set
+  --       local opts = { noremap = true, silent = true, buffer = bufnr }
 
-        map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
-        map('n', 'K', vim.lsp.buf.hover, opts)
-        map('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
-        map('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
-        map('n', '<leader>D', '<cmd>Telescope lsp_type_definitions<CR>', opts)
-        map('n', '<leader>rn', vim.lsp.buf.rename, opts)
-        map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-        map('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
-      end
+  --       map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
+  --       map('n', 'K', vim.lsp.buf.hover, opts)
+  --       map('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
+  --       map('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
+  --       map('n', '<leader>D', '<cmd>Telescope lsp_type_definitions<CR>', opts)
+  --       map('n', '<leader>rn', vim.lsp.buf.rename, opts)
+  --       map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+  --       map('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
+  --     end
 
-      mason.setup()
+  --     mason.setup()
 
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  --     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      mason_lspconfig.setup({
-        ensure_installed = {
-          'clangd',
-          'pyright',
-          'lua_ls',
-        },
-        handlers = {
-          function(server_name)
-            lspconfig[server_name].setup({
-              on_attach = on_attach,
-              capabilities = capabilities,
-            })
-          end,
-        },
-      })
-    end,
-  },
+  --     mason_lspconfig.setup({
+  --       ensure_installed = {
+  --         'clangd',
+  --         'pyright',
+  --         'lua_ls',
+  --       },
+  --       handlers = {
+  --         function(server_name)
+  --           lspconfig[server_name].setup({
+  --             on_attach = on_attach,
+  --             capabilities = capabilities,
+  --           })
+  --         end,
+  --       },
+  --     })
+  --   end,
+  -- },
 
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
+      -- 'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'L3MON4D3/LuaSnip',
@@ -289,7 +289,7 @@ require('lazy').setup({
         }),
         sources = cmp.config.sources({
           -- { name = 'copilot' },
-          { name = 'nvim_lsp' },
+          -- { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
@@ -328,4 +328,4 @@ require('lazy').setup({
 -- -----------------------------------------------------------------------------
 -- 5. SET THE COLOR SCHEME
 -- -----------------------------------------------------------------------------
-vim.cmd.colorscheme('tokyonight')
+-- vim.cmd.colorscheme('tokyonight')
