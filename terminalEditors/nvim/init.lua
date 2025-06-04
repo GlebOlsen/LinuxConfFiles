@@ -70,7 +70,7 @@ keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = "Live Gre
 keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = "Find Buffers" })
 keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = "Help Tags" })
 
--- Hop Motions -- ADDED FOR HOP.NVIM
+-- Hop Motions
 keymap.set('n', '<leader>hw', '<cmd>HopWord<CR>', { desc = "Hop to Word" })
 keymap.set('n', '<leader>hl', '<cmd>HopLine<CR>', { desc = "Hop to Line" })
 keymap.set('n', '<leader>hc', '<cmd>HopChar1<CR>', { desc = "Hop to Character" })
@@ -108,18 +108,11 @@ require('lazy').setup({
   { 'nvim-lua/plenary.nvim' }, -- A dependency for many plugins
 
   {
-    'folke/tokyonight.nvim',
-    lazy = false, -- Load this colorscheme on startup
-    priority = 1000, -- Make sure it's loaded before other plugins
-  },
-
-  {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy', -- Load on a delayed event after startup
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       options = {
-        theme = 'tokyonight',
         section_separators = { '', '' },
         component_separators = { '|', '|' },
       },
@@ -154,11 +147,8 @@ require('lazy').setup({
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       require('nvim-treesitter.configs').setup({
-        -- A list of parser names, or "all"
         ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'python', 'javascript', 'typescript' },
-        -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
-        -- Automatically install missing parsers when entering buffer
         auto_install = true,
         highlight = {
           enable = true,
@@ -167,9 +157,9 @@ require('lazy').setup({
       })
     end,
   },
-  
+
   ---------------------
-  -- Motions -- ADDED FOR HOP.NVIM
+  -- Motions
   ---------------------
   {
     'phaazon/hop.nvim',
@@ -208,67 +198,16 @@ require('lazy').setup({
   },
 
   ---------------------
-  -- LSP & Completion
+  -- Completion
   ---------------------
-  -- {
-  --   'neovim/nvim-lspconfig',
-  --   event = { 'BufReadPre', 'BufNewFile' },
-  --   dependencies = {
-  --     'williamboman/mason.nvim',
-  --     'williamboman/mason-lspconfig.nvim',
-  --   },
-  --   config = function()
-  --     -- THIS IS WHERE THE LSP.LUA CONTENT GOES --
-  --     local lspconfig = require('lspconfig')
-  --     local mason = require('mason')
-  --     local mason_lspconfig = require('mason-lspconfig')
-
-  --     local on_attach = function(client, bufnr)
-  --       local map = vim.keymap.set
-  --       local opts = { noremap = true, silent = true, buffer = bufnr }
-
-  --       map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
-  --       map('n', 'K', vim.lsp.buf.hover, opts)
-  --       map('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
-  --       map('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
-  --       map('n', '<leader>D', '<cmd>Telescope lsp_type_definitions<CR>', opts)
-  --       map('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  --       map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-  --       map('n', '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
-  --     end
-
-  --     mason.setup()
-
-  --     local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-  --     mason_lspconfig.setup({
-  --       ensure_installed = {
-  --         'clangd',
-  --         'pyright',
-  --         'lua_ls',
-  --       },
-  --       handlers = {
-  --         function(server_name)
-  --           lspconfig[server_name].setup({
-  --             on_attach = on_attach,
-  --             capabilities = capabilities,
-  --           })
-  --         end,
-  --       },
-  --     })
-  --   end,
-  -- },
-
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
-      -- 'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      -- 'zbirenbaum/copilot-cmp',
     },
     config = function()
       local cmp = require('cmp')
@@ -293,8 +232,6 @@ require('lazy').setup({
           end, { 'i', 's' }),
         }),
         sources = cmp.config.sources({
-          -- { name = 'copilot' },
-          -- { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
@@ -302,35 +239,4 @@ require('lazy').setup({
       })
     end,
   },
-
-  -- ---------------------
-  -- -- GitHub Copilot
-  -- ---------------------
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({
-  --       suggestion = {
-  --         auto_trigger = true,
-  --         keymap = {
-  --           accept = "<C-l>",
-  --           dismiss = "<C-h>",
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   config = function ()
-  --     require("copilot_cmp").setup()
-  --   end
-  -- },
 })
-
--- -----------------------------------------------------------------------------
--- 5. SET THE COLOR SCHEME
--- -----------------------------------------------------------------------------
--- vim.cmd.colorscheme('tokyonight')
