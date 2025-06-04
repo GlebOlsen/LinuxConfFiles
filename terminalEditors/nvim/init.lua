@@ -1,5 +1,3 @@
--- ~/.config/nvim/init.lua
-
 -- -----------------------------------------------------------------------------
 -- 1. LEADER KEY
 -- -----------------------------------------------------------------------------
@@ -66,6 +64,11 @@ keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = "Find Fi
 keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = "Live Grep" })
 keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = "Find Buffers" })
 keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = "Help Tags" })
+
+-- Hop Motions -- ADDED FOR HOP.NVIM
+keymap.set('n', '<leader>hw', '<cmd>HopWord<CR>', { desc = "Hop to Word" })
+keymap.set('n', '<leader>hl', '<cmd>HopLine<CR>', { desc = "Hop to Line" })
+keymap.set('n', '<leader>hc', '<cmd>HopChar1<CR>', { desc = "Hop to Character" })
 
 -- Gitsigns
 keymap.set('n', '<leader>gp', '<cmd>Gitsigns preview_hunk_inline<CR>', { desc = "Preview Hunk" })
@@ -157,6 +160,18 @@ require('lazy').setup({
         },
         indent = { enable = true },
       })
+    end,
+  },
+  
+  ---------------------
+  -- Motions -- ADDED FOR HOP.NVIM
+  ---------------------
+  {
+    'phaazon/hop.nvim',
+    branch = 'v2', -- Recommended for Neovim 0.8+
+    cmd = { 'HopWord', 'HopLine', 'HopChar1' },
+    config = function()
+      require('hop').setup()
     end,
   },
 
