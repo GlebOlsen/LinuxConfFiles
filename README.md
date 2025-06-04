@@ -35,14 +35,8 @@ or ```Cartograph CF```
 
 1. Clone repo
 2. Put init.lua ->  .config/nvim/init.lua
-3. Install packer: ```git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim```
-4. Install a nerd (Has to be a nerdfont) font:  CaskaydiaMono or FiraCode. If on WSL you'll have to install it on the windows only.
-5. Open nvim and run: ```:PackerInstall``` ```:PackerUpdate``` ```:PackerSync``` ```:PackerCompile```
-6. Enjoy
+3. Install ripgrep and sed
+4. Enjoy
 
 ### My neovim config
 * Space is the "Leader key"
-
-### For LSP support:
-* For C: clangd
-* For Python: npm install -g pyright
