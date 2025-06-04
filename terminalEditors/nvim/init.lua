@@ -39,7 +39,12 @@ opt.scrolloff = 8 -- Keep cursor away from top/bottom edge
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) -- For floating windows
 vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2d2a2e" }) -- Subtle cursor line highlight
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#4d4a4e" }) -- Subtle cursor line highlight
+
+-- CursorLine colors
+vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#00FFFF" }) 
+vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#FFFF00" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#B3FF00", bold=true }) 
 
 -- Whitespace Characters
 opt.list = true
