@@ -42,16 +42,16 @@ vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#4d4a4e" }) -- Subtle cursor line highlight
 
 -- CursorLine colors
-vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#00FFFF" }) 
+vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#00FFFF" })
 vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#FFFF00" })
-vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#B3FF00", bold=true }) 
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#B3FF00", bold=true })
 
 -- Whitespace Characters
 opt.list = true
 opt.listchars = {
   eol = '↵',
   tab = '→ ',
-  space = '·',
+  leadmultispace = '·',
   trail = '•',
 }
 
@@ -119,7 +119,7 @@ require('lazy').setup({
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff' },
-        lualine_c = { { 'filename', path = 1, shorting_rule = 'absolute' } },
+        lualine_c = { { 'filename', path = 3} },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
@@ -147,7 +147,17 @@ require('lazy').setup({
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       require('nvim-treesitter.configs').setup({
-        ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'python', 'javascript', 'typescript' },
+        ensure_installed = { 
+          'lua', 'vim', 'vimdoc', 'query',
+          'typescript', 'tsx', 'javascript', 'rust', 'go', 'zig',
+          'kotlin', 'dart', 'c_sharp',
+          'json', 'yaml', 'toml', 'scss',
+          'dockerfile', 'groovy', 'hcl', 'terraform',
+          'cmake', 'ninja',
+          'fish', 'powershell',
+          'regex', 'graphql', 'prisma', 'nix',
+          'haskell', 'elixir', 'elm', 'ocaml'
+        },
         sync_install = false,
         auto_install = true,
         highlight = {
@@ -163,7 +173,7 @@ require('lazy').setup({
   ---------------------
   {
     'phaazon/hop.nvim',
-    branch = 'v2', -- Recommended for Neovim 0.8+
+    branch = 'v2',
     cmd = { 'HopWord', 'HopLine', 'HopChar1' },
     config = function()
       require('hop').setup()
