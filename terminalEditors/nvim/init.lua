@@ -113,7 +113,6 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       options = {
-        icons_enabled = false,
         section_separators = { '', '' },
         component_separators = { '|', '|' },
       },
@@ -136,16 +135,6 @@ require('lazy').setup({
       view = { side = 'right', width = 30 },
       update_cwd = true,
       hijack_netrw = true,
-      renderer = {
-        icons = {
-          show = {
-            file = false,
-            folder = false,
-            folder_arrow = false,
-            git = false,
-          },
-        },
-      },
     },
   },
 
