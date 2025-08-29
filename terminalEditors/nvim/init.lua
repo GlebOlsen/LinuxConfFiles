@@ -12,7 +12,7 @@ local opt = vim.opt -- for conciseness
 -- General
 opt.mouse = 'a'
 opt.clipboard = 'unnamedplus'
-opt.termguicolors = true
+vim.cmd.colorscheme 'murphy'
 
 -- Numbers
 opt.number = true
@@ -33,15 +33,10 @@ opt.hlsearch = true
 -- Appearance
 opt.wrap = true
 opt.breakindent = true
-opt.scrolloff = 8 -- Keep cursor away from top/bottom edge
-
--- Transparent Background
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) -- For floating windows
-vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#4d4a4e" }) -- Subtle cursor line highlight
+opt.scrolloff = 12 -- Keep cursor away from top/bottom edge
 
 -- CursorLine colors
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#49115b" }) -- Subtle cursor line highlight
 vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#00FFFF" })
 vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#FFFF00" })
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#B3FF00", bold=true })
@@ -119,7 +114,7 @@ require('lazy').setup({
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff' },
-        lualine_c = { { 'filename', path = 3} },
+        lualine_c = { { 'filename', path = 3 } },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
@@ -139,36 +134,6 @@ require('lazy').setup({
   },
 
   ---------------------
-  -- Code & Syntax Highlighting
-  ---------------------
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require('nvim-treesitter.configs').setup({
-        ensure_installed = { 
-          'lua', 'vim', 'vimdoc', 'query',
-          'typescript', 'tsx', 'javascript', 'rust', 'go', 'zig',
-          'kotlin', 'dart', 'c_sharp',
-          'json', 'yaml', 'toml', 'scss',
-          'dockerfile', 'groovy', 'hcl', 'terraform',
-          'cmake', 'ninja',
-          'fish', 'powershell',
-          'regex', 'graphql', 'prisma', 'nix',
-          'haskell', 'elixir', 'elm', 'ocaml'
-        },
-        sync_install = false,
-        auto_install = true,
-        highlight = {
-          enable = true,
-        },
-        indent = { enable = true },
-      })
-    end,
-  },
-
-  ---------------------
   -- Motions
   ---------------------
   {
@@ -176,7 +141,9 @@ require('lazy').setup({
     branch = 'v2',
     cmd = { 'HopWord', 'HopLine', 'HopChar1' },
     config = function()
-      require('hop').setup()
+      require('hop').setup {
+        multi_windows = true
+      }
     end,
   },
 
