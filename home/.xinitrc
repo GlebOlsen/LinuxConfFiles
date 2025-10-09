@@ -1,2 +1,2 @@
 xrdb ~/.Xresources
-exec i3
+exec dub-launch --exit-with-session i3
