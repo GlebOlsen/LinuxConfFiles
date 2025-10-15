@@ -14,7 +14,7 @@ opt.clipboard = 'unnamedplus'
 opt.undofile = true
 opt.updatetime = 250
 opt.timeoutlen = 300
-vim.cmd.colorscheme 'vim'
+vim.cmd.colorscheme 'murphy'
 
 opt.number = true
 opt.relativenumber = true
