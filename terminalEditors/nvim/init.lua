@@ -56,7 +56,6 @@ opt.listchars = {
   tab = '→ ',
   leadmultispace = '·',
   trail = '•',
-  nbsp = '␣',
 }
 
 -- -----------------------------------------------------------------------------
@@ -143,7 +142,7 @@ require('lazy').setup({
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff' },
-        lualine_c = { { 'filename', path = 1 } },
+        lualine_c = { { 'filename', path = 3 } },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
@@ -153,20 +152,12 @@ require('lazy').setup({
 
   {
     'nvim-tree/nvim-tree.lua',
-    cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+    cmd = 'NvimTreeToggle', -- Load only when you run the command
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       view = { side = 'right', width = 30 },
-      update_focused_file = { enable = true },
+      update_cwd = true,
       hijack_netrw = true,
-      filters = {
-        dotfiles = false,
-        custom = { '^.git$', 'node_modules', '^.cache$' },
-      },
-      git = {
-        enable = true,
-        ignore = false,
-      },
     },
   },
 
@@ -220,47 +211,13 @@ require('lazy').setup({
   {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    },
-    config = function()
-      local telescope = require('telescope')
-      telescope.setup({
-        defaults = {
-          prompt_prefix = '🔍 ',
-          selection_caret = '➤ ',
-          path_display = { 'smart' },
-          mappings = {
-            i = {
-              ['<C-j>'] = 'move_selection_next',
-              ['<C-k>'] = 'move_selection_previous',
-            },
-          },
-        },
-        pickers = {
-          find_files = { hidden = true },
-        },
-      })
-      pcall(telescope.load_extension, 'fzf')
-    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
 
   {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    opts = {
-      signs = {
-        add = { text = '│' },
-        change = { text = '│' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-        untracked = { text = '┆' },
-      },
-      current_line_blame = false,
-      current_line_blame_opts = { delay = 300 },
-    },
+    opts = {},
   },
 
   {
