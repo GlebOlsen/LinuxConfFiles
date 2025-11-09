@@ -52,7 +52,7 @@ vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
 
 opt.list = true
 opt.listchars = {
-  eol = '↵',
+  -- eol = '↵',
   tab = '→ ',
   leadmultispace = '·',
   trail = '•',
@@ -250,7 +250,7 @@ require('lazy').setup({
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
         }),
         sources = {
-          { name = 'buffer', keyword_length = 3 },
+          { name = 'buffer', keyword_length = 4 },
           { name = 'path' },
         },
       })
@@ -284,25 +284,6 @@ require('lazy').setup({
       { 'gb', mode = 'x', desc = 'Comment toggle blockwise (visual)' },
     },
     opts = {},
-  },
-
-  {
-    'folke/which-key.nvim',
-    event = 'VeryLazy',
-    config = function()
-      local wk = require('which-key')
-      wk.setup({
-        preset = 'modern',
-        win = { border = 'rounded' },
-      })
-      wk.add({
-        { '<leader>f', group = 'Find' },
-        { '<leader>g', group = 'Git' },
-        { '<leader>h', group = 'Hop' },
-        { '<leader>s', group = 'Search' },
-        { '<leader>w', group = 'Workspace' },
-      })
-    end,
   },
 }, {
   ui = { border = 'rounded' },
