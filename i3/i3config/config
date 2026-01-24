@@ -30,6 +30,8 @@ exec --no-startup-id dex --autostart --environment i3
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/Pictures/wallpapers/1345430.png
 
+# exec --no-startup-id xrandr --output DisplayPort-0 --mode 3840x2160 --pos 0x0 --rotate normal --primary --output HDMI-A-0 --mode 1920x1080 --pos 3840x240 --rotate left
+
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
@@ -37,6 +39,9 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id picom
 exec --no-startup-id dunst
 exec --no-startup-id redshift -t 6500:3000 -l 55.7:12 -m randr
+exec --no-startup-id copyq
+exec --no-startup-id flameshot
+exec --no-startup-id nitrogen --restore
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -59,7 +64,7 @@ tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id xfce4-terminal
-bindsym $mod+control+v exec --no-startup-id copyq menu
+bindsym --release $mod+control+v exec --no-startup-id copyq menu
 bindsym Print exec --no-startup-id flameshot gui
 bindsym $mod+p exec --no-startup-id i3lock -c 000000
 bindsym $mod+Shift+p exec --no-startup-id systemctl suspend
@@ -226,7 +231,3 @@ bar {
     focused_workspace  #330033 #FF00FF #000000
   }
 }
-
-exec --no-startup-id copyq
-exec --no-startup-id flameshot
-exec --no-startup-id nitrogen --restore

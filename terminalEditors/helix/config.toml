@@ -1,4 +1,4 @@
-theme = "emacs"
+theme = "ao"
 
 [editor]
 end-of-line-diagnostics = "hint"

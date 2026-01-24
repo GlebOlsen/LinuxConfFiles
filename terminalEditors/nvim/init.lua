@@ -9,9 +9,6 @@ vim.g.maplocalleader = ' '
 -- -----------------------------------------------------------------------------
 local opt = vim.opt
 
-opt.mouse = 'a'
-opt.clipboard = 'unnamedplus'
-opt.undofile = true
 opt.updatetime = 250
 opt.timeoutlen = 300
 vim.cmd.colorscheme 'murphy'
@@ -24,13 +21,9 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.smartindent = true
-opt.autoindent = true
 
 opt.ignorecase = true
 opt.smartcase = true
-opt.hlsearch = true
-opt.incsearch = true
-
 opt.wrap = true
 opt.breakindent = true
 opt.scrolloff = 12
@@ -39,10 +32,6 @@ opt.termguicolors = true
 
 opt.splitright = true
 opt.splitbelow = true
-
-opt.lazyredraw = false
-opt.swapfile = false
-opt.backup = false
 
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#49115b" })
 vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#00FFFF" })
@@ -215,6 +204,37 @@ require('lazy').setup({
     'nvim-pack/nvim-spectre',
     cmd = 'Spectre',
     dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {
+      ensure_installed = {
+        'c_sharp',
+        'lua',
+        'vim',
+        'vimdoc',
+        'query',
+        'bash',
+        'json',
+        'html',
+        'css',
+        'javascript',
+        'typescript',
+      },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+      indent = {
+        enable = true,
+      },
+    },
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
+    end,
   },
 
   {

@@ -1,8 +1,6 @@
-alias pp='pnpm'
 alias vi='nvim'
-alias vim='nvim'
 alias nvim='nvim'
-alias helix='hx'
+alias hx='helix'
 
 #Git branches
 parse_git_branch() {
