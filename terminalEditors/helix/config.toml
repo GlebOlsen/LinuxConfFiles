@@ -1,4 +1,4 @@
-theme = "ao"
+theme = "adwaita-light"
 
 [editor]
 end-of-line-diagnostics = "hint"
@@ -6,6 +6,7 @@ line-number = "relative"
 true-color = true
 cursorline = true
 scrolloff = 12
+color-modes = true
 
 [editor.inline-diagnostics]
 cursor-line = "error"
