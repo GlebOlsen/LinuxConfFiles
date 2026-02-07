@@ -1,0 +1,25 @@
+# Indicator
+indicator: bottomright
+indicator_color: #b3ff00
+indicator_size: 12
+
+# General Cursor
+cursor_color: #FF0000
+cursor_size: 10
+
+# Hint Mode
+hint_font: Cartograph CF Bold
+hint_size: 22
+hint_bgcolor: #0f0f0f
+hint_fgcolor: #B3FF00
+hint_border_radius: 4
+
+# Grid Mode
+grid_color: #333333
+grid_border_size: 2
+grid_border_color: #FF0000
+
+# Behavior / Speed
+speed: 150
+acceleration: 875
+scroll_speed: 300
