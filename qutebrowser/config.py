@@ -2,7 +2,7 @@ config.load_autoconfig()
 
 config.set(
 	"editor.command",
-	["alacritty", "-e", "vim", "{file}", "-c", "normal {line}G{column0}l"],
+	["alacritty", "-e", "helix", "{file}", "-c", "normal {line}G{column0}l"],
 )
 config.set("fonts.default_family", ["Cartograph CF", "sans-serif"])
 
@@ -68,6 +68,6 @@ config.bind("<Ctrl-Shift-d>", "open -t file:///home/div/Downloads")
 config.bind("<Alt-t>", "config-cycle tabs.show always never")
 config.bind("<Alt-b>", "config-cycle statusbar.show always never")
 config.bind(
-	"<Ctrl-s>",
+	"<Alt-s>",
 	"config-cycle tabs.show always never ;; config-cycle statusbar.show always never",
 )

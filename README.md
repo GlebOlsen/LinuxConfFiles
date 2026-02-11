@@ -2,16 +2,17 @@
 
 * Linux confix files
 	- i3wm
- 	- Hyprland 
+	- Hyprland - (Not using anymore, tried it a couple of times and still and it's sub par WM since it's cursor focused. **(Planning on trying Sway for the 5th time lol... or finiding other i3 like wayland compositors)**)
 	- others
 * Editor configs
-	- VSCODE
-	- NVIM
-    - Micro
     - Helix
+	- VSCODE
+    - Micro
+	- NVIM
 * Scripts
 	- **fan.sh** Thinkpad fan control 
 	- **bat.sh** Laptop battery control (if allowed)
+	- **--remember to insert the x220 t script--**
 
 NixOS is in progress...
 
@@ -20,25 +21,31 @@ https://github.com/ful1e5/Bibata_Cursor_Rainbow
 or https://github.com/nxll/miniature
 
 **Favorite font:**
-https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
+https://github.com/g5becks/Cartograph/archive/refs/heads/main.zip
 or ```Cartograph CF```
 
 ## Vscode Setup
-* Extentions 
+* Base Extentions 
 	- Material icon theme
 	- Code spell checker
 	- Current Path
 	- Error Lens
 	- Jumpy2
+	- Vim
+
+* Using others for other dev env.
+
 * **Copy Settings.json file**
 * **Copy keybinding.json file**
 
-## Neovim Setup
+<hr />
+
+**Neovim Setup - (old config look in HELIX)**
 
 1. Clone repo
 2. Put init.lua ->  .config/nvim/init.lua
 3. Install ripgrep and sed
 4. Enjoy
 
-### My neovim config
+**My neovim config**
 * Space is the "Leader key"
