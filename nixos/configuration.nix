@@ -146,7 +146,7 @@ in
     luarocks
     lua51Packages.lua
     unstablePkgs.nodejs_25
-    tailscale
+    nim
 
     # Editors
     helix
@@ -156,8 +156,10 @@ in
     meld
 
     # Internet
+    tailscale
     brave
     qutebrowser
+    # mullvad
     # vivaldi
 
     # Communication
@@ -167,6 +169,10 @@ in
     # File Management
     file-roller
     xfce.tumbler
+
+    # Images
+    imv
+    gimp
 
     # Audio
     pavucontrol
