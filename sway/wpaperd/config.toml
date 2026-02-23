@@ -1,0 +1,15 @@
+[DP-2]
+path = "/home/div/pics/wallpapersS/"
+sorting = "random"
+duration = "20s"
+
+[DP-1]
+path = "/home/div/pics/wallpapers/"
+sorting = "random"
+duration = "20s"
+
+[HDMI-A-1]
+path = "/home/div/pics/wallpapersV/"
+sorting = "random"
+duration = "20s"
+mode = "center"

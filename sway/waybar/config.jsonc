@@ -1,0 +1,152 @@
+// -*- mode: jsonc -*-
+{
+    // Removing "output": "DP-1" so the bar shows on ALL three of your monitors
+    "output": "DP-1",
+    "margin": "8 8 0 8",
+    "layer": "top",
+    "position": "top", 
+    "height": 30,
+    "spacing": 4,
+
+    // Modules updated from hyprland to sway
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "sway/scratchpad",
+        "custom/media"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "mpd",
+        "idle_inhibitor",
+        "pulseaudio",
+        "network",
+        "network#speed", // Dedicated speed module
+        "custom/gpu",
+        "power-profiles-daemon",
+        "cpu",
+        "memory",
+        "temperature",
+        "backlight",
+        "battery",
+        "battery#bat2",
+        "clock",
+        "tray"
+    ],
+
+    // Sway Workspaces Configuration
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}",
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    "sway/window": {
+        "max-length": 50
+    },
+
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+
+    "mpd": {
+        "format": "{stateIcon} {artist} - {title} ",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "Stopped ",
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        }
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        }
+    },
+
+    "tray": {
+        "spacing": 10
+    },
+
+    "clock": {
+        "format": "📅 {:%d/%m/%Y 🕒 %H:%M:%S}",
+        "interval": 1
+    },
+
+    "cpu": {
+        "format": "🔳 CPU: {usage}%",
+        "interval": 1
+    },
+
+    // AMD GPU Usage (using sysfs)
+    "custom/gpu": {
+        "exec": "cat /sys/class/drm/card1/device/gpu_busy_percent", // Path may vary (hwmon0, 1, or 2)
+        "format": "🔲 GPU: {}%",
+        "return-type": "",
+        "interval": 2
+    },
+
+    // Network Traffic (Inbound/Outbound)
+    "network#speed": {
+        "interval": 1,
+        "format": "⬇️{bandwidthDownBytes} ⬆️{bandwidthUpBytes}",
+        "tooltip-format": "{ifname} via {gwaddr} 🚀",
+        "format-linked": "{ifname} (No IP) ⚠️",
+        "format-disconnected": "Disconnected ❌",
+        "max-length": 50
+    },
+
+    "memory": {
+        "format": "🟰: {used:0.1f}GB",
+        "interval": 1
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["❄️", "", "🌡️"]
+    },
+
+    "network": {
+        "format-wifi": "📡: ({signalStrength}%) {essid}",
+        "format-ethernet": "🌐: {ipaddr}",
+        "format-disconnected": "🚫: down"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "🔇",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 🔌",
+        "format-icons": ["", "", "", "", ""]
+    }
+}

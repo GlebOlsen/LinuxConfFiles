@@ -7,9 +7,9 @@ config.set(
 config.set("fonts.default_family", ["Cartograph CF", "sans-serif"])
 
 # Dark green theme
-config.set("colors.webpage.bg", "#0b0f0c")
+# config.set("colors.webpage.bg", "#0b0f0c")
 config.set("colors.webpage.preferred_color_scheme", "dark")
-config.set("colors.webpage.darkmode.enabled", True)
+config.set("colors.webpage.darkmode.enabled", False) # Disable automatic dark mode to preserve the original colors of websites for now...
 config.set("colors.tabs.bar.bg", "#0e1411")
 config.set("colors.tabs.odd.bg", "#0e1411")
 config.set("colors.tabs.even.bg", "#0f1713")
@@ -41,6 +41,7 @@ config.set("colors.completion.scrollbar.fg", "#2a4a3b")
 config.set("url.searchengines", {"DEFAULT": "https://www.google.com/search?q={}"})
 config.set("url.default_page", "https://www.google.com")
 config.set("url.start_pages", ["https://www.google.com"])
+config.set('content.headers.user_agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0', 'https://accounts.google.com/*')
 
 # Sidebar-style tabs (keeps current theme colors)
 config.set("tabs.position", "left")

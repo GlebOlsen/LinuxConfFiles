@@ -89,14 +89,14 @@
     };
 
     // --- Helpers ---
-    
+
     // Simulate native touch event for mobile/tough environments (Qutebrowser/Mobile)
     function nativeTouch(target) {
         if (!target) return;
         const touch = new Touch({
             identifier: Date.now(),
             target: target,
-            clientX: 0, clientY: 0, 
+            clientX: 0, clientY: 0,
             radiusX: 2.5, radiusY: 2.5,
             rotationAngle: 0, force: 0.5
         });
@@ -123,7 +123,7 @@
 
     function injectStyles() {
         if (state.styleInjected) return;
-        
+
         let css = '';
         if (CONFIG.blockAds) {
             css += AD_SELECTORS.map(s => `${s}{display:none!important}`).join('\n');
@@ -140,23 +140,23 @@
     }
 
     function getVideo() {
-        return document.querySelector('.ad-showing video') || 
-               document.querySelector('video.html5-main-video') || 
-               document.querySelector('video');
+        return document.querySelector('.ad-showing video') ||
+            document.querySelector('video.html5-main-video') ||
+            document.querySelector('video');
     }
 
     function handleAds() {
         if (!CONFIG.blockAds) return;
 
         const video = getVideo();
-        
+
         // Check for specific ad indicators
         const skipBtn = document.querySelector(SKIP_BTN_SELECTORS.join(','));
         const adOverlay = document.querySelector('.ad-showing') ||
-                          document.querySelector('.ad-interrupting') ||
-                          document.querySelector('ytd-player[ad-interrupting]') ||
-                          document.querySelector('.video-ads.ytp-ad-module .ytp-ad-player-overlay');
-        
+            document.querySelector('.ad-interrupting') ||
+            document.querySelector('ytd-player[ad-interrupting]') ||
+            document.querySelector('.video-ads.ytp-ad-module .ytp-ad-player-overlay');
+
         // State update: ad is currently visible if overlay OR skip button exists
         if (adOverlay || skipBtn) {
             // 1. Mute (preserve user's mute preference)
@@ -179,13 +179,13 @@
                     video.currentTime = video.duration; // Seek to end
                 }
             }
-        
+
         } else {
             // No ad is showing.
             // ONLY resume if we were previously blocked by an ad.
             if (state.adWasShowing) {
                 state.adWasShowing = false; // Reset flag
-                
+
                 if (video) {
                     video.playbackRate = 1.0;
                     video.muted = state.userMuted;
@@ -215,7 +215,7 @@
                 bd.remove();
                 // If we removed a backdrop, we must ensure the main video resumes if it was paused
                 const video = document.querySelector('video.html5-main-video');
-                if(video && video.paused) {
+                if (video && video.paused) {
                     video.play().catch(e => console.warn('Autoplay blocked', e));
                     log('Resumed video after removing backdrop');
                 }
@@ -231,7 +231,7 @@
         return text && regex.test(text);
     };
 
-    const hide = (el) => { if(el) el.style.display = 'none'; };
+    const hide = (el) => { if (el) el.style.display = 'none'; };
 
     function hideShorts() {
         if (!CONFIG.blockShorts) return;
@@ -300,7 +300,7 @@
                 });
             });
         }
-        
+
         // Pivot Bar (Mobile Bottom Bar)
         document.querySelectorAll('ytm-pivot-bar-item-renderer').forEach(el => {
             if (el.querySelector('.pivot-shorts')) hide(el);
@@ -318,10 +318,10 @@
     function init() {
         injectStyles();
         if (state.observerActive) return;
-        
+
         state.observerActive = true;
         let timeout;
-        
+
         const observer = new MutationObserver(() => {
             if (timeout) return;
             timeout = setTimeout(() => {
@@ -330,8 +330,16 @@
             }, 100); // Debounce to save CPU
         });
 
-        observer.observe(document.body, { childList: true, subtree: true });
-        onDomChange(); // Initial run
+        // Wait for body to exist before observing
+        const startObserving = () => {
+            if (document.body) {
+                observer.observe(document.body, { childList: true, subtree: true });
+                onDomChange(); // Initial run
+            } else {
+                setTimeout(startObserving, 50);
+            }
+        };
+        startObserving();
     }
 
     // --- Bootstrap ---
@@ -340,4 +348,14 @@
     } else {
         init();
     }
+
+    // Fallback for dynamic navigation (YouTube SPA)
+    window.addEventListener('yt-navigate-finish', () => {
+        onDomChange();
+        // Re-inject styles in case they were removed during navigation
+        if (!document.getElementById('yt-adb-enhanced-css')) {
+            state.styleInjected = false;
+            injectStyles();
+        }
+    });
 })();

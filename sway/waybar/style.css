@@ -1,0 +1,118 @@
+/* Global settings */
+* {
+    border: none;
+    border-radius: 0; 
+    font-family: "Cartograph CF", monospace; /* Updated Font */
+    font-size: 16px;
+    min-height: 0;
+}
+
+/* The Bar Container - 90% Opacity Forest Green */
+window#waybar {
+    background-color: rgba(5, 20, 5, 0.9); /* Transparent dark green */
+    border: 2px solid #2d5a27; 
+    color: #a3be8c;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+/* Individual Module Spacing */
+#workspaces,
+#mode,
+#scratchpad,
+#window,
+#mpd,
+#idle_inhibitor,
+#pulseaudio,
+#network,
+#power-profiles-daemon,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#battery,
+#clock,
+#tray {
+    padding: 0 10px;
+    margin: 2px 0;
+    background-color: transparent;
+}
+
+/* Workspaces Styling */
+#workspaces button {
+    padding: 0 8px;
+    background-color: transparent;
+    color: #4f772d;
+    border-radius: 0;
+    margin: 0;
+}
+
+/* The active/focused workspace - Lime Green with Dark Green Text */
+#workspaces button.focused,
+#workspaces button.active {
+    background-color: #b3ff00; /* Your specific lime green */
+    color: #051405;            /* Deep dark green text */
+    font-weight: bold;
+}
+
+#workspaces button.focused label,
+#workspaces button.active label {
+    color: #051405;            /* Ensures text inside label is also dark */
+}
+
+/* Workspaces that have windows but aren't focused */
+#workspaces button.visible {
+    color: #90a955;
+}
+
+#workspaces button.urgent {
+    background-color: #6a040f;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    background: rgba(179, 255, 0, 0.2); /* Subtle lime highlight on hover */
+    box-shadow: none;
+}
+
+/* Module Specific Colors */
+#pulseaudio { color: #90a955; }
+#pulseaudio.muted { color: #4f772d; }
+#memory { color: #b3ff00; }
+#cpu { color: #a3be8c; }
+#temperature { color: #d8e2dc; }
+#temperature.critical { color: #ff4d4d; }
+#battery { color: #a3be8c; }
+#battery.charging, #battery.plugged { color: #b3ff00; }
+#battery.warning { color: #f9dc5c; }
+#battery.critical:not(.charging) {
+    color: #ff4d4d;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+#network { color: #d8e2dc; }
+#network.disconnected { color: #4f772d; }
+#clock { color: #b3ff00; font-weight: bold; }
+
+/* Tooltip styling */
+tooltip {
+    background: rgba(19, 42, 19, 0.95);
+    border: 1px solid #b3ff00;
+    border-radius: 0;
+}
+
+tooltip label {
+    color: #b3ff00;
+}
+
+/* Animation for critical battery */
+@keyframes blink {
+    to {
+        background-color: #6a040f;
+        color: #ffffff;
+    }
+}
+
