@@ -1,8 +1,9 @@
 # My GNU/Linux config files
 
 * Linux confix files
+	- Sway (Currently migrating to it)
 	- i3wm
-	- Hyprland - (Not using anymore, tried it a couple of times and still and it's sub par WM since it's cursor focused. **(Planning on trying Sway for the 5th time lol... or finiding other i3 like wayland compositors)**)
+	- Hyprland - Not using anymore it's lacking in dynamic sizing of windows.
 	- others
 * Editor configs
     - Helix
@@ -14,7 +15,7 @@
 	- **bat.sh** Laptop battery control (if allowed)
 	- **--remember to insert the x220 t script--**
 
-NixOS is in progress...
+# NixOS is mostly done for desktop...
 
 **Cursor theme:**
 https://github.com/ful1e5/Bibata_Cursor_Rainbow

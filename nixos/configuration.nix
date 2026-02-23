@@ -58,28 +58,46 @@ in
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
-  # User Configuration
-  users.users.div = {
-    isNormalUser = true;
-    description = "div";
-    extraGroups = [ "wheel" "networkmanager" "input" ];
+  # Enable Sway (NixOS level)
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+    extraPackages = with pkgs; [
+      wayland
+      waybar
+
+      wofi
+
+      mako
+
+      foot
+
+      wdisplays
+      wpaperd
+      gammastep
+      
+      grim
+      slurp
+      swappy
+      wl-clipboard
+      copyq
+      
+      hyprpicker
+    ];
   };
 
   # System Environment
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.rocmSupport = true; # For btop GPU monitoring
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
 
-  # Enable Sway (NixOS level)
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
+  environment.variables = {
+    XCURSOR_THEME = "Bibata-Original-Ice";
+    XCURSOR_SIZE = "24";
   };
-
-  nixpkgs.config.rocmSupport = true;
-
 
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
@@ -89,77 +107,82 @@ in
     noto-fonts-color-emoji
   ];
 
-  environment.variables = {
-    XCURSOR_THEME = "Bibata-Original-Ice";
-    XCURSOR_SIZE = "24";
+  # User Configuration
+  users.users.div = {
+    isNormalUser = true;
+    description = "div";
+    extraGroups = [ "wheel" "networkmanager" "input" ];
   };
 
   services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+    publish = {
       enable = true;
-      nssmdns4 = true; # Enables resolving .local addresses via mDNS
-      openFirewall = true; # Opens port 5353/UDP for mDNS
-        publish = {
-          enable = true;
-          addresses = true;
-          workstation = true;
-        };
+      addresses = true;
+      workstation = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
-    font-manager
-    arc-theme
-    iconpack-obsidian
-    nwg-look
-    bibata-cursors
-
+    # System
+    nmap
     wget
     git
     fastfetch
     btop
     tmux
-    brave
-    qutebrowser
+    ripgrep
+    fd
+    croc
+    linuxPackages.cpupower
 
-    wdisplays
-
-    mako
-    wayland
-    wofi
-    foot
-    pavucontrol
-    waybar
-    file-roller
-    xfce.tumbler
-    helix
-
+    # Development
     gcc
     gnumake
     tree-sitter
     python3
     luarocks
     lua51Packages.lua
-
-    ripgrep
-    fd
     unstablePkgs.nodejs_25
-    neovim
-    vesktop
-    unstablePkgs.vscode-fhs
+    tailscale
 
-    # brightnessctl
+    # Editors
+    helix
+    neovim
+    micro
+    unstablePkgs.vscode-fhs
+    meld
+
+    # Internet
+    brave
+    qutebrowser
+    # vivaldi
+
+    # Communication
+    vesktop
+    # Need to add Matrix.org stuff
+
+    # File Management
+    file-roller
+    xfce.tumbler
+
+    # Audio
+    pavucontrol
     playerctl
+
+    # Theming
+    font-manager
+    arc-theme
+    iconpack-obsidian
+    nwg-look
+    bibata-cursors
+
+    # Laptop Stuff (Not finished):
+    # brightnessctl
     # networkmanagerapplet
     # blueman
-    croc
-    wpaperd
-    gammastep
-    grim
-    slurp
-    swappy
-    wl-clipboard
-    hyprpicker
-    copyq
-    linuxPackages.cpupower
   ];
 
   system.stateVersion = "25.11";
