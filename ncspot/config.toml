@@ -1,0 +1,20 @@
+[theme]
+background = "#00110000"  # transparent dark green
+primary = "#B3FF00"
+secondary = "#00AA00"
+title = "#B3FF00"
+playing = "#66FF33"
+playing_selected = "#B3FF00"
+playing_bg = "#00330000"  # transparent when playing row
+highlight = "#B3FF00"
+highlight_bg = "#005500"
+highlight_inactive_bg = "#002200"
+error = "#FF8888"
+error_bg = "#550000"
+statusbar = "#00AA00"
+statusbar_progress = "#B3FF00"
+statusbar_progress_bg = "#004400"
+statusbar_bg = "#002200"
+cmdline = "#B3FF00"
+cmdline_bg = "#001100"
+search_match = "#FF00FF"

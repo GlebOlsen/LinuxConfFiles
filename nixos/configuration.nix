@@ -170,6 +170,8 @@ in
     # Audio
     pavucontrol
     playerctl
+    unstablePkgs.ncspot
+    cava
 
     # Theming
     font-manager
