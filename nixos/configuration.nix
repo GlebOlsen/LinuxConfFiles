@@ -11,7 +11,6 @@ let
 in
 
 {
-
   imports = [
     ./hardware-configuration.nix
   ];
@@ -62,28 +61,6 @@ in
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      wayland
-      waybar
-
-      wofi
-
-      mako
-
-      foot
-
-      wdisplays
-      wpaperd
-      gammastep
-      
-      grim
-      slurp
-      swappy
-      wl-clipboard
-      copyq
-      
-      hyprpicker
-    ];
   };
 
   # System Environment
@@ -137,6 +114,22 @@ in
     fd
     croc
     linuxPackages.cpupower
+    wayland
+    waybar
+    wofi
+    mako
+
+    foot
+
+    wdisplays
+    wpaperd
+    gammastep
+    grim
+    slurp
+    swappy
+    wl-clipboard
+    copyq
+    hyprpicker
 
     # Development
     gcc
@@ -190,6 +183,5 @@ in
     # networkmanagerapplet
     # blueman
   ];
-
   system.stateVersion = "25.11";
 }
