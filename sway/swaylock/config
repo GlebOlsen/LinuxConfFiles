@@ -1,0 +1,50 @@
+# Dedicated swaylock config
+# Triggered by bindsym $mod+Shift+o and swayidle
+
+# General settings
+daemonize
+show-failed-attempts
+ignore-empty-password
+font=Cartograph CF
+indicator-radius=182
+indicator-thickness=15
+indicator-caps-lock
+
+# Background color (fallback)
+color=000000
+
+# Wallpapers for specific screens
+image=HDMI-A-1:/home/div/pics/wallpapersV/961f3a2ce5d5412a4dbdb30374543a74ba6f2f70.png
+image=DP-1:/home/div/pics/wallpapers/wallpapersden.com_blade-runner-2049-movie-joi-and-k_3000x1875.jpg
+image=DP-2:/home/div/pics/wallpapersS/2020-03-24-die-for-honor.jpg
+
+# Cool dark theme colors
+inside-color=1e1e2e99
+inside-clear-color=1e1e2e99
+inside-caps-lock-color=1e1e2e99
+inside-ver-color=1e1e2e99
+inside-wrong-color=1e1e2e99
+
+ring-color=89b4fa
+ring-clear-color=f5e0dc
+ring-caps-lock-color=fab387
+ring-ver-color=a6e3a1
+ring-wrong-color=f38ba8
+
+line-color=00000000
+line-clear-color=00000000
+line-caps-lock-color=00000000
+line-ver-color=00000000
+line-wrong-color=00000000
+
+text-color=cdd6f4
+text-clear-color=f5e0dc
+text-caps-lock-color=fab387
+text-ver-color=a6e3a1
+text-wrong-color=f38ba8
+
+key-hl-color=a6e3a1
+bs-hl-color=f38ba8
+caps-lock-key-hl-color=fab387
+caps-lock-bs-hl-color=f38ba8
+separator-color=00000000

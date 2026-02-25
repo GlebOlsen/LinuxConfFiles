@@ -110,6 +110,7 @@ in
   environment.systemPackages = with pkgs; [
     # System
     nmap
+    dysk
     wget
     git
     fastfetch
