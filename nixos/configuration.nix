@@ -15,6 +15,11 @@ in
     ./hardware-configuration.nix
   ];
 
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   # Bootloader & Kernel
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -110,20 +115,23 @@ in
     fastfetch
     btop
     tmux
-    ripgrep
-    fd
     croc
     linuxPackages.cpupower
     wayland
     waybar
     wofi
     mako
+    unstablePkgs.home-manager
 
+    # Terminal
     foot
 
+    # Display
     wdisplays
     wpaperd
     gammastep
+
+    # Clip/Screen/Extras
     grim
     slurp
     swappy
@@ -134,6 +142,8 @@ in
     # Development
     gcc
     gnumake
+    ripgrep
+    fd
     tree-sitter
     python3
     luarocks
