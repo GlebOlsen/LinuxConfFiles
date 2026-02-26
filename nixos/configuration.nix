@@ -113,11 +113,15 @@ in
     dysk
     wget
     git
+    yazi
+
     fastfetch
     btop
     tmux
     croc
     linuxPackages.cpupower
+    fish
+
     wayland
     waybar
     wofi
