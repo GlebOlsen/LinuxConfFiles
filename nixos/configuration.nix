@@ -124,7 +124,7 @@ in
 
     wayland
     waybar
-    wofi
+    fuzzel
     mako
     unstablePkgs.home-manager
 
