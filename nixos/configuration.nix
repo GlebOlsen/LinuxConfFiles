@@ -175,8 +175,10 @@ in
     # Need to add Matrix.org stuff
 
     # File Management
-    file-roller
     xfce.tumbler
+    file-roller
+    xarchiver
+    p7zip
 
     # Images
     imv
