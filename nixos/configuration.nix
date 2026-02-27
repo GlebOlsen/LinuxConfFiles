@@ -167,8 +167,8 @@ in
     tailscale
     brave
     qutebrowser
-    # mullvad
-    # vivaldi
+    mullvad
+    vivaldi
 
     # Communication
     vesktop
