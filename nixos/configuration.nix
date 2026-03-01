@@ -35,6 +35,8 @@ in
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
 
+  documentation.enable = false;
+
   # Keyboard & X11
   services.xserver.xkb = {
     layout = "dk";
@@ -171,7 +173,7 @@ in
     vivaldi
 
     # Communication
-    vesktop
+    unstablePkgs.vesktop
     # Need to add Matrix.org stuff
 
     # File Management
