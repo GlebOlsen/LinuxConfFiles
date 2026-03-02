@@ -1,31 +1,28 @@
 // -*- mode: jsonc -*-
 {
-    // Removing "output": "DP-1" so the bar shows on ALL three of your monitors
+    // Bar on main monitor (DP-1) only
     "output": "DP-1",
     "margin": "8 8 0 8",
     "layer": "top",
-    "position": "top", 
+    "position": "top",
     "height": 30,
     "spacing": 4,
-
     // Modules updated from hyprland to sway
     "modules-left": [
         "sway/workspaces",
         "sway/mode",
         "sway/scratchpad",
-        "custom/media"
+        "custom/playerctl"
     ],
     "modules-center": [
         "sway/window"
     ],
     "modules-right": [
-        "mpd",
         "idle_inhibitor",
         "pulseaudio",
         "network",
         "network#speed", // Dedicated speed module
         "custom/gpu",
-        "power-profiles-daemon",
         "cpu",
         "memory",
         "temperature",
@@ -35,7 +32,6 @@
         "clock",
         "tray"
     ],
-
     // Sway Workspaces Configuration
     "sway/workspaces": {
         "disable-scroll": true,
@@ -47,33 +43,31 @@
             "3": []
         }
     },
-
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
-
     "sway/window": {
         "max-length": 50
     },
-
     "sway/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
-        "format-icons": ["", ""],
+        "format-icons": [
+            "",
+            ""
+        ],
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
     },
-
-    "mpd": {
-        "format": "{stateIcon} {artist} - {title} ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "Stopped ",
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        }
+    "custom/playerctl": {
+        "exec": "playerctl metadata --format '{{ artist }} - {{ title }}' 2>/dev/null || echo ''",
+        "return-type": "",
+        "format": "🎵 {}",
+        "interval": 2,
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
     },
-
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -81,21 +75,17 @@
             "deactivated": " "
         }
     },
-
     "tray": {
         "spacing": 10
     },
-
     "clock": {
         "format": "📅 {:%d/%m/%Y 🕒 %H:%M:%S}",
         "interval": 1
     },
-
     "cpu": {
         "format": "🔳 CPU: {usage}%",
         "interval": 1
     },
-
     // AMD GPU Usage (using sysfs)
     "custom/gpu": {
         "exec": "cat /sys/class/drm/card1/device/gpu_busy_percent", // Path may vary (hwmon0, 1, or 2)
@@ -103,7 +93,6 @@
         "return-type": "",
         "interval": 2
     },
-
     // Network Traffic (Inbound/Outbound)
     "network#speed": {
         "interval": 1,
@@ -113,33 +102,36 @@
         "format-disconnected": "Disconnected ❌",
         "max-length": 50
     },
-
     "memory": {
         "format": "🟰: {used:0.1f}GB",
         "interval": 1
     },
-
     "temperature": {
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
-        "format-icons": ["❄️", "", "🌡️"]
+        "format-icons": [
+            "❄️",
+            "",
+            "🌡️"
+        ]
     },
-
     "network": {
         "format-wifi": "📡: ({signalStrength}%) {essid}",
         "format-ethernet": "🌐: {ipaddr}",
         "format-disconnected": "🚫: down"
     },
-
     "pulseaudio": {
         "format": "{volume}% {icon}",
         "format-muted": "🔇",
         "format-icons": {
-            "default": ["", "", ""]
+            "default": [
+                "",
+                "",
+                ""
+            ]
         },
         "on-click": "pavucontrol"
     },
-
     "battery": {
         "states": {
             "warning": 30,
@@ -147,6 +139,12 @@
         },
         "format": "{capacity}% {icon}",
         "format-charging": "{capacity}% 🔌",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     }
 }

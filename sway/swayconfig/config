@@ -250,7 +250,23 @@ gaps inner 8
 # gaps outer 8 # not worht
 # smart_gaps on # dont like
 
+# swayfx:
+blur enable
+blur_passes 2
+blur_radius 5
 
+corner_radius 8
+default_dim_inactive 0.1
+
+shadows enable
+shadow_blur_radius 20
+shadow_color #0000007F
+
+layer_effects "waybar" blur enable; shadows enable; corner_radius 10
+layer_effects "fuzzel" blur enable; shadows enable; corner_radius 10
+
+
+# execs
 exec waybar
 exec wpaperd
 exec copyq

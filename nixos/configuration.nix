@@ -67,12 +67,13 @@ in
   # Enable Sway (NixOS level)
   programs.sway = {
     enable = true;
+    package = unstablePkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
 
   # System Environment
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.rocmSupport = true; # For btop GPU monitoring
+  nixpkgs.config.rocmSupport = true; # For btop AMD GPU monitoring
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -125,7 +126,7 @@ in
     fish
 
     wayland
-    waybar
+    unstablePkgs.waybar
     fuzzel
     mako
     unstablePkgs.home-manager
@@ -163,6 +164,7 @@ in
     neovim
     micro
     unstablePkgs.vscode-fhs
+    unstablePkgs.opencode
     meld
 
     # Internet
