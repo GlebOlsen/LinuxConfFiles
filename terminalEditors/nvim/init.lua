@@ -1,24 +1,21 @@
--- -----------------------------------------------------------------------------
--- 1. LEADER KEY
--- -----------------------------------------------------------------------------
+-- leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- -----------------------------------------------------------------------------
--- 2. CORE NEOVIM OPTIONS
--- -----------------------------------------------------------------------------
+-- options
 local opt = vim.opt
 
 opt.updatetime = 250
 opt.timeoutlen = 300
 vim.cmd.colorscheme 'murphy'
+vim.o.clipboard = "unnamedplus"
 
 opt.number = true
 opt.relativenumber = true
 opt.cursorline = true
 
-opt.tabstop = 4
-opt.shiftwidth = 4
+opt.tabstop = 2
+opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
 
@@ -35,21 +32,22 @@ opt.splitbelow = true
 
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#49115b" })
 vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#00FFFF" })
-vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#FFFF00" })
+vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#ff9cac" })
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#B3FF00", bold = true })
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "NONE" })
 
 opt.list = true
 opt.listchars = {
   -- eol = '↵',
   tab = '→ ',
-  leadmultispace = '·',
   trail = '•',
 }
 
--- -----------------------------------------------------------------------------
--- 3. GLOBAL KEYMAPS
--- -----------------------------------------------------------------------------
+-- keymaps
 local keymap = vim.keymap
 
 keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
@@ -99,11 +97,12 @@ keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_w
 keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = 'Search Selection' })
 keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({path = "%:p"})<CR>', { desc = 'Search in File' })
 
--- -----------------------------------------------------------------------------
--- 4. PLUGIN MANAGER (LAZY.NVIM)
--- -----------------------------------------------------------------------------
+keymap.set('n', '<leader>fm', 'mzgg=G`z', { desc = 'Format Buffer (Indent)' })
+keymap.set('v', '<leader>fm', '=', { desc = 'Format Selection (Indent)' })
+
+-- plugins
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     'git',
     'clone',
@@ -117,6 +116,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   { 'nvim-lua/plenary.nvim' },
+
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
 
   {
     'nvim-lualine/lualine.nvim',
@@ -180,8 +185,7 @@ require('lazy').setup({
   },
 
   {
-    'phaazon/hop.nvim',
-    branch = 'v2',
+    'smoka7/hop.nvim',
     cmd = { 'HopWord', 'HopLine', 'HopChar1' },
     config = function()
       require('hop').setup({ multi_windows = true })
@@ -207,23 +211,21 @@ require('lazy').setup({
   },
 
   {
+    'lukas-reineke/indent-blankline.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    main = 'ibl',
+    opts = {
+      indent = { char = '│' },
+      scope = { enabled = true },
+    },
+  },
+
+  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
-      ensure_installed = {
-        'c_sharp',
-        'lua',
-        'vim',
-        'vimdoc',
-        'query',
-        'bash',
-        'json',
-        'html',
-        'css',
-        'javascript',
-        'typescript',
-      },
+      auto_install = true,
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
@@ -233,7 +235,7 @@ require('lazy').setup({
       },
     },
     config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
+      require('nvim-treesitter.config').setup(opts)
     end,
   },
 
@@ -271,6 +273,7 @@ require('lazy').setup({
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
+    dependencies = { 'hrsh7th/nvim-cmp' },
     opts = {
       check_ts = true,
       disable_filetype = { 'TelescopePrompt' },
@@ -284,18 +287,6 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'numToStr/Comment.nvim',
-    keys = {
-      { 'gcc', mode = 'n', desc = 'Comment toggle current line' },
-      { 'gc', mode = { 'n', 'o' }, desc = 'Comment toggle linewise' },
-      { 'gc', mode = 'x', desc = 'Comment toggle linewise (visual)' },
-      { 'gbc', mode = 'n', desc = 'Comment toggle current block' },
-      { 'gb', mode = { 'n', 'o' }, desc = 'Comment toggle blockwise' },
-      { 'gb', mode = 'x', desc = 'Comment toggle blockwise (visual)' },
-    },
-    opts = {},
-  },
 }, {
   ui = { border = 'rounded' },
   performance = {

@@ -167,8 +167,6 @@ in
 
     # Internet
     tailscale
-    brave
-    qutebrowser
     mullvad
     vivaldi
 
