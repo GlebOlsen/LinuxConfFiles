@@ -1,17 +1,17 @@
 [DP-2]
-path = "/home/div/pics/wallpapersS/"
+path = "/home/div/pics/wallpapersS_safe/"
 sorting = "random"
 duration = "20s"
 mode = "center"
 
 [DP-1]
-path = "/home/div/pics/wallpapers/"
+path = "/home/div/pics/wallpapers_safe/"
 sorting = "random"
 duration = "20s"
 mode = "center"
 
 [HDMI-A-1]
-path = "/home/div/pics/wallpapersV/"
+path = "/home/div/pics/wallpapersV_safe/"
 sorting = "random"
 duration = "20s"
 mode = "center"
