@@ -20,6 +20,12 @@ in
     "flakes"
   ];
 
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") {
+      inherit pkgs;
+    };
+  };
+
   # Bootloader & Kernel
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -161,17 +167,21 @@ in
     nim
 
     # Editors
-    helix
     neovim
+    helix
     micro
     unstablePkgs.vscode-fhs
+    unstablePkgs.github-copilot-cli
     unstablePkgs.opencode
     meld
 
     # Internet
     tailscale
     mullvad
-    vivaldi
+    brave
+    ungoogled-chromium
+    unstablePkgs.ladybird
+    nur.repos.forkprince.helium-nightly
 
     # Communication
     unstablePkgs.vesktop
