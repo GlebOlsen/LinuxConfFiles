@@ -118,6 +118,7 @@ in
 
   environment.systemPackages = with pkgs; [
     # System
+    unstablePkgs.wl-kbptr
     nmap
     dysk
     wget

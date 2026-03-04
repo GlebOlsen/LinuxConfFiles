@@ -231,6 +231,7 @@ bindsym Print exec grim -g "$(slurp)" - | swappy -f -
 bindsym $mod+Alt+v exec copyq toggle
 bindsym $mod+p exec hyprpicker -a
 bindsym $mod+Shift+o exec swaylock -C ~/.config/swaylock/config
+bindsym $mod+g exec wl-kbptr
 
 seat seat0 cursor set Bibata-Original-Ice 24
 seat seat0 xcursor_theme Bibata-Original-Ice 24
