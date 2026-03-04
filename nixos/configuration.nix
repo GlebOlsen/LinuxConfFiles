@@ -67,7 +67,7 @@ in
   # Enable Sway (NixOS level)
   programs.sway = {
     enable = true;
-    package = unstablePkgs.swayfx;
+    # package = unstablePkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
 
@@ -120,6 +120,7 @@ in
 
     fastfetch
     btop
+    amdgpu_top
     tmux
     croc
     linuxPackages.cpupower
@@ -191,6 +192,9 @@ in
     playerctl
     unstablePkgs.ncspot
     cava
+
+    # video
+    mpv
 
     # Theming
     font-manager

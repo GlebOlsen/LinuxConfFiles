@@ -20,8 +20,10 @@ set $menu fuzzel
 
 ### Output configuration
 #
-# Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-# output * bg /run/current-system/sw/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# Wallpapers per monitor
+output DP-2 bg /home/div/pics/wallpapersS_safe/245085.jpg fill
+output DP-1 bg /home/div/pics/wallpapers_safe/wallhaven-856dlk.png fill
+output HDMI-A-1 bg /home/div/pics/wallpapersV_safe/961f3a2ce5d5412a4dbdb30374543a74ba6f2f70.png fill
 
 
 
@@ -250,25 +252,25 @@ gaps inner 8
 # gaps outer 8 # not worht
 # smart_gaps on # dont like
 
-# swayfx:
-blur enable
-blur_passes 2
-blur_radius 5
+# # swayfx:
+# blur enable
+# blur_passes 2
+# blur_radius 5
 
-corner_radius 8
-default_dim_inactive 0.1
+# corner_radius 8
+# default_dim_inactive 0.1
 
-shadows enable
-shadow_blur_radius 20
-shadow_color #0000007F
+# shadows enable
+# shadow_blur_radius 20
+# shadow_color #0000007F
 
-layer_effects "waybar" blur enable; shadows enable; corner_radius 10
-layer_effects "fuzzel" blur enable; shadows enable; corner_radius 10
+# layer_effects "waybar" blur enable; shadows enable; corner_radius 10
+# layer_effects "fuzzel" blur enable; shadows enable; corner_radius 10
 
 
 # execs
 exec waybar
-exec wpaperd
+# exec wpaperd
 exec copyq
 exec gammastep -l 55.7:12.6 -t 6500:2700 -g 0.8 -m wayland
 
