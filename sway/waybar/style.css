@@ -1,6 +1,6 @@
 * {
     border: none;
-    border-radius: 10px;
+    border-radius: 0px;
     font-family: "Cartograph CF", monospace;
     font-size: 16px;
     min-height: 0;
@@ -37,7 +37,7 @@ window#waybar {
     padding: 0 8px;
     background-color: transparent;
     color: #4f772d;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     margin: 0;
 }
 
@@ -134,7 +134,7 @@ window#waybar {
 tooltip {
     background: rgba(19, 42, 19, 0.95);
     border: 1px solid #b3ff00;
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
 
 tooltip label {

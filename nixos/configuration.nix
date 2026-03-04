@@ -124,6 +124,8 @@ in
     wget
     git
     yazi
+    zellij
+    fish
 
     fastfetch
     btop
@@ -131,7 +133,6 @@ in
     tmux
     croc
     linuxPackages.cpupower
-    fish
 
     wayland
     unstablePkgs.waybar
@@ -175,6 +176,7 @@ in
     unstablePkgs.github-copilot-cli
     unstablePkgs.opencode
     meld
+    # unstablePkgs.zed-editor-fhs
 
     # Internet
     tailscale
