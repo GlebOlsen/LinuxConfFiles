@@ -180,7 +180,6 @@ in
     mullvad
     brave
     ungoogled-chromium
-    unstablePkgs.ladybird
     nur.repos.forkprince.helium-nightly
 
     # Communication
