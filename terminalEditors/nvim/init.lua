@@ -115,8 +115,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  { 'nvim-lua/plenary.nvim' },
-
   {
     'folke/which-key.nvim',
     event = 'VeryLazy',
