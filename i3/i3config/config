@@ -212,11 +212,11 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-client.focused          #FF00FF #8000ffaa #000000 #ffaaff
-client.focused_inactive #8C8C8C #4C4C4C #FFFFFF #4C4C4C   #8C8C8C
-client.unfocused        #4C4C4C #222222 #888888 #292D2E   #222222
-client.urgent           #EC69A0 #DB3279 #FFFFFF #DB3279   #DB3279
-client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
+client.focused          #115D33AA #228B22 #000000 #B3FF00 #228B22
+client.focused_inactive #00000099 #00000099 #FFFFFF #00000099 #00000099
+client.unfocused        #00000066 #00000066 #888888 #00000066 #00000066
+client.urgent           #FF0000AA #CC0000 #FFFFFF #CC0000 #CC0000
+client.placeholder      #000000AA #0C0C0C #FFFFFF #000000 #0C0C0C
 
 for_window [class="^.*"] border pixel 6
 gaps inner 14
@@ -231,9 +231,12 @@ bar {
   padding 1px
   
   colors {
-    background #301f30e4
+    background #001A0FBB
     statusline #FFFFFFFF
-    separator  #00FFFFFF
-    focused_workspace  #330033 #FF00FF #000000
+    separator  #B3FF00
+ 
+    # workspace: dark green focus
+    focused_workspace  #4CBB17 #70C247 #000000
+    inactive_workspace #00000066 #00000066 #FFFFFF
   }
 }
