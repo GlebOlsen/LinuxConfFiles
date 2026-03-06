@@ -179,11 +179,10 @@ in
     # unstablePkgs.zed-editor-fhs
 
     # Internet
+    nur.repos.forkprince.helium-nightly
     tailscale
     mullvad
     brave
-    ungoogled-chromium
-    nur.repos.forkprince.helium-nightly
 
     # Communication
     unstablePkgs.vesktop
