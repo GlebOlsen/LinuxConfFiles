@@ -30,7 +30,7 @@ exec --no-startup-id dex --autostart --environment i3
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/Pictures/wallpapers/1345430.png
 
-# exec --no-startup-id xrandr --output DisplayPort-0 --mode 3840x2160 --pos 0x0 --rotate normal --primary --output HDMI-A-0 --mode 1920x1080 --pos 3840x240 --rotate left
+exec --no-startup-id xrandr --output DisplayPort-1 --mode 1280x1024 --pos 0x1136 --rotate normal --output DisplayPort-0 --primary --mode 3840x2160 --pos 1280x0 --rotate normal --output HDMI-A-0 --mode 1920x1080 --pos 5120x240 --rotate left
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -65,7 +65,7 @@ tiling_drag modifier titlebar
 # start a terminal
 bindsym $mod+Return exec --no-startup-id xfce4-terminal
 bindsym --release $mod+control+v exec --no-startup-id copyq menu
-bindsym Print exec --no-startup-id flameshot gui
+bindsym Print exec --no-startup-id xfce4-screenshooter
 bindsym $mod+p exec --no-startup-id i3lock -c 000000
 bindsym $mod+Shift+p exec --no-startup-id systemctl suspend
 bindsym $mod+o exec --no-startup-id kcolorchooser
@@ -134,9 +134,15 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-# workspace 1 output eDP
-# workspace 2 output DisplayPort-3
-# workspace 3 output DisplayPort-2
+#set $little "DisplayPort-1"
+#set $fourK  "DisplayPort-0"
+#set $vert   "HDMI-A-0"
+
+# Assign Workspaces to Monitors
+#workspace 1 output $little
+#workspace 2 output $fourK
+#workspace 3 output $vert
+
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
