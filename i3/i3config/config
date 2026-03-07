@@ -44,7 +44,7 @@ exec --no-startup-id flameshot
 exec --no-startup-id nitrogen --restore
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
+set $refresh_i3status true
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
@@ -222,21 +222,22 @@ for_window [class="^.*"] border pixel 6
 gaps inner 14
 
 bar {
-  status_command i3status
+  status_command i3status-rs /home/div/repo/linuxconffiles/i3/i3status-rust/config.toml
+  # status_command i3status
   i3bar_command i3bar -t
-  output eDP-1
-  
+  output DisplayPort-0
+
   position top
-  font pango:FiraCode 10
+  font pango:Cartograph CF 12
   padding 1px
-  
+
   colors {
     background #001A0FBB
-    statusline #FFFFFFFF
-    separator  #B3FF00
+    # statusline #FFFFFFFF
+    # separator  #B3FF00
  
     # workspace: dark green focus
-    focused_workspace  #4CBB17 #70C247 #000000
+    focused_workspace  #4CBB17 #b3ff00 #000000
     inactive_workspace #00000066 #00000066 #FFFFFF
   }
 }

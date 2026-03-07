@@ -1,0 +1,128 @@
+[theme.overrides]
+idle_bg = "#001A0FBB"
+idle_fg = "#ffffff"
+info_bg = "#001A0FBB"
+info_fg = "#FFFFFFFF"
+good_bg = "#001A0FBB"
+good_fg = "#B3FF00"
+warning_bg = "#001A0FBB"
+warning_fg = "#ff0000"
+critical_bg = "#001A0FBB"
+critical_fg = "#Ff00ff"
+separator_bg = "#001A0FBB"
+separator_fg = "#B3FF00"
+
+[[block]]
+block = "custom"
+command = '''playerctl metadata --format '{{ artist }} - {{ title }}' 2>/dev/null | awk 'length > 56 { print substr($0, 1, 53) "..."; next } { print }' '''
+format = " 🎵 $text.pango-str() "
+interval = 3
+hide_when_empty = true
+[[block.click]]
+button = "left"
+cmd = "playerctl play-pause"
+[[block.click]]
+button = "up"
+cmd = "playerctl next"
+[[block.click]]
+button = "down"
+cmd = "playerctl previous"
+
+[[block]]
+block = "sound"
+driver = "auto"
+format = " 🔊 {$volume.eng(w:2) |muted} "
+step_width = 2
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
+
+[[block]]
+block = "net"
+interval = 1
+format = " ↓$speed_down.eng(prefix:K) ↑$speed_up.eng(prefix:K) "
+inactive_format = ""
+missing_format = ""
+
+[[block]]
+block = "net"
+interval = 5
+format = " 📡 {$signal_strength.eng(w:2) $ssid|🌐 $ip} "
+format_alt = " 🌐 {$device $ipv6|$device} "
+inactive_format = " 🚫 down "
+missing_format = ""
+
+[[block]]
+block = "temperature"
+interval = 2
+format = " G:🌡️$max "
+chip = "amdgpu-pci-*"
+inputs = ["edge"]
+warning = 85
+
+[[block]]
+block = "amd_gpu"
+format = " 🔲 $utilization 🟰 $vram_used.eng(prefix:Gi,u:B,w:3) "
+interval = 2
+
+[[block]]
+block = "cpu"
+interval = 1
+format = " 🔳 $utilization "
+info_cpu = 20
+warning_cpu = 50
+critical_cpu = 90
+
+[[block]]
+block = "temperature"
+interval = 1
+format = " C:🌡️$max "
+chip = "k10temp-pci-*"
+inputs = ["Tctl"]
+warning = 80
+
+[[block]]
+block = "memory"
+interval = 5
+format = " 🟰 $mem_used.eng(prefix:Gi,u:B,w:3) "
+format_alt = " 🟰 SWAP $swap_used.eng(prefix:Gi,u:B,w:3) "
+warning_mem = 70
+critical_mem = 90
+
+# [[block]]
+# block = "backlight"
+# format = " 💡 $brightness "
+# missing_format = ""
+
+# [[block]]
+# block = "battery"
+# format = " ⚡ $percentage {$time_remaining.dur(hms:true, min_unit:m) |}"
+# format_alt = " ⚡ $percentage $power W "
+# charging_format = " 🔌 $percentage {$time_remaining.dur(hms:true, min_unit:m) |}"
+# full_format = " 🔋 $percentage "
+# missing_format = ""
+# good = 60
+# warning = 30
+# critical = 15
+
+[[block]]
+block = "disk_space"
+path = "/"
+info_type = "available"
+alert_unit = "GB"
+warning = 20.0
+alert = 10.0
+format = " 💾 $available.eng(prefix:Gi,u:B,w:3) "
+
+[[block]]
+block = "weather"
+interval = 900
+format = " $weather$temp $humidity $direction$wind m/s ↑$sunrise.datetime(f:'%R') ↓$sunset.datetime(f:'%R')"
+[block.service]
+name = "metno"
+coordinates = ["55.76", "12.10"]
+
+[[block]]
+block = "time"
+interval = 1
+format = " 📅 $timestamp.datetime(f:'%d/%m/%Y 🕒 %H:%M:%S') "
