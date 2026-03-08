@@ -11,12 +11,6 @@
     "flakes"
   ];
 
-  # nixpkgs.config.packageOverrides = pkgs: {
-  #   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") {
-  #     inherit pkgs;
-  #   };
-  # };
-
   # Bootloader & Kernel
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -106,6 +100,11 @@
     };
   };
 
+  programs.nh = {
+    enable = true;
+    flake = "$HOME/repo/linuxconffiles/nixos";
+  };
+
   environment.systemPackages = with pkgs; [
     # System
     wl-kbptr
@@ -162,7 +161,7 @@
     helix
     micro
     vscode-fhs
-    github-copilot-cli
+    # github-copilot-cli
     opencode
     meld
     # zed-editor-fhs
@@ -172,7 +171,7 @@
     inputs.helium.packages.${ pkgs.stdenv.hostPlatform.system }.helium
     tailscale
     mullvad
-    brave
+    # brave
 
     # Communication
     vesktop
