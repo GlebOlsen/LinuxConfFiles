@@ -1,17 +1,8 @@
-{ config, pkgs, ... }:
-
-let
-  unstableTarball = builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-  };
-  unstablePkgs = import unstableTarball {
-    system = pkgs.stdenv.hostPlatform.system;
-    config = pkgs.config;
-  };
-in
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
+    ./home.nix
     ./hardware-configuration.nix
   ];
 
@@ -20,11 +11,11 @@ in
     "flakes"
   ];
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") {
-      inherit pkgs;
-    };
-  };
+  # nixpkgs.config.packageOverrides = pkgs: {
+  #   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/main.tar.gz") {
+  #     inherit pkgs;
+  #   };
+  # };
 
   # Bootloader & Kernel
   boot.loader.systemd-boot.enable = true;
@@ -62,7 +53,7 @@ in
   # Thunar & Services
   programs.thunar = {
     enable = true;
-    plugins = with pkgs.xfce; [
+    plugins = with pkgs; [
       thunar-archive-plugin
       thunar-volman
     ];
@@ -73,7 +64,6 @@ in
   # Enable Sway (NixOS level)
   programs.sway = {
     enable = true;
-    # package = unstablePkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
 
@@ -118,7 +108,7 @@ in
 
   environment.systemPackages = with pkgs; [
     # System
-    unstablePkgs.wl-kbptr
+    wl-kbptr
     nmap
     dysk
     wget
@@ -135,10 +125,9 @@ in
     linuxPackages.cpupower
 
     wayland
-    unstablePkgs.waybar
+    waybar
     fuzzel
     mako
-    unstablePkgs.home-manager
 
     # Terminal
     foot
@@ -165,31 +154,32 @@ in
     python3
     luarocks
     lua51Packages.lua
-    unstablePkgs.nodejs_25
+    nodejs_25
     nim
 
     # Editors
     neovim
     helix
     micro
-    unstablePkgs.vscode-fhs
-    unstablePkgs.github-copilot-cli
-    unstablePkgs.opencode
+    vscode-fhs
+    github-copilot-cli
+    opencode
     meld
-    # unstablePkgs.zed-editor-fhs
+    # zed-editor-fhs
 
     # Internet
-    nur.repos.forkprince.helium-nightly
+    # nur.repos.forkprince.helium-nightly
+    inputs.helium.packages.${ pkgs.stdenv.hostPlatform.system }.helium
     tailscale
     mullvad
     brave
 
     # Communication
-    unstablePkgs.vesktop
+    vesktop
     # Need to add Matrix.org stuff
 
     # File Management
-    xfce.tumbler
+    tumbler
     file-roller
     xarchiver
     p7zip
@@ -201,7 +191,7 @@ in
     # Audio
     pavucontrol
     playerctl
-    unstablePkgs.ncspot
+    ncspot
     cava
 
     # video
