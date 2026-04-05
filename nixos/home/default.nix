@@ -17,8 +17,9 @@
 # fonts
 # wallpapers
 # my lovely rainbow cursor theme
-# ... others???
-
+# copyq or find a better clipboard manager
+# Make it so that config works on other machines fx my laptop...
+# ... others??? (if you don't know test in diff system)
 
 # later:
 # neovim
