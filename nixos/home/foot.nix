@@ -12,7 +12,7 @@
         blink = "yes";
         beam-thickness = "1.5";
       };
-      colors = {
+      colors-dark = {
         alpha = "0.80";
         background = "000000";
       };

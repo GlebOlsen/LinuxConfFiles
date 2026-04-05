@@ -15,7 +15,7 @@
 	- **bat.sh** Laptop battery control (if allowed)
 	- **--remember to insert the x220 t script--**
 
-# NixOS is mostly done for desktop...
+# NixOS is mostly done for desktop still a lot missing...
 
 **Cursor theme:**
 https://github.com/ful1e5/Bibata_Cursor_Rainbow

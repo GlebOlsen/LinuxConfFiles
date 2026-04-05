@@ -105,6 +105,9 @@
     flake = "$HOME/repo/linuxconffiles/nixos";
   };
 
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+
   environment.systemPackages = with pkgs; [
     # System
     wl-kbptr
@@ -113,20 +116,16 @@
     wget
     git
     yazi
-    zellij
+    tmux
     fish
-
+    mako
+    lazygit
+    amdgpu_top
     fastfetch
     btop
-    amdgpu_top
-    tmux
     croc
     linuxPackages.cpupower
-
-    wayland
-    waybar
-    fuzzel
-    mako
+    ironbar
 
     # Terminal
     foot
@@ -160,9 +159,9 @@
     neovim
     helix
     micro
-    vscode-fhs
-    # github-copilot-cli
-    opencode
+    vscode-fhs # (need to build myself...)
+    # github-copilot-cli (need to build myself...)
+    opencode # (need to build myself...)
     meld
     # zed-editor-fhs
 
@@ -174,7 +173,9 @@
     # brave
 
     # Communication
+    # discord
     vesktop
+    element-desktop
     # Need to add Matrix.org stuff
 
     # File Management

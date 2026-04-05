@@ -8,9 +8,7 @@
     overwriteBackup = true;
   };
   home-manager.users.div = {
-    # home.packages = with pkgs; [
-    #
-    # ];
+    # home.packages = with pkgs; [];
     imports = [ ../home ];
     home.stateVersion = config.system.stateVersion;
   };
