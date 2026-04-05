@@ -44,6 +44,10 @@ let
       {
         type = "focused";
         icon_size = 16;
+        truncate = {
+          mode = "end";
+          max_length = 12;
+        };
       }
       {
         type = "script";
