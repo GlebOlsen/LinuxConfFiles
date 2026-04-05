@@ -181,6 +181,19 @@ in
       margin-left: 0.5em;
     }
 
+    .popup-volume {
+      padding: 0.75em;
+    }
+
+    .popup-volume .device-box,
+    .popup-volume .apps-box {
+      min-width: 18em;
+    }
+
+    .popup-volume .device-box {
+      margin-right: 1em;
+    }
+
     .clock {
       font-weight: bold;
     }
