@@ -5,46 +5,31 @@ let
     system = pkgs.stdenv.hostPlatform.system;
     config = pkgs.config;
   };
-  headPkgs = import inputs.nixpkgs-head {
-    system = pkgs.stdenv.hostPlatform.system;
-    config = pkgs.config;
-  };
 in
 {
-  imports = [
-    /etc/nixos/hardware-configuration.nix
-  ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  # Bootloader & Kernel
+  # Bootloader (shared: systemd-boot + EFI)
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "ipv6.disable=1" ];
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # Networking & IPv6 Disable
-  networking.hostName = "div-nix";
   networking.networkmanager.enable = true;
 
-  # Locale & Timezone
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
 
   documentation.enable = false;
 
-  # Keyboard & X11
   services.xserver.xkb = {
     layout = "dk";
     variant = "winkeys";
   };
   console.keyMap = "dk-latin1";
 
-  # Sound (Pipewire)
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -53,7 +38,6 @@ in
     pulse.enable = true;
   };
 
-  # Thunar & Services
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
@@ -64,21 +48,13 @@ in
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
-  # Enable Sway (NixOS level)
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
+  programs.dconf.enable = true;
 
-  # System Environment
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.rocmSupport = true; # For btop AMD GPU monitoring
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-  };
-
-  environment.variables = {
+    MOZ_ENABLE_WAYLAND = "1";
     XCURSOR_THEME = "Bibata-Original-Ice";
     XCURSOR_SIZE = "24";
   };
@@ -91,12 +67,13 @@ in
     noto-fonts-color-emoji
   ];
 
-  # User Configuration
   users.users.div = {
     isNormalUser = true;
     description = "div";
-    extraGroups = [ "wheel" "networkmanager" "input" ];
+    shell = pkgs.fish;
+    extraGroups = [ "wheel" "networkmanager" "input" "video" "audio" "render" ];
   };
+  programs.fish.enable = true;
 
   services.avahi = {
     enable = true;
@@ -117,6 +94,16 @@ in
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
 
+  services.fstrim.enable = true;
+  services.fwupd.enable = true;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+  nix.optimise.automatic = true;
+
   environment.systemPackages = with pkgs; [
     # System
     wl-kbptr
@@ -129,12 +116,10 @@ in
     fish
     mako
     lazygit
-    amdgpu_top
     fastfetch
     btop
     croc
     linuxPackages.cpupower
-    ironbar
     fuzzel
 
     # Terminal
@@ -169,24 +154,19 @@ in
     neovim
     helix
     micro
-    headPkgs.vscode-fhs # (need to build myself...)
-    # github-copilot-cli (need to build myself...)
-    opencode # (need to build myself...)
-    headPkgs.claude-code # (still way behind...)
+    unstablePkgs.vscode-fhs
+    opencode
+    unstablePkgs.claude-code
     meld
-    # zed-editor-fhs
 
     # Internet
-    inputs.helium.packages.${ pkgs.stdenv.hostPlatform.system }.helium
+    inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.helium
     tailscale
     mullvad
-    # brave
 
     # Communication
-    # discord
     vesktop
     element-desktop
-    # Need to add Matrix.org stuff
 
     # File Management
     unstablePkgs.tumbler
@@ -204,7 +184,7 @@ in
     ncspot
     cava
 
-    # video
+    # Video
     mpv
 
     # Theming
@@ -213,11 +193,7 @@ in
     iconpack-obsidian
     nwg-look
     bibata-cursors
-
-    # Laptop Stuff (Not finished):
-    # brightnessctl
-    # networkmanagerapplet
-    # blueman
   ];
+
   system.stateVersion = "25.11";
 }

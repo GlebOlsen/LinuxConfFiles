@@ -1,24 +1,33 @@
 {
   inputs = {
+    # Channels
     nixpkgs.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     nixpkgs-unstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    nixpkgs-head.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # Flakes
     helium = {
       url = "github:AlvaroParker/helium-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # NUR
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self,... } @inputs : {
-    nixosConfigurations.div-nix = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [ ./configuration.nix ];
-      specialArgs = {
-        inherit inputs;
+
+  outputs = { self, ... } @inputs:
+    let
+      mkHost = hostPath:
+        inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ hostPath ];
+          specialArgs = { inherit inputs; };
+        };
+    in
+    {
+      nixosConfigurations = {
+        nix-desktop = mkHost ./hosts/nix-desktop;
+        nix-laptop = mkHost ./hosts/nix-laptop;
       };
     };
-  };
 }
