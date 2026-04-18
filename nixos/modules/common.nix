@@ -9,10 +9,7 @@ in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Bootloader (shared: systemd-boot + EFI)
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Bootloader set per-host (systemd-boot vs grub).
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "ipv6.disable=1" ];
   boot.supportedFilesystems = [ "ntfs" ];

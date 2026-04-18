@@ -8,6 +8,11 @@
 
   networking.hostName = "nix-desktop";
 
+  # Bootloader: systemd-boot (EFI)
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # AMD GPU
   nixpkgs.config.rocmSupport = true;
 
