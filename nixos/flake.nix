@@ -1,10 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     helium = {
       url = "github:AlvaroParker/helium-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +13,7 @@
   outputs = { self,... } @inputs : {
     nixosConfigurations.div-nix = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./modules/configuration.nix ];
+      modules = [ ./configuration.nix ];
       specialArgs = {
         inherit inputs;
       };

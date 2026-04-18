@@ -1,9 +1,17 @@
 { config, pkgs, inputs, ... }:
 
+let
+  unstableTarball = builtins.fetchTarball {
+    url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+  };
+  unstablePkgs = import unstableTarball {
+    system = pkgs.stdenv.hostPlatform.system;
+    config = pkgs.config;
+  };
+in
 {
   imports = [
-    ./home.nix
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
   ];
 
   nix.settings.experimental-features = [
@@ -166,7 +174,6 @@
     # zed-editor-fhs
 
     # Internet
-    # nur.repos.forkprince.helium-nightly
     inputs.helium.packages.${ pkgs.stdenv.hostPlatform.system }.helium
     tailscale
     mullvad

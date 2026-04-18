@@ -1,0 +1,72 @@
+{
+  "start": null,
+  "center": null,
+  "end": null,
+  "monitors": {
+    "DP-1": {
+      "position": "top",
+      "height": 18,
+      "start": [
+        {
+          "type": "workspaces",
+          "all_monitors": true,
+          "sort": "added"
+        }
+      ],
+      "center": [
+        {
+          "type": "focused",
+          "icon_size": 16,
+          "truncate": {
+            "mode": "end",
+            "max_length": 12
+          }
+        },
+        {
+          "type": "script",
+          "name": "playerctl",
+          "cmd": "sh $HOME/.config/ironbar/scripts/playerctl.sh",
+          "interval": 2000,
+          "show_if": "playerctl status >/dev/null 2>&1",
+          "on_click_left": "playerctl play-pause",
+          "on_scroll_up": "playerctl next",
+          "on_scroll_down": "playerctl previous"
+        }
+      ],
+      "end": [
+        {
+          "type": "volume",
+          "format": "🔊 {percentage}%",
+          "mute_format": "🔇 muted"
+        },
+        {
+          "type": "sys_info",
+          "format": [
+            "C: {cpu_percent}% 🔳",
+            "{temp_c@k10temp:.0}°C",
+            "M: {memory_used#Gi:.1} GiB 🟰",
+            "G: {temp_c@amdgpu:.0}°C 🔲"
+          ],
+          "interval": {
+            "cpu": 1,
+            "memory": 5,
+            "temps": 2
+          }
+        },
+        {
+          "type": "script",
+          "cmd": "sh $HOME/.config/ironbar/scripts/gpu-usage.sh",
+          "interval": 2000
+        },
+        {
+          "type": "clock"
+        },
+        {
+          "type": "tray"
+        }
+      ]
+    },
+    "DP-2": [],
+    "HDMI-A-1": []
+  }
+}
