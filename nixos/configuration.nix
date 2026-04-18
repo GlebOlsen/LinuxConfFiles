@@ -1,10 +1,11 @@
 { config, pkgs, inputs, ... }:
 
 let
-  unstableTarball = builtins.fetchTarball {
-    url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+  unstablePkgs = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config = pkgs.config;
   };
-  unstablePkgs = import unstableTarball {
+  headPkgs = import inputs.nixpkgs-head {
     system = pkgs.stdenv.hostPlatform.system;
     config = pkgs.config;
   };
@@ -170,6 +171,7 @@ in
     vscode-fhs # (need to build myself...)
     # github-copilot-cli (need to build myself...)
     opencode # (need to build myself...)
+    headPkgs.claude-code
     meld
     # zed-editor-fhs
 
