@@ -57,8 +57,8 @@ in
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
-      thunar-archive-plugin
-      thunar-volman
+      unstablePkgs.thunar-archive-plugin
+      unstablePkgs.thunar-volman
     ];
   };
   services.gvfs.enable = true;
@@ -135,6 +135,7 @@ in
     croc
     linuxPackages.cpupower
     ironbar
+    fuzzel
 
     # Terminal
     foot
@@ -161,17 +162,17 @@ in
     python3
     luarocks
     lua51Packages.lua
-    nodejs_25
+    unstablePkgs.nodejs_25
     nim
 
     # Editors
     neovim
     helix
     micro
-    vscode-fhs # (need to build myself...)
+    headPkgs.vscode-fhs # (need to build myself...)
     # github-copilot-cli (need to build myself...)
     opencode # (need to build myself...)
-    headPkgs.claude-code
+    headPkgs.claude-code # (still way behind...)
     meld
     # zed-editor-fhs
 
@@ -188,7 +189,7 @@ in
     # Need to add Matrix.org stuff
 
     # File Management
-    tumbler
+    unstablePkgs.tumbler
     file-roller
     xarchiver
     p7zip
