@@ -222,7 +222,7 @@ for_window [class="^.*"] border pixel 6
 gaps inner 14
 
 bar {
-  status_command i3status-rs /home/div/repo/linuxconffiles/i3/i3status-rust/config.toml
+  status_command i3status-rs /home/div/repo/linuxconffiles/Old-Archive/i3/i3status-rust/config.toml
   # status_command i3status
   i3bar_command i3bar -t
   output DisplayPort-0
