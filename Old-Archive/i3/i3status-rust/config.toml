@@ -117,7 +117,7 @@ format = " 💾 $available.eng(prefix:Gi,u:B,w:3) "
 [[block]]
 block = "weather"
 interval = 900
-format = " $weather$temp $humidity $direction$wind m/s ↑$sunrise.datetime(f:'%R') ↓$sunset.datetime(f:'%R')"
+format = " $weather $temp $humidity $direction$wind m/s ↑$sunrise.datetime(f:'%R') ↓$sunset.datetime(f:'%R')"
 [block.service]
 name = "metno"
 coordinates = ["55.76", "12.10"]
