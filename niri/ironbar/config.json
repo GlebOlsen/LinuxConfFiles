@@ -1,0 +1,63 @@
+{
+  "start": null,
+  "center": null,
+  "end": null,
+  "monitors": {
+    "eDP-1": {
+      "position": "top",
+      "height": 18,
+      "start": [
+        {
+          "type": "workspaces",
+          "all_monitors": true,
+          "sort": "added"
+        }
+      ],
+      "center": [
+        {
+          "type": "focused",
+          "icon_size": 16,
+          "truncate": {
+            "mode": "end",
+            "max_length": 12
+          }
+        }
+      ],
+      "end": [
+        {
+          "type": "volume",
+          "format": "🔊 {percentage}%",
+          "mute_format": "🔇 muted"
+        },
+        {
+          "type": "sys_info",
+          "format": [
+            "C: {cpu_percent}% 🔳",
+            "M: {memory_used#Gi:.1} GiB 🟰"
+          ],
+          "interval": {
+            "cpu": 1,
+            "memory": 5
+          }
+        },
+        {
+          "type": "battery",
+          "format": "{percentage}%",
+          "profiles": {
+            "warning": 20,
+            "critical": {
+              "when": { "percent":  5, "charging": false },
+              "format": "[LOW] {percentage}%"
+            }
+          }
+        },
+        {
+          "type": "clock"
+        },
+        {
+          "type": "tray"
+        }
+      ]
+    }
+  }
+}

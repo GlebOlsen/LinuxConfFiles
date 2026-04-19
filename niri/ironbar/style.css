@@ -1,0 +1,123 @@
+* {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background-image: none;
+  font-family: "Cartograph CF", monospace;
+}
+
+scale > trough {
+  background-color: #2d2d2d;
+}
+
+scale > trough > highlight {
+  background-color: #6699cc;
+  border-style: solid;
+  border-color: #6699cc;
+  border-width: 0.2em;
+}
+
+scale > trough > slider {
+  background-color: #fff;
+}
+
+switch > slider {
+  background-color: #fff;
+}
+
+switch:checked {
+  background-color: #6699cc;
+}
+
+switch:not(:checked) {
+  background-color: #2d2d2d;
+}
+
+#bar,
+popover,
+popover contents,
+calendar {
+  background-color: rgba(0, 5, 0, 0.8);
+}
+
+box,
+button,
+label {
+  background-color: transparent;
+  color: #fff;
+  line-height: 16px;
+}
+
+button {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+button:hover,
+button:active {
+  background-color: rgba(179, 255, 0, 0.53);
+}
+
+#end > * + * {
+  margin-left: 1em;
+}
+
+#center > * + * {
+  margin-left: 1em;
+}
+
+.sysinfo > * + * {
+  margin-left: 0.5em;
+}
+
+.popup-volume {
+  padding: 0.75em;
+}
+
+.popup-volume .device-box,
+.popup-volume .apps-box {
+  min-width: 18em;
+}
+
+.popup-volume .device-box {
+  margin-right: 1em;
+}
+
+.clock {
+  font-weight: bold;
+}
+
+#playerctl {
+  color: #b3ff00;
+}
+
+.popup-clock .calendar-clock {
+  font-size: 2em;
+}
+
+.popup-clock .calendar .today {
+  background-color: #6699cc;
+}
+
+.workspaces .item.visible {
+  box-shadow: none;
+}
+
+.workspaces .item.focused {
+  box-shadow: none;
+  background-color: #b3ff00;
+  color: #000;
+}
+
+.workspaces .item.focused label,
+.workspaces .item.focused .text-icon {
+  color: #000;
+}
+
+.workspaces .item:hover {
+  background-color: rgba(179, 255, 0, 0.53);
+}
+
+.workspaces .item.urgent {
+  background-color: #8f0a0a;
+}
