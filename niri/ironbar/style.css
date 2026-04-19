@@ -6,22 +6,22 @@
   font-family: "Cartograph CF", monospace;
 }
 
-scale > trough {
+scale>trough {
   background-color: #2d2d2d;
 }
 
-scale > trough > highlight {
+scale>trough>highlight {
   background-color: #6699cc;
   border-style: solid;
   border-color: #6699cc;
   border-width: 0.2em;
 }
 
-scale > trough > slider {
+scale>trough>slider {
   background-color: #fff;
 }
 
-switch > slider {
+switch>slider {
   background-color: #fff;
 }
 
@@ -45,7 +45,6 @@ button,
 label {
   background-color: transparent;
   color: #fff;
-  line-height: 16px;
 }
 
 button {
@@ -58,15 +57,15 @@ button:active {
   background-color: rgba(179, 255, 0, 0.53);
 }
 
-#end > * + * {
+#end>*+* {
   margin-left: 1em;
 }
 
-#center > * + * {
+#center>*+* {
   margin-left: 1em;
 }
 
-.sysinfo > * + * {
+.sysinfo>*+* {
   margin-left: 0.5em;
 }
 
