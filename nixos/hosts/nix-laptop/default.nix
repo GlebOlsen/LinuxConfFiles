@@ -30,7 +30,7 @@
   services.blueman.enable = true;
 
   environment.systemPackages = with pkgs; [
-    ironbar
+    sfwbar
     brightnessctl
     networkmanagerapplet
   ];
