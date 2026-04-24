@@ -2,18 +2,34 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.substituters = [ "https://cache.garnix.io" ];
-  nix.settings.trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
-
-  # CachyOS kernel — disabled until garnix key trusted on first rebuild.
-  # Uncomment both lines below after keys applied to pull prebuilt from cache.
-  # nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
 
   # Bootloader set per-host (systemd-boot vs grub).
-  # boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "ipv6.disable=1" ];
+
+  boot.kernelParams = [
+    "ipv6.disable=1"
+    # Latency
+    "threadirqs"
+    "transparent_hugepage=madvise"
+    "mitigations=off"
+    "nowatchdog"
+    "split_lock_detect=off"
+    "iommu=pt"
+    # Quiet boot / less logging
+    "quiet"
+    "loglevel=3"
+    "udev.log_level=3"
+    "rd.udev.log_level=3"
+    "systemd.show_status=auto"
+  ];
+  boot.consoleLogLevel = 3;
   boot.supportedFilesystems = [ "ntfs" ];
+
+  boot.kernelModules = [ "tcp_bbr" ];
+  boot.kernel.sysctl = {
+    "net.ipv4.tcp_congestion_control" = "bbr";
+    "net.core.default_qdisc" = "cake";
+  };
 
   networking.networkmanager.enable = true;
 
@@ -68,10 +84,8 @@
   users.users.div = {
     isNormalUser = true;
     description = "div";
-    shell = pkgs.fish;
     extraGroups = [ "wheel" "networkmanager" "input" "video" "audio" "render" ];
   };
-  programs.fish.enable = true;
 
   services.avahi = {
     enable = true;
@@ -166,7 +180,6 @@
     element-desktop
 
     # File Management
-    tumbler
     file-roller
     xarchiver
     p7zip
