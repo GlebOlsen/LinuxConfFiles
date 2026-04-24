@@ -25,7 +25,6 @@
   services.upower.enable = true;
 
   # Backlight + bluetooth
-  programs.light.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
