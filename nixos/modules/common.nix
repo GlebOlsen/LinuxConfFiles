@@ -1,16 +1,14 @@
 { config, pkgs, inputs, ... }:
 
-let
-  unstablePkgs = import inputs.nixpkgs-unstable {
-    system = pkgs.stdenv.hostPlatform.system;
-    config = pkgs.config;
-  };
-in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.substituters = [ "https://cache.garnix.io" ];
+  nix.settings.trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
+
+  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
 
   # Bootloader set per-host (systemd-boot vs grub).
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
   boot.kernelParams = [ "ipv6.disable=1" ];
   boot.supportedFilesystems = [ "ntfs" ];
 
@@ -38,8 +36,8 @@ in
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
-      unstablePkgs.thunar-archive-plugin
-      unstablePkgs.thunar-volman
+      thunar-archive-plugin
+      thunar-volman
     ];
   };
   services.gvfs.enable = true;
@@ -144,16 +142,15 @@ in
     python3
     luarocks
     lua51Packages.lua
-    unstablePkgs.nodejs_25
+    nodejs_25
     nim
 
     # Editors
     neovim
     helix
     micro
-    unstablePkgs.vscode-fhs
-    opencode
-    unstablePkgs.claude-code
+    vscode-fhs
+    claude-code
     meld
 
     # Internet
@@ -166,7 +163,7 @@ in
     element-desktop
 
     # File Management
-    unstablePkgs.tumbler
+    tumbler
     file-roller
     xarchiver
     p7zip

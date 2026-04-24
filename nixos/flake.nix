@@ -1,8 +1,7 @@
 {
   inputs = {
-    # Channels
-    nixpkgs.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
-    nixpkgs-unstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    # Channel: unstable only
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     # Flakes
     helium = {
       url = "github:AlvaroParker/helium-nix";
@@ -13,6 +12,8 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # CachyOS kernel (binary cache via cache.garnix.io)
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
   outputs = { self, ... } @inputs:

@@ -8,10 +8,6 @@
 
   networking.hostName = "nix-laptop";
 
-  # Bootloader: GRUB
-  # EFI system (default assumption). If laptop is legacy BIOS, comment EFI block
-  # and uncomment the BIOS block below (set correct disk device).
-
   # BIOS alternative:
   boot.loader.grub = {
     enable = true;
