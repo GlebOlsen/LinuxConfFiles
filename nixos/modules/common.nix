@@ -5,10 +5,13 @@
   nix.settings.substituters = [ "https://cache.garnix.io" ];
   nix.settings.trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
 
-  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
+  # CachyOS kernel — disabled until garnix key trusted on first rebuild.
+  # Uncomment both lines below after keys applied to pull prebuilt from cache.
+  # nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
 
   # Bootloader set per-host (systemd-boot vs grub).
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+  # boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "ipv6.disable=1" ];
   boot.supportedFilesystems = [ "ntfs" ];
 
