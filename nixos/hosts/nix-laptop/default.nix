@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports = [
@@ -18,6 +18,16 @@
 
   # Compositor: Niri (Wayland)
   programs.niri.enable = true;
+
+  # Cursor theme via dconf -> portal-gnome broadcasts to clients.
+  programs.dconf.profiles.user.databases = [{
+    settings = {
+      "org/gnome/desktop/interface" = {
+        cursor-theme = "Bibata-Original-Ice";
+        cursor-size = lib.gvariant.mkUint32 24;
+      };
+    };
+  }];
 
   # Laptop power + hardware
   services.tlp.enable = true;

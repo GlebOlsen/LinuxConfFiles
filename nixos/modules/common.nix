@@ -73,12 +73,6 @@
     XCURSOR_SIZE = "24";
   };
 
-  environment.etc."xdg/gtk-3.0/settings.ini".text = ''
-    [Settings]
-    gtk-cursor-theme-name=Bibata-Original-Ice
-    gtk-cursor-theme-size=24
-  '';
-
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
     noto-fonts
@@ -209,16 +203,6 @@
     iconpack-obsidian
     nwg-look
     bibata-cursors
-    (pkgs.writeTextFile {
-      name = "default-cursor-theme";
-      destination = "/share/icons/default/index.theme";
-      text = ''
-        [Icon Theme]
-        Name=Default
-        Comment=Default Cursor Theme
-        Inherits=Bibata-Original-Ice
-      '';
-    })
   ];
 
   system.stateVersion = "25.11";
