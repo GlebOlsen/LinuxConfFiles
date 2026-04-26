@@ -167,7 +167,7 @@
     helix
     micro
     vscode-fhs
-    claude-code
+    (pkgs.callPackage ../pkgs/claude-code { })
     meld
 
     # Internet
