@@ -73,6 +73,17 @@
     XCURSOR_SIZE = "24";
   };
 
+  environment.etc."xdg/gtk-3.0/settings.ini".text = ''
+    [Settings]
+    gtk-cursor-theme-name=Bibata-Original-Ice
+    gtk-cursor-theme-size=24
+  '';
+
+  environment.etc."icons/default/index.theme".text = ''
+    [Icon Theme]
+    Inherits=Bibata-Original-Ice
+  '';
+
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
     noto-fonts
