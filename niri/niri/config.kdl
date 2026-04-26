@@ -11,6 +11,10 @@ layer-rule {
     match namespace="^wallpaper$"
     place-within-backdrop true
 }
+cursor {
+    xcursor-theme "Bibata-Original-Ice"
+    xcursor-size 24
+}
 overview {
     workspace-shadow {
         off
