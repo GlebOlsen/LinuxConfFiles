@@ -167,7 +167,7 @@
     helix
     micro
     vscode-fhs
-    (pkgs.callPackage ~/repo/linuxconffiles/nixos/pkgs/claude-code { })
+    (pkgs.callPackage ../pkgs/claude-code/package.nix { })
     meld
 
     # Internet
