@@ -19,7 +19,7 @@
   # Compositor: Niri (Wayland)
   programs.niri.enable = true;
 
-  # Cursor theme via dconf -> portal-gnome broadcasts to clients.
+  # Cursor theme via dconf -> portal-gnome broadcasts to clients (niri stuff).
   programs.dconf.profiles.user.databases = [{
     settings = {
       "org/gnome/desktop/interface" = {
@@ -39,6 +39,9 @@
   services.blueman.enable = true;
 
   environment.systemPackages = with pkgs; [
+    swaybg
+    swaylock
+    swayidle
     sfwbar
     brightnessctl
     networkmanagerapplet
