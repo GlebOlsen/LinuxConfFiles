@@ -16,6 +16,10 @@ overview {
         off
     }
 }
+cursor {
+    xcursor-theme "Bibata-Original-Ice"
+    xcursor-size 24
+}
 input {
     keyboard {
         xkb {
