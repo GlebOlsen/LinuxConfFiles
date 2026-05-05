@@ -16,18 +16,6 @@
     configurationLimit = 10;
   };
 
-  systemd.oomd.enable = false;
-  services.journald.extraConfig = ''
-    Storage=volatile
-    RuntimeMaxUse=32M
-    SystemMaxUse=64M
-    RateLimitBurst=5000
-  '';
-  boot.tmp.useTmpfs = false;
-  documentation.enable = false;
-  documentation.man.enable = false;
-  documentation.nixos.enable = false;
-
   # Compositor: Niri (Wayland)
   programs.niri.enable = true;
 
