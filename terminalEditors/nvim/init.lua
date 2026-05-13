@@ -1,14 +1,13 @@
--- leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- options
 local opt = vim.opt
 
 opt.updatetime = 250
 opt.timeoutlen = 300
-vim.cmd.colorscheme 'murphy'
-vim.o.clipboard = "unnamedplus"
+opt.undofile = true
+opt.undolevels = 10000
+opt.clipboard = 'unnamedplus'
 
 opt.number = true
 opt.relativenumber = true
@@ -30,24 +29,34 @@ opt.termguicolors = true
 opt.splitright = true
 opt.splitbelow = true
 
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#49115b" })
-vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#00FFFF" })
-vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#ff9cac" })
-vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#B3FF00", bold = true })
-vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
-vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "NONE" })
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    pcall(vim.treesitter.start, args.buf)
+  end,
+})
+
+vim.api.nvim_create_autocmd('ColorScheme', {
+  callback = function()
+    local hl = function(name, val) vim.api.nvim_set_hl(0, name, val) end
+    hl('CursorLine',    { bg = '#49115b' })
+    hl('LineNrBelow',   { fg = '#00FFFF' })
+    hl('LineNrAbove',   { fg = '#ff9cac' })
+    hl('CursorLineNr',  { fg = '#B3FF00', bold = true })
+    hl('SignColumn',    { bg = 'NONE' })
+    hl('Normal',        { bg = 'NONE' })
+    hl('NormalNC',      { bg = 'NONE' })
+    hl('NormalFloat',   { bg = 'NONE' })
+    hl('EndOfBuffer',   { bg = 'NONE' })
+  end,
+})
+vim.cmd.colorscheme 'murphy'
 
 opt.list = true
 opt.listchars = {
-  -- eol = '↵',
   tab = '→ ',
   trail = '•',
 }
 
--- keymaps
 local keymap = vim.keymap
 
 keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
@@ -92,6 +101,12 @@ keymap.set('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>', { desc = 'Diff This'
 keymap.set('n', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { desc = 'Reset Hunk' })
 keymap.set('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>', { desc = 'Reset Buffer' })
 
+keymap.set('n', '<leader>gv', '<cmd>DiffviewOpen<CR>',        { desc = 'Diffview: working tree vs HEAD' })
+keymap.set('n', '<leader>gs', '<cmd>DiffviewOpen --staged<CR>', { desc = 'Diffview: staged vs HEAD' })
+keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<CR>', { desc = 'Diffview: history of current file' })
+keymap.set('n', '<leader>gH', '<cmd>DiffviewFileHistory<CR>',   { desc = 'Diffview: branch history' })
+keymap.set('n', '<leader>gx', '<cmd>DiffviewClose<CR>',         { desc = 'Diffview: close' })
+
 keymap.set('n', '<leader>S', '<cmd>Spectre<CR>', { desc = 'Open Spectre' })
 keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = 'Search Word' })
 keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = 'Search Selection' })
@@ -100,7 +115,8 @@ keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({pat
 keymap.set('n', '<leader>fm', 'mzgg=G`z', { desc = 'Format Buffer (Indent)' })
 keymap.set('v', '<leader>fm', '=', { desc = 'Format Selection (Indent)' })
 
--- plugins
+keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<CR>', { desc = 'Toggle Undotree' })
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
@@ -144,11 +160,11 @@ require('lazy').setup({
 
   {
     'nvim-tree/nvim-tree.lua',
-    cmd = 'NvimTreeToggle', -- Load only when you run the command
+    cmd = 'NvimTreeToggle',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       view = { side = 'right', width = 30 },
-      update_cwd = true,
+      sync_root_with_cwd = true,
       hijack_netrw = true,
     },
   },
@@ -156,38 +172,38 @@ require('lazy').setup({
   {
     'nvimdev/dashboard-nvim',
     event = 'VimEnter',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('dashboard').setup({
-        theme = 'hyper',
-        config = {
-          header = {
-            '⠤⣤⣤⣤⣄⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣠⣤⠤⠤⠴⠶⠶⠶⠶',
-            '⢠⣤⣤⡄⣤⣤⣤⠄⣀⠉⣉⣙⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠴⠘⣉⢡⣤⡤⠐⣶⡆⢶⠀⣶⣶⡦',
-            '⣄⢻⣿⣧⠻⠇⠋⠀⠋⠀⢘⣿⢳⣦⣌⠳⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠞⣡⣴⣧⠻⣄⢸⣿⣿⡟⢁⡻⣸⣿⡿⠁',
-            '⠈⠃⠙⢿⣧⣙⠶⣿⣿⡷⢘⣡⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⣿⣿⣷⣝⡳⠶⠶⠾⣛⣵⡿⠋⠀⠀',
-            '⠀⠀⠀⠀⠉⠻⣿⣶⠂⠘⠛⠛⠛⢛⡛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠛⠀⠉⠒⠛⠀⠀⠀⠀⠀',
-            '⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⢸⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-            '⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⣾⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-            '⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-            '⠀⠀⠀⠀⠀⠀⢻⡁⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-            '⠀⠀⠀⠀⠀⠀⠘⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-            '⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-            '⠀⠀⠀⠀⠀⠀⠀⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-          },
-          shortcut = {},
-          footer = {}
-        }
-      })
-    end,
+    opts = {
+      theme = 'hyper',
+      config = {
+        week_header = { enable = false },
+        header = {
+          '',
+          '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⠀⠀⠀⢀⣠⣶⣿⣿⡿⠿⠿⠿⠿⢿⣿⣿⣷⣦⣄⣀⣤⣶⣶',
+          '⠀⠀⠀⠀⠀⣰⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⠟⠋',
+          '⠀⠀⠀⠀⣼⣿⡿⠃⠀⢀⣤⣾⣿⣿⣿⣿⣷⣦⣄⠀⠀⠈⠉⠀⠀⠀',
+          '⠀⠀⠀⣸⣿⡿⠁⠀⢠⣿⣿⠟⠉⠀⠈⠉⠛⢿⣿⣷⡄⠀⠀⠀⠀⠀',
+          '⠀⠀⢀⣿⣿⡇⠀⠀⣾⣿⡟⠀⠀⢀⣤⣄⠀⠀⠹⣿⣿⡄⠀⠀⠀⠀',
+          '⠀⠀⣾⣿⣿⡇⠀⠀⢻⣿⣷⡀⠀⠘⣿⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀',
+          '⠀⣼⣿⡿⣿⣿⡄⠀⠈⠻⣿⣿⣷⣿⣿⡿⠃⠀⢀⣿⣿⡇⠀⠀⠀⠀',
+          '⣰⣿⣿⠁⠹⣿⣿⣦⡀⠀⠈⠉⠛⠋⠉⠀⠀⣠⣾⣿⡟⠀⠀⠀⠀⠀',
+          '⣿⣿⣧⣤⣤⣬⣿⣿⣿⣶⣦⣤⣤⣤⣴⣶⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀',
+          '⠙⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀',
+          '',
+        },
+        shortcut = {},
+        packages = { enable = false },
+        project = { enable = false, limit = 0 },
+        mru = { enable = false },
+        footer = {},
+      },
+    },
   },
 
   {
     'smoka7/hop.nvim',
     cmd = { 'HopWord', 'HopLine', 'HopChar1' },
-    config = function()
-      require('hop').setup({ multi_windows = true })
-    end,
+    opts = { multi_windows = true },
   },
 
   {
@@ -200,6 +216,17 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {},
+  },
+
+  {
+    'sindrets/diffview.nvim',
+    cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
+    opts = {
+      enhanced_diff_hl = true,
+      view = {
+        merge_tool = { layout = 'diff3_mixed' },
+      },
+    },
   },
 
   {
@@ -219,70 +246,24 @@ require('lazy').setup({
   },
 
   {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    event = { 'BufReadPre', 'BufNewFile' },
-    opts = {
-      auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      indent = {
-        enable = true,
-      },
-    },
-    config = function(_, opts)
-      require('nvim-treesitter.config').setup(opts)
-    end,
-  },
-
-  {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-    },
-    config = function()
-      local cmp = require('cmp')
-      cmp.setup({
-        window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-        }),
-        sources = {
-          { name = 'buffer', keyword_length = 4 },
-          { name = 'path' },
-        },
-      })
+    'mbbill/undotree',
+    cmd = { 'UndotreeToggle', 'UndotreeShow', 'UndotreeFocus' },
+    init = function()
+      vim.g.undotree_WindowLayout = 2
+      vim.g.undotree_SplitWidth = 35
+      vim.g.undotree_DiffpanelHeight = 12
+      vim.g.undotree_SetFocusWhenToggle = 1
+      vim.g.undotree_ShortIndicators = 1
     end,
   },
 
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    dependencies = { 'hrsh7th/nvim-cmp' },
     opts = {
       check_ts = true,
-      disable_filetype = { 'TelescopePrompt' },
+      disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
     },
-    config = function(_, opts)
-      local npairs = require('nvim-autopairs')
-      npairs.setup(opts)
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      local cmp = require('cmp')
-      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-    end,
   },
 
 }, {
