@@ -109,6 +109,25 @@ in
     flake = flakeDir;
   };
 
+  programs.git = {
+    enable = true;
+    config = {
+      credential.helper = "store";
+      init.defaultBranch = "main";
+    };
+  };
+
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
+    withNodeJs = false;
+  };
+
+  programs.yazi = {
+    enable = true;
+    settings.yazi.mgr.show_hidden = true;
+  };
+
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
 
@@ -128,8 +147,6 @@ in
     nmap
     dysk
     wget
-    git
-    yazi
     tmux
     fish
     mako
@@ -156,11 +173,17 @@ in
     copyq
     hyprpicker
 
+    # Neovim runtime deps (lazy.nvim + telescope + spectre + treesitter)
+    ripgrep
+    fd
+    gcc
+    gnumake
+    tree-sitter
+
     # Editors
-    neovim
+    # master.vscode-fhs
     helix
     micro
-    master.vscode-fhs
     master.claude-code
     master.codex
     meld
