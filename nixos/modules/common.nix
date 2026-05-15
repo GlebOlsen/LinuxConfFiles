@@ -1,10 +1,27 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
+let
+  username = "div";
+  flakeDir = "/home/${username}/repo/linuxconffiles/nixos";
+  master = import inputs.nixpkgs-master {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+    trusted-users = [ "@wheel" ];
+    substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 
   # Bootloader set per-host (systemd-boot vs grub).
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
   boot.kernelParams = [
     "ipv6.disable=1"
@@ -46,21 +63,11 @@
 
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true;
+    enable = lib.mkDefault true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs; [
-      thunar-archive-plugin
-      thunar-volman
-    ];
-  };
-  services.gvfs.enable = true;
-  services.tumbler.enable = true;
 
   programs.dconf.enable = true;
 
@@ -74,16 +81,15 @@
   };
 
   fonts.packages = with pkgs; [
-    nerd-fonts.symbols-only
     noto-fonts
     fira-code
     nerd-fonts.fira-code
     noto-fonts-color-emoji
   ];
 
-  users.users.div = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "div";
+    description = username;
     extraGroups = [ "wheel" "networkmanager" "input" "video" "audio" "render" ];
   };
 
@@ -100,7 +106,7 @@
 
   programs.nh = {
     enable = true;
-    flake = "$HOME/repo/linuxconffiles/nixos";
+    flake = flakeDir;
   };
 
   services.gnome.gnome-keyring.enable = true;
@@ -131,7 +137,7 @@
     fastfetch
     btop
     croc
-    linuxPackages.cpupower
+    config.boot.kernelPackages.cpupower
     fuzzel
 
     # Terminal
@@ -150,24 +156,13 @@
     copyq
     hyprpicker
 
-    # Development
-    gcc
-    gnumake
-    ripgrep
-    fd
-    tree-sitter
-    python3
-    luarocks
-    lua51Packages.lua
-    nodejs_25
-    nim
-
     # Editors
     neovim
     helix
     micro
-    vscode-fhs
-    (pkgs.callPackage ../pkgs/claude-code/package.nix { })
+    master.vscode-fhs
+    master.claude-code
+    master.codex
     meld
 
     # Internet
@@ -205,5 +200,5 @@
     bibata-cursors
   ];
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

@@ -1,17 +1,15 @@
 {
   inputs = {
-    # Channel: unstable only
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    # Flakes
     helium = {
       url = "github:AlvaroParker/helium-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "";
+      };
     };
-    # NUR
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Bleeding-edge nixpkgs master (used only for claude-code + codex).
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
   };
 
   outputs = { self, ... } @inputs:
