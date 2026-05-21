@@ -82,6 +82,8 @@ keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result and center' })
 
 keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlighting' })
 
+keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle File Explorer' })
+
 keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = 'Find Files' })
 keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = 'Live Grep' })
 keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = 'Find Buffers' })
@@ -147,6 +149,17 @@ require('lazy').setup({
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },
+    },
+  },
+
+  {
+    'nvim-tree/nvim-tree.lua',
+    cmd = 'NvimTreeToggle',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      view = { side = 'right', width = 30 },
+      sync_root_with_cwd = true,
+      hijack_netrw = true,
     },
   },
 
