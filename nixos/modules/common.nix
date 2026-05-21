@@ -120,7 +120,7 @@ in
   programs.neovim = {
     enable = true;
     vimAlias = true;
-    withNodeJs = false;
+    withNodeJs = true;
   };
 
   programs.yazi = {
@@ -151,6 +151,9 @@ in
   };
   nix.optimise.automatic = true;
 
+  # Must have...
+  programs.nix-ld.enable = true;
+
   environment.systemPackages = with pkgs; [
     # System
     wl-kbptr
@@ -160,7 +163,6 @@ in
     tmux
     fish
     mako
-    lazygit
     fastfetch
     btop
     croc
@@ -191,12 +193,16 @@ in
     tree-sitter
 
     # Editors
-    # master.vscode-fhs
     helix
     micro
-    master.claude-code
-    master.codex
     meld
+    lazygit
+
+    # Vibes
+    master.codex
+    master.claude-code
+    nodejs_25
+    uv
 
     # Internet
     inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.helium

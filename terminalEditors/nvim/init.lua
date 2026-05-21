@@ -82,8 +82,6 @@ keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result and center' })
 
 keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlighting' })
 
-keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle File Explorer' })
-
 keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = 'Find Files' })
 keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = 'Live Grep' })
 keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = 'Find Buffers' })
@@ -100,12 +98,6 @@ keymap.set('n', '<leader>gt', '<cmd>Gitsigns toggle_current_line_blame<CR>', { d
 keymap.set('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>', { desc = 'Diff This' })
 keymap.set('n', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { desc = 'Reset Hunk' })
 keymap.set('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>', { desc = 'Reset Buffer' })
-
-keymap.set('n', '<leader>gv', '<cmd>DiffviewOpen<CR>',        { desc = 'Diffview: working tree vs HEAD' })
-keymap.set('n', '<leader>gs', '<cmd>DiffviewOpen --staged<CR>', { desc = 'Diffview: staged vs HEAD' })
-keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<CR>', { desc = 'Diffview: history of current file' })
-keymap.set('n', '<leader>gH', '<cmd>DiffviewFileHistory<CR>',   { desc = 'Diffview: branch history' })
-keymap.set('n', '<leader>gx', '<cmd>DiffviewClose<CR>',         { desc = 'Diffview: close' })
 
 keymap.set('n', '<leader>S', '<cmd>Spectre<CR>', { desc = 'Open Spectre' })
 keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = 'Search Word' })
@@ -159,17 +151,6 @@ require('lazy').setup({
   },
 
   {
-    'nvim-tree/nvim-tree.lua',
-    cmd = 'NvimTreeToggle',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    opts = {
-      view = { side = 'right', width = 30 },
-      sync_root_with_cwd = true,
-      hijack_netrw = true,
-    },
-  },
-
-  {
     'nvimdev/dashboard-nvim',
     event = 'VimEnter',
     opts = {
@@ -216,17 +197,6 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {},
-  },
-
-  {
-    'sindrets/diffview.nvim',
-    cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
-    opts = {
-      enhanced_diff_hl = true,
-      view = {
-        merge_tool = { layout = 'diff3_mixed' },
-      },
-    },
   },
 
   {
