@@ -160,6 +160,11 @@ require('lazy').setup({
       view = { side = 'right', width = 30 },
       sync_root_with_cwd = true,
       hijack_netrw = true,
+      filters = {
+        git_ignored = false,
+        dotfiles = false,
+      },
+      git = { enable = true, ignore = false },
     },
   },
 
