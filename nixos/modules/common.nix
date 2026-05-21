@@ -14,20 +14,24 @@ in
     trusted-users = [ "@wheel" ];
     substituters = [
       "https://nix-community.cachix.org"
+      "https://cache.garnix.io"
+      "https://attic.xuyh0120.win/lantian"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
     ];
   };
 
+  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
+
   # Bootloader set per-host (systemd-boot vs grub).
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkDefault pkgs.cachyosKernels.linuxPackages-cachyos-latest;
 
   boot.kernelParams = [
-    "ipv6.disable=1"
     # Latency
     "threadirqs"
-    "transparent_hugepage=madvise"
     "mitigations=off"
     "nowatchdog"
     "split_lock_detect=off"
@@ -49,6 +53,14 @@ in
   };
 
   networking.networkmanager.enable = true;
+  networking.getaddrinfo.precedence = {
+    "::1/128" = 50;
+    "::/0" = 40;
+    "2002::/16" = 30;
+    "::/96" = 20;
+    # Prefer IPv4-mapped addresses while keeping IPv6 available.
+    "::ffff:0:0/96" = 100;
+  };
 
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
