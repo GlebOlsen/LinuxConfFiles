@@ -29,9 +29,21 @@ opt.termguicolors = true
 opt.splitright = true
 opt.splitbelow = true
 
+opt.fillchars = { eob = ' ' }
+
 vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
     pcall(vim.treesitter.start, args.buf)
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Change cwd to directory passed as argument',
+  callback = function()
+    local arg = vim.fn.argv(0)
+    if arg ~= '' and vim.fn.isdirectory(arg) == 1 then
+      vim.cmd('cd ' .. vim.fn.fnameescape(arg))
+    end
   end,
 })
 
@@ -39,8 +51,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   callback = function()
     local hl = function(name, val) vim.api.nvim_set_hl(0, name, val) end
     hl('CursorLine',    { bg = '#49115b' })
-    hl('LineNrBelow',   { fg = '#00FFFF' })
-    hl('LineNrAbove',   { fg = '#ff9cac' })
+    hl('LineNrBelow',   { fg = '#00ffaa' })
+    hl('LineNrAbove',   { fg = '#ffaaff' })
     hl('CursorLineNr',  { fg = '#B3FF00', bold = true })
     hl('SignColumn',    { bg = 'NONE' })
     hl('Normal',        { bg = 'NONE' })
@@ -101,10 +113,10 @@ keymap.set('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>', { desc = 'Diff This'
 keymap.set('n', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { desc = 'Reset Hunk' })
 keymap.set('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>', { desc = 'Reset Buffer' })
 
-keymap.set('n', '<leader>S', '<cmd>Spectre<CR>', { desc = 'Open Spectre' })
-keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = 'Search Word' })
-keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', { desc = 'Search Selection' })
-keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({path = "%:p"})<CR>', { desc = 'Search in File' })
+keymap.set('n', '<leader>S', '<cmd>GrugFar<CR>', { desc = 'Search and Replace' })
+keymap.set('n', '<leader>sw', function() require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } }) end, { desc = 'Search Word Under Cursor' })
+keymap.set('v', '<leader>sw', function() require('grug-far').with_visual_selection() end, { desc = 'Search Selection' })
+keymap.set('n', '<leader>sp', function() require('grug-far').open({ prefills = { paths = vim.fn.expand('%') } }) end, { desc = 'Search and Replace in Current File' })
 
 keymap.set('n', '<leader>fm', 'mzgg=G`z', { desc = 'Format Buffer (Indent)' })
 keymap.set('v', '<leader>fm', '=', { desc = 'Format Selection (Indent)' })
@@ -139,7 +151,7 @@ require('lazy').setup({
       options = {
         section_separators = { '', '' },
         component_separators = { '|', '|' },
-        globalstatus = true,
+        globalstatus = false,
       },
       sections = {
         lualine_a = { 'mode' },
@@ -176,19 +188,17 @@ require('lazy').setup({
       config = {
         week_header = { enable = false },
         header = {
-          '',
-          '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀',
-          '⠀⠀⠀⠀⠀⠀⢀⣠⣶⣿⣿⡿⠿⠿⠿⠿⢿⣿⣿⣷⣦⣄⣀⣤⣶⣶',
-          '⠀⠀⠀⠀⠀⣰⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⠟⠋',
-          '⠀⠀⠀⠀⣼⣿⡿⠃⠀⢀⣤⣾⣿⣿⣿⣿⣷⣦⣄⠀⠀⠈⠉⠀⠀⠀',
-          '⠀⠀⠀⣸⣿⡿⠁⠀⢠⣿⣿⠟⠉⠀⠈⠉⠛⢿⣿⣷⡄⠀⠀⠀⠀⠀',
-          '⠀⠀⢀⣿⣿⡇⠀⠀⣾⣿⡟⠀⠀⢀⣤⣄⠀⠀⠹⣿⣿⡄⠀⠀⠀⠀',
-          '⠀⠀⣾⣿⣿⡇⠀⠀⢻⣿⣷⡀⠀⠘⣿⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀',
-          '⠀⣼⣿⡿⣿⣿⡄⠀⠈⠻⣿⣿⣷⣿⣿⡿⠃⠀⢀⣿⣿⡇⠀⠀⠀⠀',
-          '⣰⣿⣿⠁⠹⣿⣿⣦⡀⠀⠈⠉⠛⠋⠉⠀⠀⣠⣾⣿⡟⠀⠀⠀⠀⠀',
-          '⣿⣿⣧⣤⣤⣬⣿⣿⣿⣶⣦⣤⣤⣤⣴⣶⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀',
-          '⠙⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀',
-          '',
+          '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⡄⠀⠀⠸⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⢠⠆⠀⠀⠀⠀⠀⡇⡔⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠇⠀⠀⡾⡵⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⣶⣭⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡷⡭⠀⠀⡛⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⢺⡇⠀⠀⠀⠀⠀⣿⡗⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠸⢹⠇⠀⠸⢯⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+          ' ⠀⠀⢳⡩⣯⢤⣶⣦⣤⣽⣥⣥⠀⠀⠀⠀⡔⣩⠤⠾⢷⠀⠀⠀⣗⢭⠀⠀⡻⣛⠀⠀⠀⠀⠀⠀⠀⡠⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+          '  ⠀⠸⡿⣿⠿⠛⠛⠛⢿⢻⠉⠀⠀⠀⣸⠞⠁⣠⠏⣧⠇⠀⠀⡽⡇⠀⠀⡷⡇⠀⠀⠀⠀⠀⣤⡁⣸⡤⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⢏⣿⠀⠀⠀⠀⠀⣿⣽⠀⠀⠀⠀⢫⣧⣾⠿⠉⠀⠀⠀⠀⢭⡿⠀⠀⡷⡝⠀⠀⠀⠀⣬⡷⠋⠉⢫⡏⢿⡂⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⡍⠫⠀⠀⠀⠀⠀⠙⠃⠀⠀⠀⠀⠀⣿⣮⣗⠦⠤⣄⡀⠀⡟⡇⠀⠀⢯⡇⠀⠀⠀⢌⡇⠀⠀⠀⠀⢹⠠⠃⠀⠀⠀⠀⠀⠀⠀',
+          '⠀⠀⠀⠳⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠿⠿⠃⠀⠸⣿⠀⠀⢸⡗⢤⠀⠀⠀⠯⠧⡀⠀⠀⣠⠏⠀⠀⠀⠀⠀⠀⠀⠀',
+          ' ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⠔⠃⠀⠀⠀⠉⠛⠭⡓⠉⠀⠀⠀⠀⠀⠀⠀⠀ ',
         },
         shortcut = {},
         packages = { enable = false },
@@ -218,9 +228,36 @@ require('lazy').setup({
   },
 
   {
-    'nvim-pack/nvim-spectre',
-    cmd = 'Spectre',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    'MagicDuck/grug-far.nvim',
+    cmd = 'GrugFar',
+    opts = {
+      engine = 'ripgrep',
+      engines = { ripgrep = { showReplaceDiff = true } },
+      minSearchChars = 1,
+    },
+  },
+
+  {
+    'saghen/blink.cmp',
+    event = 'InsertEnter',
+    version = '1.*',
+    dependencies = { 'mikavilpas/blink-ripgrep.nvim' },
+    opts = {
+      keymap = {
+        preset = 'default',
+        ['<Tab>'] = { 'accept', 'fallback' },
+      },
+      sources = {
+        default = { 'buffer', 'path', 'ripgrep' },
+        providers = {
+          ripgrep = {
+            module = 'blink-ripgrep',
+            name = 'Ripgrep',
+            score_offset = 100,
+          },
+        },
+      },
+    },
   },
 
   {
@@ -254,12 +291,21 @@ require('lazy').setup({
     },
   },
 
+  {
+    'catgoose/nvim-colorizer.lua',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {},
+  },
+
 }, {
-  ui = { border = 'rounded' },
+  -- ui = { border = 'rounded' },
   performance = {
     rtp = {
       disabled_plugins = {
         'gzip',
+        'netrwPlugin',
+        'rplugin',
+        'spellfile',
         'tarPlugin',
         'tohtml',
         'tutor',
