@@ -9,10 +9,7 @@
       };
     };
     # Bleeding-edge nixpkgs master (used only for claude-code + codex).
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-
-    # CachyOS kernel with prebuilt binary cache (garnix + lantian).
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nixpkgs-master.url = "https://github.com/NixOS/nixpkgs/archive/refs/heads/master.tar.gz";
   };
 
   outputs = { self, ... } @inputs:

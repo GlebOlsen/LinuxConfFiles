@@ -14,20 +14,14 @@ in
     trusted-users = [ "@wheel" ];
     substituters = [
       "https://nix-community.cachix.org"
-      "https://cache.garnix.io"
-      "https://attic.xuyh0120.win/lantian"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
     ];
   };
 
-  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
-
   # Bootloader set per-host (systemd-boot vs grub).
-  boot.kernelPackages = lib.mkDefault pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_latest;
 
   boot.kernelParams = [
     # Latency
@@ -45,12 +39,21 @@ in
   ];
   boot.consoleLogLevel = 3;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.tmp.cleanOnBoot = true;
+
+  zramSwap.enable = true;
 
   boot.kernelModules = [ "tcp_bbr" ];
   boot.kernel.sysctl = {
     "net.ipv4.tcp_congestion_control" = "bbr";
     "net.core.default_qdisc" = "cake";
+    "kernel.printk" = "3 3 3 3";
   };
+
+  services.journald.extraConfig = ''
+    SystemMaxUse=20M
+    MaxRetentionSec=3days
+  '';
 
   networking.networkmanager.enable = true;
   networking.getaddrinfo.precedence = {
@@ -160,6 +163,7 @@ in
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 14d";
+    persistent = true;
   };
   nix.optimise.automatic = true;
 
@@ -211,9 +215,9 @@ in
     lazygit
 
     # Vibes
-    master.codex
+    codex
     master.claude-code
-    nodejs_25
+    nodejs_26
     uv
 
     # Internet
