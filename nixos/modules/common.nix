@@ -102,8 +102,7 @@ in
 
   fonts.packages = with pkgs; [
     noto-fonts
-    fira-code
-    nerd-fonts.fira-code
+    nerd-fonts.symbols-only
     noto-fonts-color-emoji
   ];
 
@@ -137,10 +136,21 @@ in
     };
   };
 
-  programs.neovim = {
+
+  programs.neovim = let
+    tsParsers = pkgs.symlinkJoin {
+      name = "nvim-treesitter-parsers";
+      paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
+    };
+  in {
     enable = true;
     vimAlias = true;
+    viAlias = true;
     withNodeJs = true;
+    runtime = {
+      "parser".source = "${tsParsers}/parser";
+      "queries".source = "${pkgs.vimPlugins.nvim-treesitter}/runtime/queries";
+    };
   };
 
   programs.yazi = {
@@ -209,16 +219,11 @@ in
     copyq
     hyprpicker
 
-    # Neovim runtime deps (lazy.nvim + telescope + spectre + treesitter)
+    # Neovim runtime deps (telescope, grug-far, blink-ripgrep)
     ripgrep
     fd
-    gcc
-    gnumake
-    tree-sitter
 
     # Editors
-    helix
-    micro
     meld
     lazygit
 
@@ -231,7 +236,7 @@ in
     # Internet
     inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.helium
     tailscale
-    mullvad
+    # mullvad
 
     # Communication
     vesktop
