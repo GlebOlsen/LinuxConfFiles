@@ -106,6 +106,13 @@ in
     noto-fonts-color-emoji
   ];
 
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "Cartograph CF" ];
+    sansSerif = [ "Cartograph CF" ];
+    serif = [ "Cartograph CF" ];
+    emoji = [ "Noto Color Emoji" ];
+  };
+
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -216,7 +223,7 @@ in
     slurp
     swappy
     wl-clipboard
-    copyq
+    cliphist
     hyprpicker
 
     # Neovim runtime deps (telescope, grug-far, blink-ripgrep)
@@ -262,7 +269,7 @@ in
 
     # Theming
     font-manager
-    arc-theme
+    matcha-gtk-theme
     iconpack-obsidian
     nwg-look
     bibata-cursors

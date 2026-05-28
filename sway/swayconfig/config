@@ -228,7 +228,7 @@ bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
 
 bindsym Print exec grim -g "$(slurp)" - | swappy -f -
-bindsym $mod+Alt+v exec copyq toggle
+bindsym $mod+Alt+v exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
 bindsym $mod+p exec hyprpicker -a
 bindsym $mod+Shift+o exec swaylock -C ~/.config/swaylock/config
 bindsym $mod+g exec wl-kbptr
@@ -272,7 +272,8 @@ gaps inner 8
 # execs
 exec waybar
 # exec wpaperd
-exec copyq
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
 exec gammastep -l 55.7:12.6 -t 6500:2700 -g 0.8 -m wayland
 
 
