@@ -86,6 +86,11 @@ in
 
   programs.dconf.enable = true;
 
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   environment.sessionVariables = {
@@ -187,6 +192,9 @@ in
 
     # Terminal
     foot
+
+    # Sway
+    waybar
 
     # Display
     wdisplays

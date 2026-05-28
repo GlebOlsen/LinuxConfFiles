@@ -16,14 +16,7 @@
   # AMD GPU
   nixpkgs.config.rocmSupport = true;
 
-  # Compositor: Sway
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
-
   environment.systemPackages = with pkgs; [
-    waybar
     amdgpu_top
   ];
 }
