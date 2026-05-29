@@ -9,6 +9,8 @@ let
   };
 in
 {
+  imports = [ ./clipboard.nix ];
+
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
     trusted-users = [ "@wheel" ];
@@ -219,11 +221,10 @@ in
     gammastep
 
     # Clip/Screen/Extras
+    # (wl-clipboard + cliphist live in ./clipboard.nix)
     grim
     slurp
     swappy
-    wl-clipboard
-    cliphist
     hyprpicker
 
     # Neovim runtime deps (telescope, grug-far, blink-ripgrep)
