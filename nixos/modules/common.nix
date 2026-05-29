@@ -9,8 +9,9 @@ let
   };
 in
 {
-  imports = [ ./clipboard.nix ];
+  imports = [ ./clipboard.nix ./yazi.nix ];
 
+  # Nix
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
     trusted-users = [ "@wheel" ];
@@ -21,10 +22,23 @@ in
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
+  nixpkgs.config.allowUnfree = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+    persistent = true;
+  };
+  nix.optimise.automatic = true;
+  programs.nh = {
+    enable = true;
+    flake = flakeDir;
+  };
+  programs.nix-ld.enable = true;
 
+  # Boot & kernel
   # Bootloader set per-host (systemd-boot vs grub).
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_latest;
-
   boot.kernelParams = [
     # Latency
     "threadirqs"
@@ -42,21 +56,15 @@ in
   boot.consoleLogLevel = 3;
   boot.supportedFilesystems = [ "ntfs" ];
   boot.tmp.cleanOnBoot = true;
-
-  zramSwap.enable = true;
-
   boot.kernelModules = [ "tcp_bbr" ];
   boot.kernel.sysctl = {
     "net.ipv4.tcp_congestion_control" = "bbr";
     "net.core.default_qdisc" = "cake";
     "kernel.printk" = "3 3 3 3";
   };
+  zramSwap.enable = true;
 
-  services.journald.extraConfig = ''
-    SystemMaxUse=20M
-    MaxRetentionSec=3days
-  '';
-
+  # Network
   networking.networkmanager.enable = true;
   networking.getaddrinfo.precedence = {
     "::1/128" = 50;
@@ -66,61 +74,6 @@ in
     # Prefer IPv4-mapped addresses while keeping IPv6 available.
     "::ffff:0:0/96" = 100;
   };
-
-  time.timeZone = "Europe/Copenhagen";
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  documentation.enable = false;
-
-  services.xserver.xkb = {
-    layout = "dk";
-    variant = "winkeys";
-  };
-  console.keyMap = "dk-latin1";
-
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = lib.mkDefault true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  programs.dconf.enable = true;
-
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-    XCURSOR_THEME = "Bibata-Original-Ice";
-    XCURSOR_SIZE = "24";
-  };
-
-  fonts.packages = with pkgs; [
-    noto-fonts
-    nerd-fonts.symbols-only
-    noto-fonts-color-emoji
-  ];
-
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "Cartograph CF" ];
-    sansSerif = [ "Cartograph CF" ];
-    serif = [ "Cartograph CF" ];
-    emoji = [ "Noto Color Emoji" ];
-  };
-
-  users.users.${username} = {
-    isNormalUser = true;
-    description = username;
-    extraGroups = [ "wheel" "networkmanager" "input" "video" "audio" "render" ];
-  };
-
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -132,11 +85,58 @@ in
     };
   };
 
-  programs.nh = {
-    enable = true;
-    flake = flakeDir;
+  # Locale, keyboard & time
+  time.timeZone = "Europe/Copenhagen";
+  i18n.defaultLocale = "en_US.UTF-8";
+  services.xserver.xkb = {
+    layout = "dk";
+    variant = "winkeys";
+  };
+  console.keyMap = "dk-latin1";
+
+  # Audio (PipeWire)
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = lib.mkDefault true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
+  # Desktop — Sway / Wayland
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+  programs.dconf.enable = true;
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+    XCURSOR_THEME = "Bibata-Original-Ice";
+    XCURSOR_SIZE = "24";
+  };
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    noto-fonts
+    nerd-fonts.symbols-only
+    noto-fonts-color-emoji
+  ];
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "Cartograph CF" ];
+    sansSerif = [ "Cartograph CF" ];
+    serif = [ "Cartograph CF" ];
+    emoji = [ "Noto Color Emoji" ];
+  };
+
+  # Users
+  users.users.${username} = {
+    isNormalUser = true;
+    description = username;
+    extraGroups = [ "wheel" "networkmanager" "input" "video" "audio" "render" ];
+  };
+
+  # Programs
   programs.git = {
     enable = true;
     config = {
@@ -144,8 +144,6 @@ in
       init.defaultBranch = "main";
     };
   };
-
-
   programs.neovim = let
     tsParsers = pkgs.symlinkJoin {
       name = "nvim-treesitter-parsers";
@@ -162,11 +160,8 @@ in
     };
   };
 
-  programs.yazi = {
-    enable = true;
-    settings.yazi.mgr.show_hidden = true;
-  };
-
+  # Thunar GUI file manager (disabled — replaced by Yazi in ./yazi.nix).
+  # gvfs + udisks2 already live in ./yazi.nix; re-enable just these for Thunar:
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
@@ -174,28 +169,24 @@ in
       thunar-volman
     ];
   };
-  services.gvfs.enable = true;
-  services.tumbler.enable = true;
+  services.tumbler.enable = true; # thumbnail daemon for Thunar
 
+  # Services & security
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
-
   services.fstrim.enable = true;
   services.fwupd.enable = true;
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
-    persistent = true;
-  };
-  nix.optimise.automatic = true;
-
-  # Must have...
-  programs.nix-ld.enable = true;
+  # Logging & docs
+  services.journald.extraConfig = ''
+    SystemMaxUse=20M
+    MaxRetentionSec=3days
+  '';
+  documentation.enable = false;
 
   environment.systemPackages = with pkgs; [
     # System
+    nix-tree
     wl-kbptr
     nmap
     dysk
@@ -236,7 +227,7 @@ in
     lazygit
 
     # Vibes
-    codex
+    master.codex
     master.claude-code
     nodejs_26
     uv
@@ -251,9 +242,9 @@ in
     element-desktop
 
     # File Management
-    file-roller
-    xarchiver
     p7zip
+    file-roller # GUI archive manager (Thunar archive-plugin backend)
+    xarchiver   # GUI archive manager
 
     # Images
     imv
