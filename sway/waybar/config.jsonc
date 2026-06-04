@@ -80,9 +80,9 @@
     "network#speed": {
         "interval": 1,
         "format": " {bandwidthDownBytes}  {bandwidthUpBytes}",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ",
+        "tooltip-format": " {ifname} via {gwaddr}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": " Disconnected",
         "max-length": 50
     },
     "memory": {
@@ -105,7 +105,7 @@
         "tooltip-format-disconnected": "Disconnected"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon}",
+        "format": "{icon} {volume}%",
         "format-muted": "",
         "format-icons": {
             "default": [
@@ -123,11 +123,11 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {power}W {icon}",
-        "format-full": "{capacity}% {power}W {icon}",
-        "format-charging": "{capacity}% {power}W ",
-        "format-plugged": "{capacity}% {power}W ",
-        "format-alt": "{time} {icon}",
+        "format": "{icon} {capacity}% {power}W",
+        "format-full": "{icon} {capacity}% {power}W",
+        "format-charging": " {capacity}% {power}W",
+        "format-plugged": " {capacity}% {power}W",
+        "format-alt": "{icon} {time}",
         "format-icons": [
             "",
             "",
@@ -143,15 +143,15 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {power}W {icon}",
-        "format-full": "{capacity}% {power}W {icon}",
-        "format-charging": "{capacity}% {power}W ",
-        "format-plugged": "{capacity}% {power}W ",
-        "format-alt": "{time} {icon}",
+        "format": "{icon} {capacity}% {power}W",
+        "format-full": "{icon} {capacity}% {power}W",
+        "format-charging": " {capacity}% {power}W",
+        "format-plugged": " {capacity}% {power}W",
+        "format-alt": "{icon} {time}",
         "format-icons": ["", "", "", "", ""]
     },
     "backlight": {
-        "format": "{percent}% {icon}",
+        "format": "{icon} {percent}%",
         "format-icons": ["","","","","","","","",""]
     }
 }
