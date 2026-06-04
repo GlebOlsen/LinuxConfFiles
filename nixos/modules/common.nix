@@ -9,7 +9,7 @@ let
   };
 in
 {
-  imports = [ ./clipboard.nix ./yazi.nix ];
+  imports = [ ./clipboard.nix ];
 
   # Nix
   nix.settings = {
@@ -109,11 +109,22 @@ in
     wrapperFeatures.gtk = true;
   };
   programs.dconf.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr = {
+      enable = true;
+      settings.screencast = {
+        chooser_type = "simple";
+        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+      };
+    };
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
-    XCURSOR_THEME = "Bibata-Original-Ice";
-    XCURSOR_SIZE = "24";
+    XCURSOR_THEME = "miniature";
+    XCURSOR_SIZE = "64";
   };
 
   # Fonts
@@ -160,8 +171,7 @@ in
     };
   };
 
-  # Thunar GUI file manager (disabled — replaced by Yazi in ./yazi.nix).
-  # gvfs + udisks2 already live in ./yazi.nix; re-enable just these for Thunar:
+  # Thunar GUI file manager.
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
@@ -170,6 +180,7 @@ in
     ];
   };
   services.tumbler.enable = true; # thumbnail daemon for Thunar
+  services.gvfs.enable = true;
 
   # Services & security
   services.gnome.gnome-keyring.enable = true;
@@ -227,7 +238,7 @@ in
     lazygit
 
     # Vibes
-    master.codex
+    codex
     master.claude-code
     nodejs_26
     uv
@@ -265,6 +276,12 @@ in
     iconpack-obsidian
     nwg-look
     bibata-cursors
+
+    # Local cursor theme
+    (runCommandLocal "miniature-cursors" { } ''
+      mkdir -p $out/share/icons/miniature
+      cp -r ${../assets/cursors/miniature}/. $out/share/icons/miniature/
+    '')
   ];
 
   system.stateVersion = "26.05";

@@ -233,8 +233,7 @@ bindsym $mod+p exec hyprpicker -a
 bindsym $mod+Shift+o exec swaylock -C ~/.config/swaylock/config
 bindsym $mod+g exec wl-kbptr
 
-seat seat0 cursor set Bibata-Original-Ice 24
-seat seat0 xcursor_theme Bibata-Original-Ice 24
+seat seat0 xcursor_theme miniature 64
 
 client.focused          #b3ff00 #b3ff00 #051405 #FF00FF     #b3ff00
 client.focused_inactive #2d5a27 #051405 #a3be8c #2d5a27     #2d5a27
