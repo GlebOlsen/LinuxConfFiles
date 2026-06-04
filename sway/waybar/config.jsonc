@@ -71,8 +71,8 @@
     },
     // AMD GPU Usage (using sysfs)
     "custom/gpu": {
-        "exec": "cat /sys/class/drm/card1/device/gpu_busy_percent", // Path may vary (hwmon0, 1, or 2)
-        "format": "🖥️ {}%",
+        "exec": "for c in /sys/class/drm/card*/device; do [ -r $c/gpu_busy_percent ] || continue; awk -v u=$(cat $c/gpu_busy_percent) -v vu=$(cat $c/mem_info_vram_used) -v vt=$(cat $c/mem_info_vram_total) -v t=$(cat $c/hwmon/hwmon*/temp1_input 2>/dev/null|head -1) 'BEGIN{printf \"🖥️ %s%% 🌡️ %d°C 🟰 %.1f/%.1fGB\", u, t/1000, vu/1073741824, vt/1073741824}'; break; done",
+        "format": "{}",
         "return-type": "",
         "interval": 2
     },
