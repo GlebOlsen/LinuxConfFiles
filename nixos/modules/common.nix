@@ -204,12 +204,13 @@ in
     dysk
     wget
     tmux
-    fish
     mako
     fastfetch
     btop
     croc
     config.boot.kernelPackages.cpupower
+    lm_sensors
+    jq
     fuzzel
 
     # Terminal

@@ -14,16 +14,14 @@ window#waybar {
 
 #workspaces,
 #mode,
-#scratchpad,
 #window,
-#mpd,
-#idle_inhibitor,
+#custom-playerctl,
 #pulseaudio,
 #network,
-#power-profiles-daemon,
+#custom-gpu,
 #cpu,
+#custom-cputemp,
 #memory,
-#temperature,
 #backlight,
 #battery,
 #clock,
@@ -39,6 +37,7 @@ window#waybar {
     color: #4f772d;
     /* border-radius: 10px; */
     margin: 0;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 #workspaces button.focused,
@@ -66,10 +65,8 @@ window#waybar {
 }
 
 #workspaces button:hover {
-    background: rgba(179, 255, 0, 0.4);
-    box-shadow: 0 0 5px rgba(179, 255, 0, 0.5);
-    padding: 0 15px;
-    color: #b3ff00;
+    background: #ff00ff;
+    color: #051405;
 }
 
 #pulseaudio {
@@ -88,11 +85,11 @@ window#waybar {
     color: #a3be8c;
 }
 
-#temperature {
+#custom-cputemp {
     color: #d8e2dc;
 }
 
-#temperature.critical {
+#custom-cputemp.critical {
     color: #ff4d4d;
 }
 
@@ -102,11 +99,16 @@ window#waybar {
 
 #battery.charging,
 #battery.plugged {
-    color: #b3ff00;
+    color: #FFFF00;
+    animation-name: blink-charging;
+    animation-duration: 1s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 #battery.warning {
-    color: #f9dc5c;
+    color: #ff9900;
 }
 
 #battery.critical:not(.charging) {
@@ -145,5 +147,12 @@ tooltip label {
     to {
         background-color: #6a040f;
         color: #ffffff;
+    }
+}
+
+@keyframes blink-charging {
+    to {
+        background-color: #FFFF00;
+        color: #051405;
     }
 }
