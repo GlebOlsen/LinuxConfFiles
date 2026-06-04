@@ -22,7 +22,7 @@ set $menu fuzzel
 #
 # Wallpapers per monitor
 output DP-2 bg /home/div/pics/wallpapersS_safe/245085.jpg fill
-output DP-1 bg /home/div/pics/wallpapers_safe/wallhaven-856dlk.png fill
+output DP-1 bg /home/div/pics/wallpapers_safe/1770759436804440.png fill
 output HDMI-A-1 bg /home/div/pics/wallpapersV_safe/961f3a2ce5d5412a4dbdb30374543a74ba6f2f70.png fill
 
 

@@ -9,7 +9,7 @@ let
   };
 in
 {
-  imports = [ ./clipboard.nix ];
+  imports = [ ./clipboard.nix ./yazi.nix ];
 
   # Nix
   nix.settings = {
@@ -171,16 +171,16 @@ in
     };
   };
 
-  # Thunar GUI file manager.
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs; [
-      thunar-archive-plugin
-      thunar-volman
-    ];
-  };
-  services.tumbler.enable = true; # thumbnail daemon for Thunar
-  services.gvfs.enable = true;
+  # # Thunar GUI file manager.
+  # programs.thunar = {
+  #   enable = true;
+  #   plugins = with pkgs; [
+  #     thunar-archive-plugin
+  #     thunar-volman
+  #   ];
+  # };
+  # services.tumbler.enable = true; # thumbnail daemon for Thunar
+  # services.gvfs.enable = true;
 
   # Services & security
   services.gnome.gnome-keyring.enable = true;
@@ -256,8 +256,8 @@ in
 
     # File Management
     p7zip
-    file-roller # GUI archive manager (Thunar archive-plugin backend)
-    xarchiver   # GUI archive manager
+    # file-roller # GUI archive manager (Thunar archive-plugin backend)
+    # xarchiver   # GUI archive manager
 
     # Images
     imv
@@ -273,10 +273,10 @@ in
     mpv
 
     # Theming
-    font-manager
     matcha-gtk-theme
     iconpack-obsidian
-    nwg-look
+    # font-manager
+    # nwg-look
 
     # Local cursor theme
     (runCommandLocal "miniature-cursors" { } ''

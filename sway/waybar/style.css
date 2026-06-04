@@ -38,6 +38,11 @@ window#waybar {
     color: #90a955;
 }
 
+#workspaces {
+    margin: 0;
+    padding: 0;
+}
+
 #workspaces button {
     min-width: 30px;
     min-height: 22px;
@@ -56,15 +61,15 @@ window#waybar {
 
 #workspaces button.focused,
 #workspaces button.active {
-    background-color: rgba(179, 255, 0, 0.9);
-    box-shadow: inset 0 0 0 1px #d8ff6a;
-    color: #051405;
+    background-color: rgba(179, 255, 0, 0.5);
+    box-shadow: inset 0 0 0 4px #b3ff00;
+    color: #000000;
     font-weight: normal;
 }
 
 #workspaces button.focused label,
 #workspaces button.active label {
-    color: #051405;
+    color: #000000;
 }
 
 #workspaces button.visible {
@@ -79,8 +84,8 @@ window#waybar {
 }
 
 #workspaces button:hover {
-    background-color: rgba(144, 169, 85, 0.28);
-    box-shadow: inset 0 0 0 1px #90a955;
+    background-color: #ff00ff;
+    box-shadow: inset 0 0 0 4px #b3ff00;
     color: #051405;
 }
 

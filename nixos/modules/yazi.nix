@@ -98,6 +98,8 @@
     settings.theme.indicator.padding = { open = "█"; close = "█"; };
     settings.theme.status.sep_left = { open = ""; close = ""; };
     settings.theme.status.sep_right = { open = ""; close = ""; };
+    settings.theme.tabs.sep_inner = { open = ""; close = ""; };
+    settings.theme.tabs.sep_outer = { open = ""; close = ""; };
 
     settings.keymap.mgr.prepend_keymap =
       (map (n: {
@@ -139,7 +141,6 @@
   # gvfs.yazi backend: network shares (SMB/SFTP/NFS/WebDAV) + device mounting,
   # and udisks2 for block-device enumeration (mount/unmount/eject).
   services.gvfs.enable = true;
-  services.udisks2.enable = true;
 
   # `ils` -> sixel thumbnail grid of the current dir (foot speaks sixel, not kitty).
   environment.shellAliases.ils =
