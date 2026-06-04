@@ -198,6 +198,7 @@ in
   environment.systemPackages = with pkgs; [
     # System
     nix-tree
+    # nix-output-monitor nix-update nix-init nix-melt nurl
     wl-kbptr
     nmap
     dysk
@@ -238,7 +239,7 @@ in
     lazygit
 
     # Vibes
-    codex
+    master.codex
     master.claude-code
     nodejs_26
     uv
@@ -275,7 +276,6 @@ in
     matcha-gtk-theme
     iconpack-obsidian
     nwg-look
-    bibata-cursors
 
     # Local cursor theme
     (runCommandLocal "miniature-cursors" { } ''
