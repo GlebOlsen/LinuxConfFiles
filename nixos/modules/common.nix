@@ -111,7 +111,6 @@ in
     enable = true;
     wrapperFeatures.gtk = true;
   };
-  programs.waybar.enable = true;
   programs.dconf.enable = true;
   xdg.portal = {
     enable = true;
@@ -224,6 +223,9 @@ in
 
     # Terminal
     foot
+
+    # Sway
+    waybar
 
     # Display
     wdisplays
