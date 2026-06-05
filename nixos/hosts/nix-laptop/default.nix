@@ -1,10 +1,20 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
     ./hardware.nix
     ../../modules/common.nix
+    inputs.scroll-flake.nixosModules.default
   ];
+
+  # Scroll — Sway fork, scrolling tiling layout (testing).
+  # Registers a separate "scroll" Wayland session; existing Sway stays as fallback.
+  programs.scroll = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+    # Bleeding-edge instead of stable 1.12.15 — uncomment to swap:
+    # package = inputs.scroll-flake.packages.${pkgs.stdenv.hostPlatform.system}.scroll-git;
+  };
 
   networking.hostName = "nix-laptop";
   networking.networkmanager.enable = true;

@@ -77,16 +77,16 @@ in
     # Prefer IPv4-mapped addresses while keeping IPv6 available.
     "::ffff:0:0/96" = 100;
   };
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-    publish = {
-      enable = true;
-      addresses = true;
-      workstation = true;
-    };
-  };
+  # services.avahi = {
+  #   enable = true;
+  #   nssmdns4 = true;
+  #   openFirewall = true;
+  #   publish = {
+  #     enable = true;
+  #     addresses = true;
+  #     workstation = true;
+  #   };
+  # };
 
   # Locale, keyboard & time
   time.timeZone = "Europe/Copenhagen";
@@ -190,7 +190,7 @@ in
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
   services.fstrim.enable = true;
-  services.fwupd.enable = true;
+  # services.fwupd.enable = true;
   # QMK keychron stuff
   services.udev.extraRules = ''
     KERNEL=="hidraw*", ATTRS{idVendor}=="3434", MODE="0660", TAG+="uaccess"
