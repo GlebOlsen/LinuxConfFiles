@@ -3,13 +3,9 @@
 let
   username = "div";
   flakeDir = "/home/${username}/repo/linuxconffiles/nixos";
-  master = import inputs.nixpkgs-master {
-    system = pkgs.stdenv.hostPlatform.system;
-    config.allowUnfree = true;
-  };
 in
 {
-  imports = [ ./clipboard.nix ./yazi.nix ];
+  imports = [ ./clipboard.nix ];
 
   # Nix
   nix.settings = {
@@ -23,6 +19,15 @@ in
     ];
   };
   nixpkgs.config.allowUnfree = true;
+  # Bleeding-edge master nixpkgs exposed as pkgs.master
+  nixpkgs.overlays = [
+    (final: _prev: {
+      master = import inputs.nixpkgs-master {
+        inherit (final.stdenv.hostPlatform) system;
+        config.allowUnfree = true;
+      };
+    })
+  ];
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -56,7 +61,6 @@ in
   boot.consoleLogLevel = 3;
   boot.supportedFilesystems = [ "ntfs" ];
   boot.tmp.cleanOnBoot = true;
-  boot.kernelModules = [ "tcp_bbr" ];
   boot.kernel.sysctl = {
     "net.ipv4.tcp_congestion_control" = "bbr";
     "net.core.default_qdisc" = "cake";
@@ -65,7 +69,6 @@ in
   zramSwap.enable = true;
 
   # Network
-  networking.networkmanager.enable = true;
   networking.getaddrinfo.precedence = {
     "::1/128" = 50;
     "::/0" = 40;
@@ -97,7 +100,7 @@ in
   # Audio (PipeWire)
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = lib.mkDefault true;
+    enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
@@ -108,6 +111,7 @@ in
     enable = true;
     wrapperFeatures.gtk = true;
   };
+  programs.waybar.enable = true;
   programs.dconf.enable = true;
   xdg.portal = {
     enable = true;
@@ -144,7 +148,7 @@ in
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "wheel" "networkmanager" "input" "video" "audio" "render" ];
+    extraGroups = [ "wheel" "input" "video" "audio" "render" ];
   };
 
   # Programs
@@ -164,6 +168,7 @@ in
     enable = true;
     vimAlias = true;
     viAlias = true;
+    defaultEditor = true;
     withNodeJs = true;
     runtime = {
       "parser".source = "${tsParsers}/parser";
@@ -171,22 +176,26 @@ in
     };
   };
 
-  # # Thunar GUI file manager.
-  # programs.thunar = {
-  #   enable = true;
-  #   plugins = with pkgs; [
-  #     thunar-archive-plugin
-  #     thunar-volman
-  #   ];
-  # };
-  # services.tumbler.enable = true; # thumbnail daemon for Thunar
-  # services.gvfs.enable = true;
+  # Thunar GUI file manager.
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
+  };
+  services.tumbler.enable = true; # Thunar thumbnails
+  services.gvfs.enable = true;
 
   # Services & security
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
   services.fstrim.enable = true;
   services.fwupd.enable = true;
+  # QMK keychron stuff
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", ATTRS{idVendor}=="3434", MODE="0660", TAG+="uaccess"
+    '';
 
   # Logging & docs
   services.journald.extraConfig = ''
@@ -216,12 +225,8 @@ in
     # Terminal
     foot
 
-    # Sway
-    waybar
-
     # Display
     wdisplays
-    wpaperd
     gammastep
 
     # Clip/Screen/Extras
@@ -235,7 +240,7 @@ in
     ripgrep
     fd
 
-    # Editors
+    # Coding related
     meld
     lazygit
 
@@ -256,8 +261,8 @@ in
 
     # File Management
     p7zip
-    # file-roller # GUI archive manager (Thunar archive-plugin backend)
-    # xarchiver   # GUI archive manager
+    file-roller # GUI archive manager (Thunar archive-plugin backend)
+    xarchiver   # GUI archive manager
 
     # Images
     imv

@@ -16,7 +16,12 @@
   # AMD GPU
   nixpkgs.config.rocmSupport = true;
 
+  # External monitor brightness control via DDC/CI.
+  hardware.i2c.enable = true;
+  services.ddccontrol.enable = true;
+
   environment.systemPackages = with pkgs; [
     amdgpu_top
+    ddcutil
   ];
 }

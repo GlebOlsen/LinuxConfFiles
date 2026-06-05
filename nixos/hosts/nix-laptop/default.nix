@@ -7,9 +7,11 @@
   ];
 
   networking.hostName = "nix-laptop";
+  networking.networkmanager.enable = true;
+  users.users.div.extraGroups = [ "networkmanager" ];
 
   # TTY rice.
-  console.font = "${pkgs.cozette}/share/consolefonts/cozette6x13.psfu";
+  console.font = "${pkgs.spleen}/share/consolefonts/spleen-12x24.psfu";
   console.colors = [ "01140e" "f62b5a" "47b413" "e3c401" "24acd4" "f2affd" "13c299" "e6e6e6" "616161" "ff4d51" "35d450" "e9e836" "5dc5f8" "feabf2" "24dfc4" "ffffff" ];
 
   # Intel GPU:
