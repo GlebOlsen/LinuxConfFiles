@@ -45,8 +45,8 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-  # River test
-  programs.river-classic.enable = true;
+  # Mango test
+  programs.mangowc.enable = true;
 
   environment.systemPackages = with pkgs; [
     brightnessctl
