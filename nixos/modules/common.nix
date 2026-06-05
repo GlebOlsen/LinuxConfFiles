@@ -109,6 +109,7 @@ in
   # Desktop — Sway / Wayland
   programs.sway = {
     enable = true;
+    package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
   programs.dconf.enable = true;
