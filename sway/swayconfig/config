@@ -225,8 +225,8 @@ bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ t
 # bindsym --locked XF86MonBrightnessVown exec brightnessctl set 5%-
 # bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 # Adjust brightness on all 3 monitors via ddcutil (DDC/CI, VCP code 10) (Desktop)
-bindsym --locked XF86MonBrightnessUp exec for d in 1 2 3; do ddcutil --display $d setvcp 10 + 10; done
-bindsym --locked XF86MonBrightnessDown exec for d in 1 2 3; do ddcutil --display $d setvcp 10 - 10; done
+bindsym --locked XF86MonBrightnessUp exec sh -c 'for d in 1 2 3; do ddcutil --display $d setvcp 10 + 10; done'
+bindsym --locked XF86MonBrightnessDown exec sh -c 'for d in 1 2 3; do ddcutil --display $d setvcp 10 - 10; done'
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
