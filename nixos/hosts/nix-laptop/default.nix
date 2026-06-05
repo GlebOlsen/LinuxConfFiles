@@ -37,6 +37,12 @@
     configurationLimit = 10;
   };
 
+  # miracle-wm test
+  nixpkgs.overlays = [
+    (final: _prev: { miracle-wm = final.master.miracle-wm; })
+  ];
+  programs.wayland.miracle-wm.enable = true;
+
   # Laptop power + hardware
   services.tlp.enable = true;
   services.thermald.enable = true;

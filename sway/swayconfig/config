@@ -167,6 +167,7 @@ input type:keyboard {
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
+    bindsym $mod+Shift+f inhibit_fullscreen toggle
 
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
@@ -260,17 +261,16 @@ gaps inner 8
 # blur enable
 # blur_passes 2
 # blur_radius 5
-
-# corner_radius 8
+#
+# corner_radius 0
+# # layer_effects "waybar" blur enable; shadows enable; corner_radius 0
+# # layer_effects "fuzzel" blur enable; shadows enable; corner_radius 0
+#
 # default_dim_inactive 0.1
-
+#
 # shadows enable
 # shadow_blur_radius 20
 # shadow_color #0000007F
-
-# layer_effects "waybar" blur enable; shadows enable; corner_radius 10
-# layer_effects "fuzzel" blur enable; shadows enable; corner_radius 10
-
 
 # execs
 exec waybar
