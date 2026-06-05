@@ -10,11 +10,6 @@
     };
     # Bleeding-edge nixpkgs master (used only for claude-code + codex).
     nixpkgs-master.url = "https://github.com/NixOS/nixpkgs/archive/refs/heads/master.tar.gz";
-    # Scroll: Sway fork with scrolling tiling layout (laptop test).
-    scroll-flake = {
-      url = "github:Diax170/scroll-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = { self, ... } @inputs:
