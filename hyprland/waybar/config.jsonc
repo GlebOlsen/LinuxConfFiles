@@ -1,0 +1,155 @@
+// -*- mode: jsonc -*-
+{
+    // Bar on main monitor (DP-1) only
+    "output": "DP-1",
+    "margin": "8 8 0 8",
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 4,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/submap",
+        "custom/playerctl"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "network#speed", // Dedicated speed module
+        "custom/gpu",
+        "cpu",
+        "custom/cputemp",
+        "memory",
+        "backlight",
+        "battery",
+        "battery#bat2",
+        "clock",
+        "tray"
+    ],
+    // Hyprland Workspaces — all-outputs shows every monitor's workspaces
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}",
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
+    },
+    "hyprland/submap": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "hyprland/window": {
+        "max-length": 50
+    },
+    "custom/playerctl": {
+        "exec": "playerctl metadata --format '{{ artist }} - {{ title }}' 2>/dev/null || echo ''",
+        "return-type": "",
+        "format": "🎜 {}",
+        "max-length": 60,
+        "interval": 2,
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+    "tray": {
+        "spacing": 4
+    },
+    "clock": {
+        "format": " {:%d/%m/%Y  %H:%M:%S}",
+        "interval": 1,
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+        "format": " {usage}%",
+        "interval": 1
+    },
+    // AMD GPU Usage (using sysfs)
+    "custom/gpu": {
+        "exec": "for c in /sys/class/drm/card*/device; do [ -r $c/gpu_busy_percent ] || continue; awk -v u=$(cat $c/gpu_busy_percent) -v vu=$(cat $c/mem_info_vram_used) -v vt=$(cat $c/mem_info_vram_total) -v t=$(cat $c/hwmon/hwmon*/temp1_input 2>/dev/null|head -1) 'BEGIN{printf \" %s%%  %d°C  %.1f/%.1fGB\", u, t/1000, vu/1073741824, vt/1073741824}'; break; done",
+        "format": "{}",
+        "return-type": "",
+        "interval": 2
+    },
+    // Network Traffic (Inbound/Outbound)
+    "network#speed": {
+        "interval": 1,
+        "format": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "tooltip-format": " {ifname} via {gwaddr}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": " Disconnected"
+    },
+    "memory": {
+        "format": " {used:0.1f}GB",
+        "interval": 1
+    },
+    "custom/cputemp": {
+        "exec": "sensors -j 2>/dev/null | jq -r '[to_entries[] | select(.key|test(\"^(k10temp|coretemp|zenpower)\")) | .value | (.Tctl.temp1_input, .[\"Package id 0\"].temp1_input)] | map(select(. != null)) | first | round'",
+        "return-type": "",
+        "format": " {}°C",
+        "interval": 2,
+        "tooltip": false
+    },
+    "network": {
+        "format-wifi": "",
+        "format-ethernet": "",
+        "format-disconnected": "",
+        "tooltip-format-wifi": "{essid}: {ipaddr}/{cidr}",
+        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format-disconnected": "Disconnected"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        },
+        "on-click": "pavucontrol"
+    },
+    "battery": {
+        "bat": "BAT0",
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}% {power}W",
+        "format-full": "{icon} {capacity}% {power}W",
+        "format-charging": " {capacity}% {power}W",
+        "format-plugged": " {capacity}% {power}W",
+        "format-alt": "{icon} {time}",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    "battery#bat2": {
+        "bat": "BAT1",
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}% {power}W",
+        "format-full": "{icon} {capacity}% {power}W",
+        "format-charging": " {capacity}% {power}W",
+        "format-plugged": " {capacity}% {power}W",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["","","","","","","","",""]
+    }
+}

@@ -5,7 +5,10 @@ let
   flakeDir = "/home/${username}/repo/linuxconffiles/nixos";
 in
 {
-  imports = [ ./clipboard.nix ];
+  imports = [
+    ./clipboard.nix
+    ./styling.nix
+  ];
 
   # Nix
   nix.settings = {
@@ -26,6 +29,30 @@ in
         inherit (final.stdenv.hostPlatform) system;
         config.allowUnfree = true;
       };
+    })
+    # swayfx patch
+    # (final: prev: {
+    #   swayfx-unwrapped = prev.swayfx-unwrapped.overrideAttrs (old: {
+    #     patches = (old.patches or [ ]) ++ [
+    #       (final.fetchpatch {
+    #         url = "https://gist.githubusercontent.com/bim9262/0f63e6b5d8107d7d2654b61e0b7debe2/raw";
+    #         hash = "sha256-+6II1Xnth/uenTeCnOUSDgsjpRgfW3ilRp+nMjs1eJg=";
+    #       })
+    #     ];
+    #   });
+    #   swayfx = prev.swayfx.override { inherit (final) swayfx-unwrapped; };
+    # })
+    # sway patch
+    (final: prev: {
+      sway-unwrapped = prev.sway-unwrapped.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          (final.fetchpatch {
+            url = "https://gist.githubusercontent.com/bim9262/0f63e6b5d8107d7d2654b61e0b7debe2/raw";
+            hash = "sha256-+6II1Xnth/uenTeCnOUSDgsjpRgfW3ilRp+nMjs1eJg=";
+          })
+        ];
+      });
+      sway = prev.sway.override { inherit (final) sway-unwrapped; };
     })
   ];
   nix.gc = {
@@ -106,12 +133,18 @@ in
     pulse.enable = true;
   };
 
-  # Desktop — Sway / Wayland
+  # Desktop — Wayland
   programs.sway = {
     enable = true;
+    package = pkgs.sway;
+    # package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
-  programs.dconf.enable = true;
+  # Hyprland
+  # programs.hyprland = {
+  #   enable = true;
+  #   xwayland.enable = true;
+  # };
   xdg.portal = {
     enable = true;
     wlr = {
@@ -121,29 +154,14 @@ in
         chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
       };
     };
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
-    XCURSOR_THEME = "miniature";
-    XCURSOR_SIZE = "64";
-  };
-
-  # Fonts
-  fonts.packages = with pkgs; [
-    noto-fonts
-    nerd-fonts.symbols-only
-    noto-fonts-color-emoji
-  ];
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "Cartograph CF" ];
-    sansSerif = [ "Cartograph CF" ];
-    serif = [ "Cartograph CF" ];
-    emoji = [ "Noto Color Emoji" ];
   };
 
   # Users
+  users.defaultUserShell = pkgs.fish;
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -151,6 +169,16 @@ in
   };
 
   # Programs
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set -g fish_greeting
+      set -g fish_prompt_pwd_dir_length 0
+      fish_config theme choose seaweed
+      set -g __fish_git_prompt_hide_untrackedfiles 0
+      fish_config prompt choose informative_vcs
+    '';
+  };
   programs.git = {
     enable = true;
     config = {
@@ -219,7 +247,9 @@ in
     config.boot.kernelPackages.cpupower
     lm_sensors
     jq
+    tree
     fuzzel
+    wooz
 
     # Terminal
     foot
@@ -230,6 +260,7 @@ in
     # Display
     wdisplays
     gammastep
+    # hyprpaper
 
     # Clip/Screen/Extras
     # (wl-clipboard + cliphist live in ./clipboard.nix)
@@ -278,18 +309,6 @@ in
 
     # Video
     mpv
-
-    # Theming
-    matcha-gtk-theme
-    iconpack-obsidian
-    # font-manager
-    # nwg-look
-
-    # Local cursor theme
-    (runCommandLocal "miniature-cursors" { } ''
-      mkdir -p $out/share/icons/miniature
-      cp -r ${../assets/cursors/miniature}/. $out/share/icons/miniature/
-    '')
   ];
 
   system.stateVersion = "26.05";

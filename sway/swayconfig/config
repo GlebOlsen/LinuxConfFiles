@@ -21,7 +21,7 @@ set $menu fuzzel
 ### Output configuration
 #
 # Wallpapers per monitor
-output DP-2 bg /home/div/pics/wallpapersS_safe/245085.jpg fill
+output DP-2 bg /home/div/pics/wallpapersS_safe/1692758741738793.jpg fill
 output DP-1 bg /home/div/pics/wallpapers_safe/1770759436804440.png fill
 output HDMI-A-1 bg /home/div/pics/wallpapersV_safe/961f3a2ce5d5412a4dbdb30374543a74ba6f2f70.png fill
 
@@ -29,7 +29,7 @@ output HDMI-A-1 bg /home/div/pics/wallpapersV_safe/961f3a2ce5d5412a4dbdb30374543
 
 ### Monitor Configuration
 output HDMI-A-1 mode 1920x1080 position 7040 240 transform 270
-output DP-2 mode 1280x1024 position 1920 1136 transform normal
+output DP-2 mode 1920x1080 position 1280 1080 transform normal
 output DP-1 mode 3840x2160 position 3200 0 transform normal
 
 # Example configuration:
@@ -237,6 +237,7 @@ bindsym $mod+Alt+v exec cliphist-fuzzel-img
 bindsym $mod+p exec hyprpicker -a
 bindsym $mod+Shift+o exec swaylock -C ~/.config/swaylock/config
 bindsym $mod+g exec wl-kbptr
+bindsym $mod+Shift+z exec wooz --invert-scroll --mouse-track
 
 seat seat0 xcursor_theme miniature 64
 

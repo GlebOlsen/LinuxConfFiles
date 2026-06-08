@@ -8,7 +8,7 @@
         flake-compat.follows = "";
       };
     };
-    # Bleeding-edge nixpkgs master (used only for claude-code + codex).
+    # Bleeding-edge nixpkgs master
     nixpkgs-master.url = "https://github.com/NixOS/nixpkgs/archive/refs/heads/master.tar.gz";
   };
 

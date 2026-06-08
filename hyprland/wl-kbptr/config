@@ -1,0 +1,26 @@
+[general]
+modes=tile,bisect
+
+[mode_tile]
+label_color=#b3ff00ff
+label_select_color=#ff00ffff
+unselectable_bg_color=#05140588
+selectable_bg_color=#13231344
+selectable_border_color=#b3ff00aa
+label_font_family=Cartograph CF
+label_font_size=10 50% 100
+label_symbols=abcdefghijklmnopqrstuvwxyzåæø
+
+[mode_bisect]
+label_color=#b3ff00ff
+label_font_size=22
+label_font_family=Cartograph CF
+label_padding=10
+pointer_size=18
+pointer_color=#ff00ffdd
+unselectable_bg_color=#05140588
+even_area_bg_color=#13231344
+even_area_border_color=#b3ff00aa
+odd_area_bg_color=#1a2b1a44
+odd_area_border_color=#88cc00aa
+history_border_color=#b3ff00cc
