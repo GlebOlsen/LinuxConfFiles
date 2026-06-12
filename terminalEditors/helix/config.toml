@@ -5,14 +5,13 @@ end-of-line-diagnostics = "hint"
 line-number = "relative"
 true-color = true
 cursorline = true
-scrolloff = 8
-color-modes = true
+scrolloff = 6
 
 [editor.inline-diagnostics]
-cursor-line = "warning"
+cursor-line = "error"
 
 [editor.whitespace]
-render = { space = "none", tab = "all", newline = "none" }
+render = { space = "all", tab = "all", newline = "none" }
 
 [editor.soft-wrap]
 enable = true
@@ -20,3 +19,18 @@ enable = true
 [editor.indent-guides]
 render = true
 skip-levels = 1
+
+[keys.normal]
+X = "select_line_above"
+V = ["select_mode", "extend_to_line_bounds"]
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
+[keys.normal.space]
+b = ":sh git blame -L %{cursor_line},%{cursor_line} %{buffer_name}"
+G = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
+
+[keys.select]
+X = "select_line_above"
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
