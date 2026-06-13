@@ -1,52 +1,50 @@
-# My GNU/Linux config files
+# linuxconffiles
 
-* Linux confix files
-	- Sway (Currently migrating to it)
-	- i3wm
-	- Hyprland - Not using anymore it's lacking in dynamic sizing of windows.
-	- others
-* Editor configs
-    - Helix
-	- VSCODE
-    - Micro
-	- NVIM
-* Scripts
-	- **fan.sh** Thinkpad fan control 
-	- **bat.sh** Laptop battery control (if allowed)
-	- **--remember to insert the x220 t script--**
+My linux "stuff" config: a NixOS flake plus dotfiles for two machines.
 
-# NixOS is mostly done for desktop still a lot missing...
+## Layout
 
-**Cursor theme:**
-https://github.com/ful1e5/Bibata_Cursor_Rainbow
-or https://github.com/nxll/miniature
+| Path | Contents |
+|------|----------|
+| `nixos/` | Flake, hosts, and modules (the system config) |
+| `sway/` | Sway WM, waybar, foot, fuzzel, swaylock |
+| `hyprland/` | Hyprland WM, waybar, foot, fuzzel, hyprpaper |
+| `terminalEditors/` | Helix, Neovim, micro configs |
+| `heliumbrowser/` | Helium browser (ublock, vimium) |
+| `home/` | `.bashrc`, `.tmux.conf` |
+| `cava/`, `ncspot/` | Audio visualizer, Spotify TUI |
+| `scripts/` | Helper lenovo scripts (fan, backlight, screen) |
+| `archive/` | Old setups (i3, niri, qutebrowser, old Hyprland, vscode, zed.) |
 
-**Favorite font:**
-https://github.com/g5becks/Cartograph/archive/refs/heads/main.zip
-or ```Cartograph CF```
+## NixOS
 
-## Vscode Setup
-* Base Extentions 
-	- Material icon theme
-	- Code spell checker
-	- Current Path
-	- Error Lens
-	- Jumpy2
-	- Vim
+Flake (`nixos/flake.nix`) defines two hosts off a shared `modules/common.nix`:
 
-* Using others for other dev env.
+- `nix-desktop`: AMD GPU (ROCm), systemd-boot, DDC/CI brightness.
+- `nix-laptop`: Intel GPU, GRUB, TLP/thermald power, bluetooth, miracle-wm test.
 
-* **Copy Settings.json file**
-* **Copy keybinding.json file**
+Modules: `common.nix` (base system), `styling.nix` (GTK/cursor/font theming), `clipboard.nix` (cliphist + fuzzel image picker).
 
-<hr />
+### Build
 
-**Neovim Setup - (old config look in HELIX)**
+```sh
+nh os switch nixos -H nix-desktop   # or nix-laptop
+```
 
-1. Clone repo
-2. Put init.lua ->  .config/nvim/init.lua
-3. Install ripgrep and sed
-4. Enjoy
+Or plain Nix:
 
-**My neovim config**
-* Space is the "Leader key"
+```sh
+sudo nixos-rebuild switch --flake ./nixos#nix-desktop
+```
+
+## Stack
+
+- Compositor: Sway (patched fullscreen), Hyprland available.
+- Kernel: XanMod latest, low-latency tweaks, BBR + CAKE.
+- Shell: fish. Audio: PipeWire. Editor: Neovim/Helix.
+- Bleeding-edge nixpkgs `master` exposed as `pkgs.master`.
+
+## Credits
+
+- Cursor theme: [Bibata_Cursor_Rainbow](https://github.com/ful1e5/Bibata_Cursor_Rainbow)
+- Font: [Cartograph CF](https://github.com/g5becks/Cartograph)

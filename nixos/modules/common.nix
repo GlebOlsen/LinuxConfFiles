@@ -22,27 +22,15 @@ in
     ];
   };
   nixpkgs.config.allowUnfree = true;
-  # master nixpkgs exposed as pkgs.master
   nixpkgs.overlays = [
+    # master nixpkgs exposed as pkgs.master
     (final: _prev: {
       master = import inputs.nixpkgs-master {
         inherit (final.stdenv.hostPlatform) system;
         config.allowUnfree = true;
       };
     })
-    # swayfx patch
-    # (final: prev: {
-    #   swayfx-unwrapped = prev.swayfx-unwrapped.overrideAttrs (old: {
-    #     patches = (old.patches or [ ]) ++ [
-    #       (final.fetchpatch {
-    #         url = "https://gist.githubusercontent.com/bim9262/0f63e6b5d8107d7d2654b61e0b7debe2/raw";
-    #         hash = "sha256-+6II1Xnth/uenTeCnOUSDgsjpRgfW3ilRp+nMjs1eJg=";
-    #       })
-    #     ];
-    #   });
-    #   swayfx = prev.swayfx.override { inherit (final) swayfx-unwrapped; };
-    # })
-    # sway patch
+    # sway fix fullscreen
     (final: prev: {
       sway-unwrapped = prev.sway-unwrapped.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
@@ -137,14 +125,8 @@ in
   programs.sway = {
     enable = true;
     package = pkgs.sway;
-    # package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
-  # Hyprland
-  # programs.hyprland = {
-  #   enable = true;
-  #   xwayland.enable = true;
-  # };
   xdg.portal = {
     enable = true;
     wlr = {
@@ -184,6 +166,23 @@ in
     config = {
       credential.helper = "store";
       init.defaultBranch = "main";
+    };
+  };
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      gui = {
+        showRandomTip = false;
+        showCommandLog = false;
+        showBottomLine = false;
+        border = "bold";
+        scrollHeight = 4;
+        nerdFontsVersion = "3";
+      };
+      git.parseEmoji = true;
+      os.editPreset = "nvim";
+      disableStartupPopups = true;
+      update.method = "never";
     };
   };
   programs.neovim = let
@@ -235,6 +234,7 @@ in
     # System
     nix-tree
     # nix-output-monitor nix-update nix-init nix-melt nurl
+    tree
     wl-kbptr
     nmap
     dysk
@@ -247,7 +247,6 @@ in
     config.boot.kernelPackages.cpupower
     lm_sensors
     jq
-    tree
     fuzzel
     wooz
 
@@ -269,13 +268,12 @@ in
     swappy
     hyprpicker
 
-    # Neovim runtime deps (telescope, grug-far, blink-ripgrep)
+    # Coding
+    meld
+    scooter
+    # Neovim deps
     ripgrep
     fd
-
-    # Coding related
-    meld
-    lazygit
 
     # Vibes
     master.codex
@@ -311,5 +309,5 @@ in
     mpv
   ];
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 }

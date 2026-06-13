@@ -72,6 +72,15 @@ opt.listchars = {
 
 local keymap = vim.keymap
 
+local function term(cmd)
+  vim.cmd('tabnew')
+  vim.fn.jobstart(cmd, {
+    term = true,
+    on_exit = function() vim.cmd('tabclose'); vim.cmd('checktime') end,
+  })
+  vim.cmd('startinsert')
+end
+
 keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
 keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window' })
 keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to top window' })
@@ -113,11 +122,9 @@ keymap.set('n', '<leader>gt', '<cmd>Gitsigns toggle_current_line_blame<CR>', { d
 keymap.set('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>', { desc = 'Diff This' })
 keymap.set('n', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { desc = 'Reset Hunk' })
 keymap.set('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>', { desc = 'Reset Buffer' })
+keymap.set('n', '<leader>gg', function() term({ 'lazygit' }) end, { desc = 'Lazygit' })
 
-keymap.set('n', '<leader>S', '<cmd>GrugFar<CR>', { desc = 'Search and Replace' })
-keymap.set('n', '<leader>sw', function() require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } }) end, { desc = 'Search Word Under Cursor' })
-keymap.set('v', '<leader>sw', function() require('grug-far').with_visual_selection() end, { desc = 'Search Selection' })
-keymap.set('n', '<leader>sp', function() require('grug-far').open({ prefills = { paths = vim.fn.expand('%') } }) end, { desc = 'Search and Replace in Current File' })
+keymap.set('n', '<leader>S', function() term({ 'scooter' }) end, { desc = 'Scooter Search/Replace' })
 
 keymap.set('n', '<leader>fm', 'mzgg=G`z', { desc = 'Format Buffer (Indent)' })
 keymap.set('v', '<leader>fm', '=', { desc = 'Format Selection (Indent)' })
@@ -264,16 +271,6 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {},
-  },
-
-  {
-    'MagicDuck/grug-far.nvim',
-    cmd = 'GrugFar',
-    opts = {
-      engine = 'ripgrep',
-      engines = { ripgrep = { showReplaceDiff = true } },
-      minSearchChars = 1,
-    },
   },
 
   {
