@@ -1,6 +1,6 @@
 # linuxconffiles
 
-My linux "stuff" config: a NixOS flake plus dotfiles for two machines.
+My linux "stuff" and configs: a NixOS flake plus dotfiles for two machines.
 
 ## Layout
 
