@@ -22,7 +22,7 @@ set $menu fuzzel
 #
 # Wallpapers per monitor
 output DP-2 bg /home/div/pics/wallpapersS_safe/1692758741738793.jpg fill
-output DP-1 bg /home/div/pics/wallpapers_safe/1770759436804440.png fill
+output DP-1 bg /home/div/pics/wallpapers_safe/bg.png fill
 output HDMI-A-1 bg /home/div/pics/wallpapersV_safe/961f3a2ce5d5412a4dbdb30374543a74ba6f2f70.png fill
 
 
@@ -236,6 +236,24 @@ bindsym $mod+Alt+v exec cliphist-fuzzel-img
 bindsym $mod+p exec hyprpicker -a
 bindsym $mod+Shift+o exec swaylock -C ~/.config/swaylock/config
 bindsym $mod+g exec wl-kbptr
+bindsym $mod+Alt+g mode "Mouse"
+mode "Mouse" {
+    bindsym g mode "default", exec wl-kbptr && swaymsg mode "Mouse"
+
+    bindsym h seat seat0 cursor move -15 0
+    bindsym j seat seat0 cursor move 0 15
+    bindsym k seat seat0 cursor move 0 -15
+    bindsym l seat seat0 cursor move 15 0
+
+    bindsym a seat seat0 cursor press button1, seat seat0 cursor release button1
+    bindsym s seat seat0 cursor press button2, seat seat0 cursor release button2
+    bindsym d seat seat0 cursor press button3, seat seat0 cursor release button3
+
+    bindsym r exec wlrctl pointer scroll -15 0
+    bindsym f exec wlrctl pointer scroll 15 0
+
+    bindsym Escape mode "default"
+}
 bindsym $mod+Shift+z exec wooz --invert-scroll --mouse-track
 
 seat seat0 xcursor_theme miniature 64

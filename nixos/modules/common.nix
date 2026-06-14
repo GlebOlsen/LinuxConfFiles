@@ -235,7 +235,6 @@ in
     nix-tree
     # nix-output-monitor nix-update nix-init nix-melt nurl
     tree
-    wl-kbptr
     nmap
     dysk
     wget
@@ -249,6 +248,10 @@ in
     jq
     fuzzel
     wooz
+
+    # Mouse stuff
+    wl-kbptr
+    wlrctl
 
     # Terminal
     foot
