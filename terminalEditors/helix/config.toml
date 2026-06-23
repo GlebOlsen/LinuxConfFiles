@@ -27,6 +27,8 @@ render = true
 skip-levels = 1
 
 [keys.normal]
+C-d = ["page_cursor_half_down", "align_view_center"]
+C-u = ["page_cursor_half_up", "align_view_center"]
 X = "select_line_above"
 V = ["select_mode", "extend_to_line_bounds"]
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]

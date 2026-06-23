@@ -143,6 +143,8 @@ in
   };
 
   # Users
+  users.users.root.hashedPassword = "!";
+  # sudo passwd -dl root (to remove the password and disable login)
   users.defaultUserShell = pkgs.fish;
   users.users.${username} = {
     isNormalUser = true;
