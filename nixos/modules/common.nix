@@ -185,23 +185,6 @@ in
       update.method = "never";
     };
   };
-  programs.neovim = let
-    tsParsers = pkgs.symlinkJoin {
-      name = "nvim-treesitter-parsers";
-      paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
-    };
-  in {
-    enable = true;
-    vimAlias = true;
-    viAlias = true;
-    defaultEditor = true;
-    withNodeJs = true;
-    runtime = {
-      "parser".source = "${tsParsers}/parser";
-      "queries".source = "${pkgs.vimPlugins.nvim-treesitter}/runtime/queries";
-    };
-  };
-
   # Thunar GUI file manager.
   programs.thunar = {
     enable = true;
@@ -262,7 +245,6 @@ in
     # Display
     wdisplays
     gammastep
-    # hyprpaper
 
     # Clip/Screen/Extras
     # (wl-clipboard + cliphist live in ./clipboard.nix)
@@ -274,7 +256,7 @@ in
     # Coding
     meld
     scooter
-    # Neovim deps
+    helix
     ripgrep
     fd
 

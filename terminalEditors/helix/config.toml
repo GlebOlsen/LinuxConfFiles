@@ -35,7 +35,7 @@ A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_befor
 [keys.normal.space]
 b = ":sh git blame -L %{cursor_line},%{cursor_line} %{buffer_name}"
 G = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
-S = [":write-all", ":insert-output serpl >/dev/tty", ":reload-all", ":redraw"]
+S = [":write-all", ":insert-output scooter >/dev/tty", ":reload-all", ":redraw"]
 
 [keys.select]
 X = "select_line_above"
