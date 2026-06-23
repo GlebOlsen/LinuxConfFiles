@@ -184,7 +184,9 @@ in
         nerdFontsVersion = "3";
       };
       git.parseEmoji = true;
-      os.editPreset = "helix";
+      os.edit = "hx -- {{filename}}";
+      os.editAtLine = "hx -- {{filename}}:{{line}}";
+      os.editAtLineAndWait = "hx -- {{filename}}:{{line}}";
       disableStartupPopups = true;
       update.method = "never";
     };
