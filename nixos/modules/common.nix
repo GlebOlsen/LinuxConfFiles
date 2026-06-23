@@ -140,6 +140,8 @@ in
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
+    EDITOR = "hx";
+    VISUAL = "hx";
   };
 
   # Users
@@ -182,7 +184,7 @@ in
         nerdFontsVersion = "3";
       };
       git.parseEmoji = true;
-      os.editPreset = "nvim";
+      os.editPreset = "helix";
       disableStartupPopups = true;
       update.method = "never";
     };
