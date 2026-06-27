@@ -114,16 +114,6 @@ in
     enable = true;
     xwayland.enable = true;
   };
-  # xdg.portal = {
-  #   enable = true;
-  #   wlr = {
-  #     enable = true;
-  #     settings.screencast = {
-  #       chooser_type = "simple";
-  #       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-  #     };
-  #   };
-  # };
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
@@ -223,7 +213,6 @@ in
     lm_sensors
     jq
     fuzzel
-    wooz
 
     # Mouse stuff
     wl-kbptr
@@ -232,7 +221,7 @@ in
     # Terminal
     foot
 
-    # Sway
+    # Status bar
     waybar
 
     # Display
