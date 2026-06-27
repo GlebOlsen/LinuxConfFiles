@@ -103,6 +103,7 @@ hl.config({
         kb_layout   = "dk",
         follow_mouse = 1,
         sensitivity  = 0,
+        -- Laptop: natural_scroll = true
         touchpad = { natural_scroll = false },
     },
 })
@@ -145,9 +146,9 @@ hl.bind(mainMod .. " + V", hl.dsp.layout("preselect r"))
 hl.bind(mainMod .. " + B", hl.dsp.layout("preselect d"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.layout("preselect l"))
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.layout("preselect u"))
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 -- fake fullscreen: window stays tiled, app thinks it's fullscreen
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle" }))
-hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + space", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
 
@@ -197,10 +198,14 @@ hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("wl-kbptr"))
 hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("swaylock -C ~/.config/swaylock/config"))
 
 -- Media / volume / brightness
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"),       { locked = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"),    { locked = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -2%"),         { locked = true, repeating = true })
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +2%"),         { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),         { locked = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),       { locked = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"),          { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+"),   { locked = true, repeating = true })
+-- Brightness via brightnessctl (Laptop)
+-- hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true })
+-- hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true })
+-- Brightness on all 3 monitors via ddcutil (DDC/CI, VCP code 10) (Desktop)
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("for d in 1 2 3; do ddcutil --display $d setvcp 10 + 10; done"), { locked = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("for d in 1 2 3; do ddcutil --display $d setvcp 10 - 10; done"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
