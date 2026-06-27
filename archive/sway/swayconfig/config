@@ -53,9 +53,9 @@ exec swayidle -w \
 #
 # Example configuration:
 #
-input type:touchpad {
-      natural_scroll enabled
-}
+# input type:touchpad {
+#       natural_scroll enabled
+# }
 
 
 input type:keyboard {

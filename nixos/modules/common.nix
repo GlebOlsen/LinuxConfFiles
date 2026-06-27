@@ -30,18 +30,6 @@ in
         config.allowUnfree = true;
       };
     })
-    # sway fix fullscreen
-    (final: prev: {
-      sway-unwrapped = prev.sway-unwrapped.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [
-          (final.fetchpatch {
-            url = "https://gist.githubusercontent.com/bim9262/0f63e6b5d8107d7d2654b61e0b7debe2/raw";
-            hash = "sha256-+6II1Xnth/uenTeCnOUSDgsjpRgfW3ilRp+nMjs1eJg=";
-          })
-        ];
-      });
-      sway = prev.sway.override { inherit (final) sway-unwrapped; };
-    })
   ];
   nix.gc = {
     automatic = true;
@@ -122,21 +110,20 @@ in
   };
 
   # Desktop — Wayland
-  programs.sway = {
+  programs.hyprland = {
     enable = true;
-    package = pkgs.sway;
-    wrapperFeatures.gtk = true;
+    xwayland.enable = true;
   };
-  xdg.portal = {
-    enable = true;
-    wlr = {
-      enable = true;
-      settings.screencast = {
-        chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-      };
-    };
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr = {
+  #     enable = true;
+  #     settings.screencast = {
+  #       chooser_type = "simple";
+  #       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+  #     };
+  #   };
+  # };
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
@@ -267,7 +254,7 @@ in
     fd
 
     # Vibes
-    master.codex
+    codex
     master.claude-code
     nodejs_26
     uv

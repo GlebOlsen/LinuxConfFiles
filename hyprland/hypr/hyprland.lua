@@ -26,7 +26,6 @@ hl.workspace_rule({ workspace = "3", monitor = "HDMI-A-1", default = true })
 -------------------
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("gammastep -l 55.7:12.6 -t 6500:2700 -g 0.8 -m wayland")
