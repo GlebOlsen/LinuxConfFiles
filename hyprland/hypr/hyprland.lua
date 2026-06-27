@@ -12,10 +12,16 @@ hl.workspace_rule({ workspace = "2", monitor = "DP-1",     default = true })
 hl.workspace_rule({ workspace = "3", monitor = "HDMI-A-1", default = true })
 
 hl.on("hyprland.start", function()
+    hl.exec_cmd("awww img -o DP-2     --resize crop /home/div/pics/wallpapersS_safe/1692758741738793.jpg")
+    hl.exec_cmd("awww img -o DP-1     --resize crop /home/div/pics/wallpapers_safe/bg.png")
+    hl.exec_cmd("awww img -o HDMI-A-1 --resize crop /home/div/pics/wallpapersV_safe/961f3a2ce5d5412a4dbdb30374543a74ba6f2f70.png")
     hl.exec_cmd("waybar")
+    -- Laptop tray applets:
+    -- hl.exec_cmd("nm-applet --indicator")
+    -- hl.exec_cmd("blueman-applet")
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("gammastep -l 55.7:12.6 -t 6500:2700 -g 0.8 -m wayland")
-    hl.exec_cmd([[swayidle -w timeout 900 'swaylock -C ~/.config/swaylock/config' timeout 930 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep 'swaylock -C ~/.config/swaylock/config']])
+    hl.exec_cmd("hypridle")
 end)
 
 hl.env("XCURSOR_THEME", "miniature")
@@ -181,7 +187,7 @@ hl.bind("Print", hl.dsp.exec_cmd([[grim -g "$(slurp)" - | swappy -f -]]))
 hl.bind(mainMod .. " + ALT + V", hl.dsp.exec_cmd("cliphist-fuzzel-img"))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -a"))
 hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("wl-kbptr"))
-hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("swaylock -C ~/.config/swaylock/config"))
+hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("hyprlock"))
 
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),         { locked = true })
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),       { locked = true })
@@ -206,4 +212,18 @@ hl.window_rule({
     name  = "fix-xwayland-drags",
     match = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false },
     no_focus = true,
+})
+
+hl.window_rule({
+    name  = "vesktop-blackout",
+    match = { class = "^vesktop$" },
+    no_screen_share = true,
+})
+
+hl.window_rule({
+    name  = "blackout-sensitive",
+    match = { title = "([Ll]ogin|[Ss]ign[ -]?[Ii]n|[Ll]og[ -]?[Ii]n|[Mm]ail|[Gg]it[Hh]ub|[Gg]it|[Cc]laude|[Cc]odex|[Ss]team|[Ss]potify|[Dd]ba)" },
+    no_screen_share = true,
+    border_color = "rgb(ff0d2d)",
+    border_size = 3,
 })

@@ -114,6 +114,18 @@ in
     enable = true;
     xwayland.enable = true;
   };
+  # Wallpaper daemon (CPU/shm, ~0 VRAM)
+  systemd.user.services.awww = {
+    description = "awww wallpaper daemon";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.awww}/bin/awww-daemon";
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+  };
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
@@ -233,6 +245,11 @@ in
     grim
     slurp
     swappy
+
+    # Hyprland
+    awww
+    hyprlock
+    hypridle
     hyprpicker
 
     # Coding
