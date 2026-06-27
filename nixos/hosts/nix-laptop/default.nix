@@ -1,10 +1,17 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ./hardware.nix
     ../../modules/common.nix
   ];
+
+  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/3b629e27-78b1-4e43-9dd9-4720bb689a12";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.extraModprobeConfig = ''
+    options thinkpad_acpi fan_control=1
+  '';
 
   networking.hostName = "nix-laptop";
   networking.networkmanager.enable = true;
@@ -19,29 +26,11 @@
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
-      libvdpau-va-gl
-      intel-vaapi-driver # Intel HD 3000
-      # intel-media-driver     # Intel UHD 620
-      # intel-compute-runtime  # Intel UHD 620
+       intel-media-driver
     ];
   };
-  environment.sessionVariables.LIBVA_DRIVER_NAME = "i965"; # Intel HD 3000
-  # environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD"; # Intel UHD 620
   hardware.enableRedistributableFirmware = true;
-
-  # BIOS alternative:
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/sda";
-    useOSProber = true;
-    configurationLimit = 10;
-  };
-
-  # miracle-wm test
-  nixpkgs.overlays = [
-    (final: _prev: { miracle-wm = final.master.miracle-wm; })
-  ];
-  programs.wayland.miracle-wm.enable = true;
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
   # Laptop power + hardware
   services.tlp.enable = true;
@@ -55,6 +44,6 @@
   environment.systemPackages = with pkgs; [
     brightnessctl
     networkmanagerapplet
-    intel-gpu-tools # intel_gpu_top monitor
+    intel-gpu-tools
   ];
 }
