@@ -117,8 +117,7 @@ in
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
-    EDITOR = "hx";
-    VISUAL = "hx";
+    VISUAL = "nvim";
   };
 
   # Users
@@ -149,6 +148,21 @@ in
       init.defaultBranch = "main";
     };
   };
+  programs.neovim = let
+    tsParsers = pkgs.symlinkJoin {
+      name = "nvim-treesitter-parsers";
+      paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
+    };
+  in {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    runtime = {
+      "parser".source = "${tsParsers}/parser";
+      "queries".source = "${pkgs.vimPlugins.nvim-treesitter}/runtime/queries";
+    };
+  };
   programs.lazygit = {
     enable = true;
     settings = {
@@ -161,9 +175,7 @@ in
         nerdFontsVersion = "3";
       };
       git.parseEmoji = true;
-      os.edit = "hx -- {{filename}}";
-      os.editAtLine = "hx -- {{filename}}:{{line}}";
-      os.editAtLineAndWait = "hx -- {{filename}}:{{line}}";
+      os.editPreset = "nvim";
       disableStartupPopups = true;
       update.method = "never";
     };
@@ -243,7 +255,6 @@ in
     # Coding
     meld
     scooter
-    helix
     ripgrep
     fd
 

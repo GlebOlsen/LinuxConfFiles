@@ -101,9 +101,17 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     hl('NormalNC',      { bg = 'NONE' })
     hl('NormalFloat',   { bg = 'NONE' })
     hl('EndOfBuffer',   { bg = 'NONE' })
+    hl('LimTermNormal', { bg = '#000000' })
   end,
 })
 vim.cmd.colorscheme 'murphy'
+
+for i, c in ipairs({
+  '#242424', '#f62b5a', '#47b413', '#e3c401', '#24acd4', '#f2affd', '#13c299', '#e6e6e6',
+  '#616161', '#ff4d51', '#35d450', '#e9e836', '#5dc5f8', '#feabf2', '#24dfc4', '#ffffff',
+}) do
+  vim.g['terminal_color_' .. (i - 1)] = c
+end
 
 opt.list = true
 opt.listchars = {
@@ -147,6 +155,7 @@ local function term(cmd)
   end
   local buf = vim.api.nvim_create_buf(false, true)
   local win = vim.api.nvim_open_win(buf, true, vim.tbl_extend('force', cfg(), { style = 'minimal' }))
+  vim.wo[win].winhighlight = 'NormalFloat:LimTermNormal,FloatBorder:LimTermNormal'
   local grp = vim.api.nvim_create_augroup('LimTerm', { clear = true })
   vim.api.nvim_create_autocmd('VimResized', {
     group = grp,
