@@ -165,7 +165,7 @@ local function term(cmd)
   })
   vim.fn.jobstart(cmd, {
     term = true,
-
+    on_exit = function()
       pcall(vim.api.nvim_del_augroup_by_id, grp)
       if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
       vim.cmd('checktime')
