@@ -7,7 +7,7 @@ vim.g.loaded_tutor_mode_plugin = 1
 local opt = vim.opt
 
 opt.updatetime = 250
-opt.timeoutlen = 300
+opt.timeoutlen = 1000
 opt.undofile = true
 opt.undolevels = 10000
 opt.clipboard = 'unnamedplus'
@@ -165,7 +165,7 @@ local function term(cmd)
   })
   vim.fn.jobstart(cmd, {
     term = true,
-    on_exit = function()
+
       pcall(vim.api.nvim_del_augroup_by_id, grp)
       if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
       vim.cmd('checktime')
@@ -218,7 +218,7 @@ keymap.set('n', '<leader>fr', '<cmd>browse oldfiles<CR>', { desc = 'Recent Files
 keymap.set('n', '<leader>fc', ':grep <C-r><C-w><CR>', { desc = 'Grep Word Under Cursor' })
 
 keymap.set('n', '<leader>gg', function() term({ 'lazygit' }) end, { desc = 'Lazygit' })
-keymap.set('n', '<leader>S', function() vim.cmd('wall') term({ 'scooter' }) end, { desc = 'Scooter Search/Replace' })
+keymap.set('n', '<leader>S', function() vim.cmd('silent! wall') term({ 'scooter' }) end, { desc = 'Scooter Search/Replace' })
 
 keymap.set('n', '<leader>fm', 'mzgg=G`z', { desc = 'Format Buffer (Indent)' })
 keymap.set('v', '<leader>fm', '=', { desc = 'Format Selection (Indent)' })
