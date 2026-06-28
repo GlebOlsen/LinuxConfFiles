@@ -51,7 +51,7 @@ end
 
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
-vim.g.netrw_winsize = 20
+vim.g.netrw_winsize = 25
 vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
 vim.api.nvim_create_autocmd('FileType', {
