@@ -1,4 +1,4 @@
-theme = "ao"
+theme = "rainbow9"
 
 [editor]
 end-of-line-diagnostics = "hint"
@@ -6,6 +6,8 @@ line-number = "relative"
 true-color = true
 cursorline = true
 scrolloff = 6
+# bufferline = "multiple"
+popup-border = "all"
 
 [editor.file-picker]
 hidden = false

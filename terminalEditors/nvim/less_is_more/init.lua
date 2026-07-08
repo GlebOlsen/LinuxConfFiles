@@ -55,6 +55,14 @@ vim.g.netrw_winsize = 25
 vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
 vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'netrw',
+  desc = 'Stop double-click from going up a directory (netrw maps <2-LeftMouse> to -)',
+  callback = function(args)
+    vim.keymap.set('n', '<2-LeftMouse>', '<Nop>', { buffer = args.buf })
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
     pcall(vim.treesitter.start, args.buf)
   end,

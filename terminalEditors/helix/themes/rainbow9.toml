@@ -1,0 +1,64 @@
+"keyword"           = "violet"
+"keyword.control"   = "violet"
+"keyword.directive" = "violet"
+"function"          = "green"
+"function.builtin"  = "green"
+"function.macro"    = "green"
+"type"              = "azure"
+"type.builtin"      = "azure"
+"constant"          = "yellow"
+"constant.numeric"  = "yellow"
+"constant.builtin"  = "yellow"
+"string"            = "orange"
+"constant.character" = "orange"
+"comment"           = "gray"
+"operator"          = "cyan"
+
+# everything else stays white
+"variable"          = "white"
+"variable.parameter" = "white"
+"variable.other.member" = "white"
+"variable.builtin"  = "white"
+"punctuation"       = "white"
+"punctuation.bracket" = "white"
+"constructor"       = "white"
+"namespace"         = "white"
+"label"             = "white"
+"attribute"         = "white"
+
+# minimal UI
+"ui.background"     = { bg = "bg" }
+"ui.text"           = "white"
+"ui.text.focus"     = "white"
+"ui.linenr"         = "gray"
+"ui.linenr.selected" = "high"
+"ui.cursor"         = { fg = "bg", bg = "high" }
+"ui.cursor.match"   = { fg = "high", modifiers = ["bold"] }
+"ui.cursorline.primary" = { bg = "bg2" }
+"ui.selection"      = { bg = "sel" }
+"ui.statusline"     = { fg = "white", bg = "bg2" }
+"ui.statusline.inactive" = { fg = "gray", bg = "bg2" }
+"ui.menu"           = { fg = "white", bg = "bg2" }
+"ui.menu.selected"  = { fg = "bg", bg = "cyan" }
+"ui.popup"          = { bg = "bg2" }
+"ui.help"           = { bg = "bg2", fg = "white" }
+"ui.virtual.ruler"  = { bg = "bg2" }
+"ui.virtual.whitespace" = "gray"
+"ui.virtual.jump-label" = { fg = "bg", bg = "high" }
+"diagnostic.error"  = { underline = { color = "red", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+
+[palette]
+red    = "#FF0000"
+orange = "#FF8000"
+yellow = "#FFFF00"
+green  = "#00FF00"
+cyan   = "#00FFFF"
+azure  = "#3399FF"
+violet = "#FF00FF"
+white  = "#FFFFFF"
+gray   = "#808080"
+bg     = "#000000"
+bg2    = "#1A1A1A"
+sel    = "#3A4A00"
+high   = "#B3FF00"
