@@ -20,6 +20,9 @@ cursor-line = "error"
 [editor.whitespace]
 render = { tab = "all", newline = "none" }
 
+[editor.soft-wrap]
+enable = true
+
 [editor.indent-guides]
 render = true
 skip-levels = 1
