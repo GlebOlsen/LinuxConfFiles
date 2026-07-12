@@ -42,11 +42,20 @@
 "ui.menu.selected"  = { fg = "bg", bg = "cyan" }
 "ui.popup"          = { bg = "bg2" }
 "ui.help"           = { bg = "bg2", fg = "white" }
+"ui.window"         = "cyan"
 "ui.virtual.ruler"  = { bg = "bg2" }
 "ui.virtual.whitespace" = "gray"
+"ui.virtual.inlay-hint" = "gray"
 "ui.virtual.jump-label" = { fg = "bg", bg = "high" }
 "diagnostic.error"  = { underline = { color = "red", style = "curl" } }
 "diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+"diagnostic.info"   = { underline = { color = "azure", style = "curl" } }
+"diagnostic.hint"   = { underline = { color = "cyan", style = "curl" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+"diff.plus"         = "green"
+"diff.minus"        = "red"
+"diff.delta"        = "yellow"
 
 [palette]
 red    = "#FF0000"

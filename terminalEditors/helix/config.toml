@@ -18,10 +18,7 @@ git-exclude = false
 cursor-line = "error"
 
 [editor.whitespace]
-render = { space = "all", tab = "all", newline = "none" }
-
-[editor.soft-wrap]
-enable = true
+render = { tab = "all", newline = "none" }
 
 [editor.indent-guides]
 render = true
@@ -36,7 +33,7 @@ A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 A-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
 
 [keys.normal.space]
-b = ":sh git blame -L %{cursor_line},%{cursor_line} %{buffer_name}"
+b = ":sh git blame -L %{cursor_line},+1 -- \"%{buffer_name}\""
 G = [":new", ":insert-output lazygit", ":insert-output printf '\\x1b[?1049h\\x1b[?2004h' >/dev/tty", ":buffer-close!", ":redraw"]
 S = [":write-all", ":insert-output scooter >/dev/tty", ":insert-output printf '\\x1b[?1049h\\x1b[?2004h' >/dev/tty", ":reload-all", ":redraw"]
 M = [":insert-output glow -s dark -p %{buffer_name} </dev/tty >/dev/tty", ":insert-output printf '\\x1b[?1049h\\x1b[?2004h' >/dev/tty", ":redraw"]
