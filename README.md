@@ -7,13 +7,14 @@ My linux "stuff" and configs: a NixOS flake plus dotfiles for two machines.
 | Path | Contents |
 |------|----------|
 | `nixos/` | Flake, hosts, and modules (the system config) |
+| `i3/` | i3, Polybar, picom, and warpd configs |
 | `hyprland/` | Hyprland WM (Lua config), waybar, foot, fuzzel, wl-kbptr |
 | `terminalEditors/` | Helix, Neovim, micro configs |
 | `heliumbrowser/` | Helium browser (ublock, vimium) |
 | `home/` | `.bashrc`, `.tmux.conf` |
 | `cava/`, `ncspot/` | Audio visualizer, Spotify TUI |
 | `scripts/` | Helper lenovo scripts (fan, backlight, screen) |
-| `archive/` | Old setups (Sway, i3, niri, qutebrowser, old Hyprland, vscode, zed.) |
+| `archive/` | Old setups and retired bars (i3bar/i3status, Sway, niri, qutebrowser, old Hyprland, vscode, zed) |
 
 ## NixOS
 
@@ -38,8 +39,8 @@ sudo nixos-rebuild switch --flake ./nixos#nix-desktop
 
 ## Stack
 
-- Compositor: Hyprland (Lua config). Sway archived.
-- Wallpaper: awww daemon (CPU/shm, ~0 VRAM).
+- Window managers: i3/X11 and Hyprland/Wayland (Lua config). Sway archived.
+- Wallpaper: nitrogen on i3; awww on Hyprland.
 - Kernel: XanMod latest, low-latency tweaks, BBR + CAKE.
 - Shell: fish. Audio: PipeWire. Editor: Neovim/Helix.
 - Bleeding-edge nixpkgs `master` exposed as `pkgs.master`.
