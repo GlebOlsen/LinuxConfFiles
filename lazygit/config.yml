@@ -1,0 +1,14 @@
+gui:
+  showRandomTip: false
+  showCommandLog: false
+  showBottomLine: false
+  border: bold
+  scrollHeight: 4
+  nerdFontsVersion: "3"
+git:
+  parseEmoji: true
+os:
+  editPreset: helix
+disableStartupPopups: true
+update:
+  method: never
