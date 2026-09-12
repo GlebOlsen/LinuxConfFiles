@@ -1,4 +1,9 @@
 gui:
+  # filterMode: fuzzy
+  # showNumstatInFilesView: true
+  # showDivergenceFromBaseBranch: arrowAndNumber
+  # expandFocusedSidePanel: true
+  # switchTabsWithPanelJumpKeys: true
   showRandomTip: false
   showCommandLog: false
   showBottomLine: false
@@ -7,6 +12,12 @@ gui:
   nerdFontsVersion: "3"
 git:
   parseEmoji: true
+  # autoForwardBranches: none
+  # diffRenderers:
+  #   - name: delta
+  #     type: stdinFilter
+  #     colorArg: always
+  #     command: delta --dark --paging=never --line-numbers
 os:
   editPreset: helix
 disableStartupPopups: true
