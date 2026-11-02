@@ -16,7 +16,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/Pict
 exec --no-startup-id xrandr --output DisplayPort-1 --mode 1920x1080 --pos 1280x1080 --rotate normal --output DisplayPort-0 --primary --mode 3840x2160 --pos 3200x0 --rotate normal --output HDMI-A-0 --mode 1920x1080 --pos 7040x240 --rotate left
 
 # Wacom tablet mapping (after xrandr has arranged the screens)
-exec_always --no-startup-id sleep 2 && ~/repo/linuxconffiles/i3/wacom/wacom-setup.sh
+exec_always --no-startup-id sleep 2 && ~/repo/linuxconffiles/arch/.config/i3/wacom-setup.sh
 
 # exec --no-startup-id nm-applet
 # exec --no-startup-id blueman-applet
@@ -45,7 +45,7 @@ floating_modifier $mod
 
 tiling_drag modifier titlebar
 
-bindsym $mod+Return exec --no-startup-id xfce4-terminal
+bindsym $mod+Return exec --no-startup-id kitty
 bindsym --release $mod+control+v exec --no-startup-id copyq menu
 bindsym --release Print exec --no-startup-id flameshot gui
 bindsym $mod+p exec --no-startup-id i3lock -c 000000

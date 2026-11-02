@@ -1,0 +1,107 @@
+# Rice green: dark green background, lime accent, olive selection.
+# Colours from ~/.config/focus-editor/themes/rice-green.focus-theme:
+#   bg 07100A  bg2 0B1810  bg4 12241A  selection 3A4A00  cursor/accent B3FF00
+#   green 00FF00  cyan 00FFFF  yellow FFFF00  orange FF8000  magenta FF00FF
+#   red FF0000  gray 808080  dim B0B0B0  text FFFFFF
+# No background colours on purpose: the terminal background shows through.
+
+[mgr]
+cwd             = { fg = "#00FFFF" }
+find_keyword    = { fg = "#FFFF00", bold = true, italic = true, underline = true }
+find_position   = { fg = "#FF00FF", bg = "reset", bold = true, italic = true }
+marker_copied   = { fg = "#00FF00", bg = "#00FF00" }
+marker_cut      = { fg = "#FF0000", bg = "#FF0000" }
+marker_marked   = { fg = "#00FFFF", bg = "#00FFFF" }
+marker_selected = { fg = "#FFFF00", bg = "#FFFF00" }
+count_copied    = { fg = "#07100A", bg = "#00FF00" }
+count_cut       = { fg = "#07100A", bg = "#FF0000" }
+count_selected  = { fg = "#07100A", bg = "#FFFF00" }
+border_style    = { fg = "#3A4A00" }
+
+[tabs]
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+active    = { fg = "#07100A", bg = "#B3FF00", bold = true }
+inactive  = { fg = "#B3FF00", bg = "#12241A" }
+
+[mode]
+normal_main = { fg = "#07100A", bg = "#B3FF00", bold = true }
+normal_alt  = { fg = "#B3FF00", bg = "#12241A" }
+select_main = { fg = "#07100A", bg = "#FF00FF", bold = true }
+select_alt  = { fg = "#FF00FF", bg = "#12241A" }
+unset_main  = { fg = "#07100A", bg = "#FF0000", bold = true }
+unset_alt   = { fg = "#FF0000", bg = "#12241A" }
+
+[indicator]
+parent  = { fg = "#FFFFFF", bg = "#202D05" }
+current = { fg = "#FFFFFF", bg = "#3A4A00" }
+padding = { open = "█", close = "█" }
+
+[status]
+sep_left        = { open = "", close = "" }
+sep_right       = { open = "", close = "" }
+perm_sep        = { fg = "#808080" }
+perm_type       = { fg = "#B3FF00" }
+perm_read       = { fg = "#FFFF00" }
+perm_write      = { fg = "#FF0000" }
+perm_exec       = { fg = "#00FFFF" }
+progress_normal = { fg = "#B3FF00", bg = "#12241A" }
+progress_error  = { fg = "#FFFF00", bg = "#660000" }
+
+[which]
+border          = { fg = "#00FFFF" }
+cand            = { fg = "#00FFFF" }
+rest            = { fg = "#808080" }
+desc            = { fg = "#B0B0B0" }
+separator_style = { fg = "#808080" }
+
+[confirm]
+border = { fg = "#00FFFF" }
+title  = { fg = "#00FFFF" }
+
+[spot]
+border   = { fg = "#00FFFF" }
+title    = { fg = "#00FFFF" }
+tbl_col  = { fg = "#B3FF00" }
+tbl_cell = { fg = "#B3FF00", reversed = true }
+
+[notify]
+title_info  = { fg = "#00FF00" }
+title_warn  = { fg = "#FFFF00" }
+title_error = { fg = "#FF0000" }
+
+[pick]
+border = { fg = "#00FFFF" }
+active = { fg = "#B3FF00", bold = true }
+
+[input]
+border = { fg = "#00FFFF" }
+
+[cmp]
+border = { fg = "#00FFFF" }
+active = { fg = "#FFFFFF", bg = "#3A4A00" }
+
+[tasks]
+border  = { fg = "#00FFFF" }
+hovered = { fg = "#B3FF00", bold = true }
+
+[help]
+border  = { fg = "#00FFFF" }
+chord   = { fg = "#00FFFF" }
+hovered = { fg = "#FFFFFF", bg = "#3A4A00", bold = true }
+
+# Setting rules replaces yazi's whole default list, so this is the v26.9.1
+# preset list with only the colours changed.
+[filetype]
+rules = [
+	{ mime = "**/image/*", fg = "#FF8000" },
+	{ mime = "**/{audio,video}/*", fg = "#FF00FF" },
+	{ mime = "**/application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#FF0000" },
+	{ mime = "**/application/{pdf,doc,rtf}", fg = "#00FFFF" },
+	{ mime = "vfs/{absent,stale}", fg = "#808080" },
+	{ url = "*", is = "orphan", bg = "#660000" },
+	{ url = "*", is = "exec", fg = "#00FF00" },
+	{ url = "*", is = "dummy", bg = "#660000" },
+	{ url = "*/", is = "dummy", bg = "#660000" },
+	{ url = "*/", fg = "#B3FF00" },
+]

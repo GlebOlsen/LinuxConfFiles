@@ -6,15 +6,11 @@ My linux "stuff" and configs: a NixOS flake plus dotfiles for two machines.
 
 | Path | Contents |
 |------|----------|
+| `arch/` | Arch (i3/X11) dotfiles, laid out like `$HOME`: `arch/.config/i3/config` belongs at `~/.config/i3/config` |
 | `nixos/` | Flake, hosts, and modules (the system config) |
-| `i3/` | i3, Polybar, picom, and warpd configs |
-| `hyprland/` | Hyprland WM (Lua config), waybar, foot, fuzzel, wl-kbptr |
-| `terminalEditors/` | Helix, Neovim, micro configs |
-| `heliumbrowser/` | Helium browser (ublock, vimium) |
-| `home/` | `.bashrc`, `.tmux.conf` |
-| `cava/`, `ncspot/` | Audio visualizer, Spotify TUI |
-| `scripts/` | Helper lenovo scripts (fan, backlight, screen) |
-| `archive/` | Old setups and retired bars (i3bar/i3status, Sway, niri, qutebrowser, old Hyprland, vscode, zed) |
+| `archive/` | Old setups and retired configs (Hyprland, Sway, niri, i3bar/i3status, qutebrowser, vscode, zed, Helium, old Helix config, Neovim, yazi) |
+
+In `arch/`, `.local/bin/` holds the Lenovo helper scripts (fan, battery, screen).
 
 ## NixOS
 

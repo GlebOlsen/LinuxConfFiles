@@ -1,0 +1,7 @@
+[mgr]
+show_hidden = true
+linemode    = "perms_owner_time"
+
+[preview]
+max_width  = 1920
+max_height = 2160

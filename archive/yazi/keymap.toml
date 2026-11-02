@@ -1,0 +1,132 @@
+# Yazi keymap — ported from the NixOS home-manager module (archive/nixos/yazi.nix).
+# Clipboard bindings use xclip here (X11/i3) instead of wl-copy (Wayland).
+
+[[mgr.prepend_keymap]]
+on   = [ "1" ]
+run  = "plugin relative-motions 1"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "2" ]
+run  = "plugin relative-motions 2"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "3" ]
+run  = "plugin relative-motions 3"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "4" ]
+run  = "plugin relative-motions 4"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "5" ]
+run  = "plugin relative-motions 5"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "6" ]
+run  = "plugin relative-motions 6"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "7" ]
+run  = "plugin relative-motions 7"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "8" ]
+run  = "plugin relative-motions 8"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "9" ]
+run  = "plugin relative-motions 9"
+desc = "Move in relative steps"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-1>" ]
+run  = "tab_switch 0"
+desc = "Switch to tab 1"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-2>" ]
+run  = "tab_switch 1"
+desc = "Switch to tab 2"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-3>" ]
+run  = "tab_switch 2"
+desc = "Switch to tab 3"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-4>" ]
+run  = "tab_switch 3"
+desc = "Switch to tab 4"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-5>" ]
+run  = "tab_switch 4"
+desc = "Switch to tab 5"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-6>" ]
+run  = "tab_switch 5"
+desc = "Switch to tab 6"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-7>" ]
+run  = "tab_switch 6"
+desc = "Switch to tab 7"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-8>" ]
+run  = "tab_switch 7"
+desc = "Switch to tab 8"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-9>" ]
+run  = "tab_switch 8"
+desc = "Switch to tab 9"
+
+[[mgr.prepend_keymap]]
+on   = [ "M", "m" ]
+run  = "plugin gvfs -- select-then-mount --jump"
+desc = "Mount device/share + jump"
+
+[[mgr.prepend_keymap]]
+on   = [ "M", "u" ]
+run  = "plugin gvfs -- select-then-unmount --eject"
+desc = "Unmount / eject"
+
+[[mgr.prepend_keymap]]
+on   = [ "M", "a" ]
+run  = "plugin gvfs -- add-mount"
+desc = "Add mount: smb:// sftp:// nfs://"
+
+[[mgr.prepend_keymap]]
+on   = [ "M", "r" ]
+run  = "plugin gvfs -- remove-mount"
+desc = "Remove saved mount"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "m" ]
+run  = "plugin gvfs -- jump-to-device"
+desc = "Jump to device"
+
+[[mgr.prepend_keymap]]
+on   = [ "<C-y>" ]
+run  = 'shell -- magick %h png:- | xclip -selection clipboard -t image/png'
+desc = "Copy image to clipboard"
+
+[[mgr.prepend_keymap]]
+on   = [ "<A-y>" ]
+run  = 'shell -- printf "file://%s" "$(realpath %h)" | xclip -selection clipboard -t text/uri-list'
+desc = "Copy file reference (Thunar-style)"
+
+[[mgr.prepend_keymap]]
+on   = [ "<Tab>" ]
+run  = "spot"
+desc = "Spot: image dimensions + metadata"

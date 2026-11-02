@@ -4,8 +4,8 @@ export XDG_SESSION_DESKTOP=i3
 export DESKTOP_SESSION=i3
 export EDITOR=nvim
 export VISUAL=nvim
-export TERMINAL=xfce4-terminal
-export BROWSER=helium-browser
+export TERMINAL=kitty
+export BROWSER=brave-origin
 
 xrdb -merge "$HOME/.Xresources"
 exec dbus-run-session -- i3

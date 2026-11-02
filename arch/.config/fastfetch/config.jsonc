@@ -1,0 +1,73 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  // single-column layout (default); the two-column one is wide.jsonc: `fastfetch -c wide` (needs 154+ columns)
+  "logo": { "source": "arch2", "padding": { "top": 1, "left": 2, "right": 4 } },
+  "display": {
+    "separator": "  ",
+    "key": { "width": 16 },
+    "color": { "title": "blue", "separator": "90" },
+    "constants": [
+      // one per box: draw a full row with both borders, then jump back to its left edge
+      "\u001b[1;34m│                                                      │\u001b[55D",
+      "\u001b[1;32m│                                                      │\u001b[55D",
+      "\u001b[1;35m│                                                      │\u001b[55D",
+      "\u001b[1;36m│                                                      │\u001b[55D",
+      "\u001b[1;33m│                                                      │\u001b[55D"
+    ]
+  },
+  "modules": [
+    "break",
+    { "type": "title", "format": "{#1;34}  {user-name}{#0}{#90}@{#1;34}{host-name}" },
+
+    // System
+    { "type": "custom", "format": "{#1;34}┌─ System ─────────────────────────────────────────────┐" },
+    { "type": "os", "key": "{$1} 󰣇  OS", "keyColor": "blue" },
+    { "type": "disk", "key": "{$1} 󰃭  OS Age", "keyColor": "blue", "folders": "/", "format": "{years} years, {days-of-year} days (since {create-time:10})" },
+    { "type": "kernel", "key": "{$1}   Kernel", "keyColor": "blue" },
+    { "type": "initsystem", "key": "{$1} 󰒓  Init", "keyColor": "blue" },
+    { "type": "uptime", "key": "{$1} 󰅐  Uptime", "keyColor": "blue" },
+    { "type": "packages", "key": "{$1} 󰏖  Packages", "keyColor": "blue" },
+    { "type": "locale", "key": "{$1} 󰇧  Locale", "keyColor": "blue" },
+    { "type": "custom", "format": "{#1;34}└──────────────────────────────────────────────────────┘" },
+
+    // Hardware
+    { "type": "custom", "format": "{#1;32}┌─ Hardware ───────────────────────────────────────────┐" },
+    { "type": "host", "key": "{$2} 󰪫  Host", "keyColor": "green" },
+    { "type": "bios", "key": "{$2} 󰘚  BIOS", "keyColor": "green" },
+    { "type": "cpu", "key": "{$2}   CPU", "keyColor": "green" },
+    { "type": "gpu", "key": "{$2} 󰢮  GPU", "keyColor": "green" },
+    { "type": "memory", "key": "{$2} 󰍛  Memory", "keyColor": "green" },
+    { "type": "swap", "key": "{$2} 󰓡  Swap", "keyColor": "green" },
+    { "type": "disk", "key": "{$2} 󰋊  Disk", "keyColor": "green", "folders": "/" },
+    { "type": "custom", "format": "{#1;32}└──────────────────────────────────────────────────────┘" },
+
+    // Desktop
+    { "type": "custom", "format": "{#1;35}┌─ Desktop ────────────────────────────────────────────┐" },
+    { "type": "wm", "key": "{$3} 󰕮  WM", "keyColor": "magenta", "format": "{pretty-name}{?version} {version}{?}{?protocol-name} {#1;38;2;18;18;18;48;2;153;204;255}  {protocol-name} {#}{?}" },
+    { "type": "theme", "key": "{$3} 󰏘  Theme", "keyColor": "magenta" },
+    { "type": "icons", "key": "{$3} 󰀻  Icons", "keyColor": "magenta" },
+    { "type": "font", "key": "{$3} 󰊄  Font", "keyColor": "magenta" },
+    { "type": "cursor", "key": "{$3} 󰇀  Cursor", "keyColor": "magenta" },
+    { "type": "display", "key": "{$3} 󰍹  Displays", "keyColor": "magenta", "compactType": "original" },
+    { "type": "custom", "format": "{#1;35}└──────────────────────────────────────────────────────┘" },
+
+    // Terminal
+    { "type": "custom", "format": "{#1;36}┌─ Terminal ───────────────────────────────────────────┐" },
+    { "type": "shell", "key": "{$4} 󱆃  Shell", "keyColor": "cyan" },
+    { "type": "editor", "key": "{$4} 󰏫  Editor", "keyColor": "cyan" },
+    { "type": "terminal", "key": "{$4} 󰆍  Terminal", "keyColor": "cyan" },
+    { "type": "terminalfont", "key": "{$4} 󰬴  Term Font", "keyColor": "cyan" },
+    { "type": "custom", "format": "{#1;36}└──────────────────────────────────────────────────────┘" },
+
+    // Network
+    { "type": "custom", "format": "{#1;33}┌─ Network ────────────────────────────────────────────┐" },
+    { "type": "localip", "key": "{$5} 󰩠  Local IP", "keyColor": "yellow" },
+    { "type": "version", "key": "{$5} 󰋽  Fetch", "keyColor": "yellow" },
+    { "type": "custom", "format": "{#1;33}└──────────────────────────────────────────────────────┘" },
+
+    // colour squares
+    "break",
+    { "type": "custom", "format": "     \u001b[22;30m█\u001b[100m▀▀\u001b[49m█  \u001b[22;31m█\u001b[101m▀▀\u001b[49m█  \u001b[22;32m█\u001b[102m▀▀\u001b[49m█  \u001b[22;33m█\u001b[103m▀▀\u001b[49m█  \u001b[22;34m█\u001b[104m▀▀\u001b[49m█  \u001b[22;35m█\u001b[105m▀▀\u001b[49m█  \u001b[22;36m█\u001b[106m▀▀\u001b[49m█  \u001b[22;37m█\u001b[107m▀▀\u001b[49m█\u001b[0m" },
+    { "type": "custom", "format": "     \u001b[22;30m█\u001b[100m▄▄\u001b[49m█  \u001b[22;31m█\u001b[101m▄▄\u001b[49m█  \u001b[22;32m█\u001b[102m▄▄\u001b[49m█  \u001b[22;33m█\u001b[103m▄▄\u001b[49m█  \u001b[22;34m█\u001b[104m▄▄\u001b[49m█  \u001b[22;35m█\u001b[105m▄▄\u001b[49m█  \u001b[22;36m█\u001b[106m▄▄\u001b[49m█  \u001b[22;37m█\u001b[107m▄▄\u001b[49m█\u001b[0m" }
+  ]
+}

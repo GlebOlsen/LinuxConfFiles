@@ -1,0 +1,62 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  // two-column layout: built-in logo is off, the Arch logo is drawn as the first column
+  // needs a terminal at least 154 columns wide; run with `fastfetch -c wide`
+  "logo": { "type": "none" },
+  "display": {
+    "separator": "  ",
+    "color": { "separator": "90" },
+    "constants": [
+      // one per box: draw a full row with both borders, then jump back to its left edge
+      "\u001b[1;34m\u001b[44G│                                                    │\u001b[45G",
+      "\u001b[1;32m\u001b[44G│                                                    │\u001b[45G",
+      "\u001b[1;35m\u001b[101G│                                                    │\u001b[102G",
+      "\u001b[1;36m\u001b[101G│                                                    │\u001b[102G",
+      "\u001b[1;33m\u001b[101G│                                                    │\u001b[102G"
+    ]
+  },
+  "modules": [
+    "break",
+    { "type": "custom", "format": "{#1;36}\u001b[3G                  ▄\n\u001b[3G                 ▟█▙\n\u001b[3G                ▟███▙\n\u001b[3G               ▟█████▙\n\u001b[3G              ▟███████▙\n\u001b[3G             ▂▔▀▜██████▙\n\u001b[3G            ▟██▅▂▝▜█████▙\n\u001b[3G           ▟█████████████▙\n\u001b[3G          ▟███████████████▙\n\u001b[3G         ▟█████████████████▙\n\u001b[3G        ▟███████████████████▙\n\u001b[3G       ▟█████████▛▀▀▜████████▙\n\u001b[3G      ▟████████▛      ▜███████▙\n\u001b[3G     ▟█████████        ████████▙\n\u001b[3G    ▟██████████        █████▆▅▄▃▂\n\u001b[3G   ▟██████████▛        ▜█████████▙\n\u001b[3G  ▟██████▀▀▀              ▀▀██████▙\n\u001b[3G ▟███▀▘                       ▝▀███▙\n\u001b[3G▟▛▀                               ▀▜▙" },
+    { "type": "title", "format": "\u001b[19A\u001b[44G{#1;34}{user-name}{#0}{#90}@{#1;34}{host-name}" },
+    { "type": "custom", "format": "\u001b[44G{#1;34}┌─ System ───────────────────────────────────────────┐" },
+    { "type": "os", "key": "{$1} 󰣇  OS", "keyColor": "blue", "keyWidth": 59 },
+    { "type": "disk", "key": "{$1} 󰃭  OS Age", "keyColor": "blue", "keyWidth": 59, "folders": "/", "format": "{years} years, {days-of-year} days (since {create-time:10})" },
+    { "type": "kernel", "key": "{$1}   Kernel", "keyColor": "blue", "keyWidth": 59 },
+    { "type": "initsystem", "key": "{$1} 󰒓  Init", "keyColor": "blue", "keyWidth": 59 },
+    { "type": "uptime", "key": "{$1} 󰅐  Uptime", "keyColor": "blue", "keyWidth": 59 },
+    { "type": "packages", "key": "{$1} 󰏖  Packages", "keyColor": "blue", "keyWidth": 59 },
+    { "type": "locale", "key": "{$1} 󰇧  Locale", "keyColor": "blue", "keyWidth": 59 },
+    { "type": "custom", "format": "\u001b[44G{#1;34}└────────────────────────────────────────────────────┘" },
+    { "type": "custom", "format": "\u001b[44G{#1;32}┌─ Hardware ─────────────────────────────────────────┐" },
+    { "type": "host", "key": "{$2} 󰪫  Host", "keyColor": "green", "keyWidth": 59 },
+    { "type": "bios", "key": "{$2} 󰘚  BIOS", "keyColor": "green", "keyWidth": 59 },
+    { "type": "cpu", "key": "{$2}   CPU", "keyColor": "green", "keyWidth": 59 },
+    { "type": "gpu", "key": "{$2} 󰢮  GPU", "keyColor": "green", "keyWidth": 59 },
+    { "type": "memory", "key": "{$2} 󰍛  Memory", "keyColor": "green", "keyWidth": 59 },
+    { "type": "swap", "key": "{$2} 󰓡  Swap", "keyColor": "green", "keyWidth": 59 },
+    { "type": "disk", "key": "{$2} 󰋊  Disk", "keyColor": "green", "keyWidth": 59, "folders": "/" },
+    { "type": "custom", "format": "\u001b[44G{#1;32}└────────────────────────────────────────────────────┘" },
+    { "type": "custom", "format": "\u001b[18A\u001b[101G{#1;35}┌─ Desktop ──────────────────────────────────────────┐" },
+    { "type": "wm", "key": "{$3} 󰕮  WM", "keyColor": "magenta", "keyWidth": 116, "format": "{pretty-name}{?version} {version}{?}{?protocol-name} {#1;38;2;18;18;18;48;2;153;204;255}  {protocol-name} {#}{?}" },
+    { "type": "theme", "key": "{$3} 󰏘  Theme", "keyColor": "magenta", "keyWidth": 116 },
+    { "type": "icons", "key": "{$3} 󰀻  Icons", "keyColor": "magenta", "keyWidth": 116 },
+    { "type": "font", "key": "{$3} 󰊄  Font", "keyColor": "magenta", "keyWidth": 116 },
+    { "type": "cursor", "key": "{$3} 󰇀  Cursor", "keyColor": "magenta", "keyWidth": 116 },
+    { "type": "display", "key": "{$3} 󰍹  Displays", "keyColor": "magenta", "keyWidth": 116, "compactType": "original" },
+    { "type": "custom", "format": "\u001b[101G{#1;35}└────────────────────────────────────────────────────┘" },
+    { "type": "custom", "format": "\u001b[101G{#1;36}┌─ Terminal ─────────────────────────────────────────┐" },
+    { "type": "shell", "key": "{$4} 󱆃  Shell", "keyColor": "cyan", "keyWidth": 116 },
+    { "type": "editor", "key": "{$4} 󰏫  Editor", "keyColor": "cyan", "keyWidth": 116 },
+    { "type": "terminal", "key": "{$4} 󰆍  Terminal", "keyColor": "cyan", "keyWidth": 116 },
+    { "type": "terminalfont", "key": "{$4} 󰬴  Term Font", "keyColor": "cyan", "keyWidth": 116 },
+    { "type": "custom", "format": "\u001b[101G{#1;36}└────────────────────────────────────────────────────┘" },
+    { "type": "custom", "format": "\u001b[101G{#1;33}┌─ Network ──────────────────────────────────────────┐" },
+    { "type": "localip", "key": "{$5} 󰩠  Local IP", "keyColor": "yellow", "keyWidth": 116 },
+    { "type": "version", "key": "{$5} 󰋽  Fetch", "keyColor": "yellow", "keyWidth": 116 },
+    { "type": "custom", "format": "\u001b[101G{#1;33}└────────────────────────────────────────────────────┘" },
+    "break",
+    { "type": "custom", "format": "\u001b[76G\u001b[22;30m█\u001b[100m▀▀\u001b[49m█  \u001b[22;31m█\u001b[101m▀▀\u001b[49m█  \u001b[22;32m█\u001b[102m▀▀\u001b[49m█  \u001b[22;33m█\u001b[103m▀▀\u001b[49m█  \u001b[22;34m█\u001b[104m▀▀\u001b[49m█  \u001b[22;35m█\u001b[105m▀▀\u001b[49m█  \u001b[22;36m█\u001b[106m▀▀\u001b[49m█  \u001b[22;37m█\u001b[107m▀▀\u001b[49m█\u001b[0m" },
+    { "type": "custom", "format": "\u001b[76G\u001b[22;30m█\u001b[100m▄▄\u001b[49m█  \u001b[22;31m█\u001b[101m▄▄\u001b[49m█  \u001b[22;32m█\u001b[102m▄▄\u001b[49m█  \u001b[22;33m█\u001b[103m▄▄\u001b[49m█  \u001b[22;34m█\u001b[104m▄▄\u001b[49m█  \u001b[22;35m█\u001b[105m▄▄\u001b[49m█  \u001b[22;36m█\u001b[106m▄▄\u001b[49m█  \u001b[22;37m█\u001b[107m▄▄\u001b[49m█\u001b[0m" }
+  ]
+}
