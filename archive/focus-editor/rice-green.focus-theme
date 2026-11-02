@@ -1,0 +1,119 @@
+[25]  # Version number. Do not delete.
+
+# Rice green: very dark green background, high-contrast syntax after the Helix rainbow9 theme
+# (repo\linuxconffiles\terminalEditors\helix\themes\rainbow9.toml). Few colors, everything else white.
+#   keyword FF00FF  function 00FF00  type 3399FF  constant FFFF00  string FF8000
+#   operator 00FFFF  comment 808080  text FFFFFF  cursor B3FF00  selection 3A4A00
+
+[colors]
+background0:                            07100AFF
+background1:                            040A06FF
+background2:                            0B1810FF
+background3:                            0B1810FF
+background4:                            12241AFF
+selection_active:                       3A4A00FF
+selection_inactive:                     3A4A007F
+selection_highlight:                    B3FF0022
+search_result_active:                   5A7000FF
+search_result_inactive:                 B3FF0033
+scrollbar:                              80808033
+scrollbar_hover:                        808080FF
+scrollbar_background:                   040A064C
+cursor:                                 B3FF00FF
+cursor_inactive:                        5A8000FF
+paste_animation:                        3A4A00FF
+splitter:                               0B1810FF
+splitter_hover:                         00FFFFFF
+letter_highlight:                       FFFFFFFF
+list_cursor_lite:                       3A4A004C
+list_cursor:                            3A4A00FF
+shadow_dark:                            00000066
+shadow_transparent:                     00000000
+text_input_label:                       808080FF
+char_under_cursor:                      07100AFF
+
+ui_default:                             FFFFFFFF
+ui_dim:                                 B0B0B0FF
+ui_neutral:                             808080FF
+ui_warning:                             FFFF00FF
+ui_warning_dim:                         3A3A00FF
+ui_error:                               FF0000FF
+ui_error_bright:                        FF0000FF
+ui_success:                             3A4A00FF
+
+region_scope_export:                    07100AFF
+region_scope_file:                      00000033
+region_scope_module:                    00000022
+region_header:                          3A4A00FF
+region_success:                         006600FF
+region_warning:                         666600FF
+region_error:                           660000FF
+region_heredoc:                         0B1810FF
+
+build_panel_background:                 040A06FF
+build_panel_scrollbar:                  80808033
+build_panel_scrollbar_hover:            808080FF
+build_panel_scrollbar_background:       040A064C
+build_panel_title_bar:                  0B1810FF
+
+code_default:                           FFFFFFFF
+code_comment:                           808080FF
+code_type:                              3399FFFF
+code_function:                          00FF00FF
+code_punctuation:                       FFFFFFFF
+code_operation:                         00FFFFFF
+code_string_literal:                    FF8000FF
+code_value:                             FFFF00FF
+code_highlight:                         B3FF00FF
+code_error:                             FF0000FF
+code_warning:                           FFFF00FF
+code_keyword:                           FF00FFFF
+code_invalid:                           FF0000FF
+code_multiline_string:                  FF8000FF
+code_raw_string:                        FF8000FF
+code_char_literal:                      FF8000FF
+code_identifier:                        FFFFFFFF
+code_note:                              808080FF
+code_number:                            FFFF00FF
+code_multiline_comment:                 808080FF
+code_modifier:                          FF00FFFF
+code_attribute:                         FFFFFFFF
+code_enum_variant:                      FFFFFFFF
+code_macro:                             00FF00FF
+code_builtin_variable:                  FFFF00FF
+code_builtin_function:                  00FF00FF
+code_builtin_exception:                 FF0000FF
+code_directive:                         FF00FFFF
+code_directive_modifier:                FF00FFFF
+code_header:                            B3FF00FF
+code_header2:                           00FF00FF
+code_header3:                           00FFFFFF
+code_header4:                           00FFFFFF
+code_header5:                           00FFFFFF
+code_header6:                           00FFFFFF
+
+ruler:                                  B3FF0022
+bracket_highlight:                      B3FF0044
+indent_guide:                           12241AFF
+
+# Added after migration to version [17]
+active_pane_border:                     00FFFFFF
+
+# Added after migration to version [18]
+inactive_pane_dim_overlay:              000000FF
+
+# Added after migration to version [19]
+code_comment_highlight1:                B3FF00FF
+code_comment_highlight2:                FF0000FF
+code_comment_highlight3:                FF0000FF
+code_comment_highlight4:                FFFF00FF
+
+# Added after migration to version [20]
+cursor_line_highlight:                  0B1810FF
+color_preview_title_bar:                0B1810FF
+
+# Added after migration to version [21]
+code_addition:                          00FF00FF
+code_deletion:                          FF0000FF
+region_addition:                        0066004C
+region_deletion:                        6600004C
