@@ -4,7 +4,7 @@ export XDG_SESSION_DESKTOP=i3
 export DESKTOP_SESSION=i3
 export EDITOR=nvim
 export VISUAL=nvim
-export TERMINAL=kitty
+export TERMINAL=xfce4-terminal
 export BROWSER=brave-origin
 
 xrdb -merge "$HOME/.Xresources"

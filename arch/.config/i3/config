@@ -45,7 +45,7 @@ floating_modifier $mod
 
 tiling_drag modifier titlebar
 
-bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+Return exec --no-startup-id xfce4-terminal
 bindsym --release $mod+control+v exec --no-startup-id copyq menu
 bindsym --release Print exec --no-startup-id flameshot gui
 bindsym $mod+p exec --no-startup-id i3lock -c 000000
