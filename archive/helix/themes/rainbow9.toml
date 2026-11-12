@@ -27,14 +27,14 @@
 "attribute"         = "white"
 
 # minimal UI
-"ui.background"     = { bg = "bg" }
+"ui.background"     = { bg = "..." }
 "ui.text"           = "white"
 "ui.text.focus"     = "white"
 "ui.linenr"         = "gray"
 "ui.linenr.selected" = "high"
 "ui.cursor"         = { fg = "bg", bg = "high" }
 "ui.cursor.match"   = { fg = "high", modifiers = ["bold"] }
-"ui.cursorline.primary" = { bg = "bg2" }
+"ui.cursorline.primary" = { bg = "#103000" }
 "ui.selection"      = { bg = "sel" }
 "ui.statusline"     = { fg = "white", bg = "bg2" }
 "ui.statusline.inactive" = { fg = "gray", bg = "bg2" }

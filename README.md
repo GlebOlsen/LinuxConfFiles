@@ -8,7 +8,7 @@ My linux "stuff" and configs: a NixOS flake plus dotfiles for two machines.
 |------|----------|
 | `arch/` | Arch (i3/X11) dotfiles, laid out like `$HOME`: `arch/.config/i3/config` belongs at `~/.config/i3/config` |
 | `nixos/` | Flake, hosts, and modules (the system config) |
-| `archive/` | Old setups and retired configs (Hyprland, Sway, niri, i3bar/i3status, qutebrowser, vscode, zed, Helium, old Helix config, Neovim, yazi) |
+| `archive/` | Old setups and retired configs (Hyprland, Sway, niri, i3bar/i3status, qutebrowser, vscode, zed, Helium, Helix, older Neovim configs, yazi) |
 
 In `arch/`, `.local/bin/` holds the Lenovo helper scripts (fan, battery, screen).
 
@@ -38,7 +38,7 @@ sudo nixos-rebuild switch --flake ./nixos#nix-desktop
 - Window managers: i3/X11 and Hyprland/Wayland (Lua config). Sway archived.
 - Wallpaper: nitrogen on i3; awww on Hyprland.
 - Kernel: XanMod latest, low-latency tweaks, BBR + CAKE.
-- Shell: fish. Audio: PipeWire. Editor: Neovim/Helix.
+- Shell: fish. Audio: PipeWire. Editor: Neovim on Arch (plugin-free, `arch/.config/nvim/init.lua`), Helix on NixOS.
 - Bleeding-edge nixpkgs `master` exposed as `pkgs.master`.
 
 ## Credits
