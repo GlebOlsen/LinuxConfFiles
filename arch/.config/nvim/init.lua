@@ -59,6 +59,7 @@ autocmd('ColorScheme', {
   callback = function()
     local hl = function(name, val) vim.api.nvim_set_hl(0, name, val) end
     hl('CursorLine',    { bg = '#1e2d22' })
+    hl('Visual',        { bg = '#3A4A00' })
     hl('LineNrBelow',   { fg = '#00ffaa' })
     hl('LineNrAbove',   { fg = '#ffaaff' })
     hl('CursorLineNr',  { fg = '#B3FF00', bold = true })
@@ -247,7 +248,7 @@ map('n', '<leader>M', function() term({ 'glow', '-s', 'dark', '-p', vim.fn.expan
 
 map('n', '<leader>fm', 'mzgg=G`z', { desc = 'Format Buffer (Indent)' })
 map('v', '<leader>fm', '=', { desc = 'Format Selection (Indent)' })
-map('n', '<leader>u', '<cmd>undolist<CR>', { desc = 'Undo List' })
+map('n', '<leader>u', '<cmd>packadd nvim.undotree | Undotree<CR>', { desc = 'Undo Tree' })
 
 map('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
 map('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window' })
