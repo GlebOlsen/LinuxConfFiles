@@ -41,7 +41,7 @@ opt.listchars = {
 }
 
 opt.autocomplete = true
-opt.completeopt = { 'fuzzy' }
+opt.completeopt = { 'menu', 'fuzzy' }
 opt.pumheight = 12
 opt.pummaxwidth = 40
 
@@ -60,6 +60,20 @@ autocmd('ColorScheme', {
     local hl = function(name, val) vim.api.nvim_set_hl(0, name, val) end
     hl('CursorLine',    { bg = '#1e2d22' })
     hl('Visual',        { bg = '#3A4A00' })
+    hl('Pmenu',         { bg = '#1e2d22' })
+    hl('PmenuSel',      { bg = '#3A4A00' })
+    for fg, groups in pairs({
+      ['#FFFFFF'] = { 'Identifier', 'Special', 'Delimiter', '@variable', 'javaScriptBraces' },
+      ['#FF00FF'] = { 'Statement', 'PreProc' },
+      ['#00FF00'] = { 'Function', '@function.builtin' },
+      ['#3399FF'] = { 'Type', '@type.builtin' },
+      ['#FFFF00'] = { 'Constant', '@constant.builtin' },
+      ['#FF8000'] = { 'String', 'Character' },
+      ['#00FFFF'] = { 'Operator' },
+      ['#808080'] = { 'Comment' },
+    }) do
+      for _, group in ipairs(groups) do hl(group, { fg = fg }) end
+    end
     hl('LineNrBelow',   { fg = '#00ffaa' })
     hl('LineNrAbove',   { fg = '#ffaaff' })
     hl('CursorLineNr',  { fg = '#B3FF00', bold = true })
@@ -70,7 +84,7 @@ autocmd('ColorScheme', {
     hl('EndOfBuffer',   { bg = 'NONE' })
   end,
 })
-vim.cmd.colorscheme 'industry'
+vim.cmd.colorscheme 'vim'
 
 for i, c in ipairs({
   '#242424', '#f62b5a', '#47b413', '#e3c401', '#24acd4', '#f2affd', '#13c299', '#e6e6e6',
@@ -153,7 +167,7 @@ autocmd('QuickFixCmdPost', {
 local function open_pick(s)
   local file, lnum, col = s:match('^(.-):(%d+):(%d+)')
   if not file then file, lnum = s:match('^(.-):(%d+)$') end
-  vim.cmd.edit(vim.fn.fnameescape(file or s))
+  vim.cmd.drop(vim.fn.fnameescape(file or s))
   if lnum then
     pcall(vim.api.nvim_win_set_cursor, 0, { tonumber(lnum), math.max((tonumber(col) or 1) - 1, 0) })
     vim.cmd('normal! zz')
