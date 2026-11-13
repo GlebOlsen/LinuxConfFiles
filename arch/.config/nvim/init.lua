@@ -138,12 +138,6 @@ autocmd({ 'FocusGained', 'BufEnter' }, {
 })
 
 autocmd('FileType', {
-  callback = function(args)
-    pcall(vim.treesitter.start, args.buf)
-  end,
-})
-
-autocmd('FileType', {
   pattern = 'netrw',
   desc = 'Stop double-click from going up a directory (netrw maps <2-LeftMouse> to -)',
   callback = function(args)
