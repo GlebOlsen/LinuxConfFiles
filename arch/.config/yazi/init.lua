@@ -4,27 +4,28 @@ require("gvfs"):setup({
 	password_vault = "keyring",
 })
 
-function Linemode:perms_owner_time()
-	local cha = self._file.cha
-	local perm = cha:perm() or ""
-
+-- Owner, group, readable size and newest of mtime/btime; shared by the linemode and the status bar.
+local function file_info(file)
+	local cha = file.cha
 	local user = ya.user_name(cha.uid) or tostring(cha.uid or "")
 	local group = ya.group_name(cha.gid) or tostring(cha.gid or "")
-
-	local size = self._file:size()
+	local size = file:size()
 	local size_s = size and ya.readable_size(size) or "-"
-
 	local time = math.max(math.floor(cha.mtime or 0), math.floor(cha.btime or 0))
+	return user, group, size_s, time
+end
+
+function Linemode:perms_owner_time()
+	local user, group, size, time = file_info(self._file)
+	local perm = self._file.cha:perm() or ""
+
 	local date = ""
 	if time > 0 then
-		if os.date("%Y", time) == os.date("%Y") then
-			date = os.date("%b %d %H:%M", time)
-		else
-			date = os.date("%b %d  %Y", time)
-		end
+		local same_year = os.date("%Y", time) == os.date("%Y")
+		date = os.date(same_year and "%b %d %H:%M" or "%b %d  %Y", time)
 	end
 
-	return string.format("%s  %s  %s:%s  %s", size_s, perm, user, group, date)
+	return string.format("%s  %s  %s:%s  %s", size, perm, user, group, date)
 end
 
 Status:children_add(function()
@@ -32,19 +33,12 @@ Status:children_add(function()
 	if not h or ya.target_family() ~= "unix" then
 		return ""
 	end
-	local cha = h.cha
 
-	local user = ya.user_name(cha.uid) or tostring(cha.uid or "")
-	local group = ya.group_name(cha.gid) or tostring(cha.gid or "")
-
-	local size = h:size()
-	local size_s = size and ya.readable_size(size) or "-"
-
-	local t = math.max(math.floor(cha.mtime or 0), math.floor(cha.btime or 0))
-	local date = t > 0 and os.date("%b %d %H:%M", t) or ""
+	local user, group, size, time = file_info(h)
+	local date = time > 0 and os.date("%b %d %H:%M", time) or ""
 
 	return ui.Line {
-		ui.Span(size_s .. "  "):fg("cyan"),
+		ui.Span(size .. "  "):fg("cyan"),
 		ui.Span(user .. ":" .. group .. "  "):fg("magenta"),
 		ui.Span(date .. "  "):fg("blue"),
 	}

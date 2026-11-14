@@ -1,0 +1,35 @@
+# Yazi keymap — ported from the NixOS home-manager module (archive/nixos/yazi.nix).
+# Clipboard bindings use xclip here (X11/i3) instead of wl-copy (Wayland).
+
+[mgr]
+prepend_keymap = [
+	{ on = "1", run = "plugin relative-motions 1", desc = "Move in relative steps" },
+	{ on = "2", run = "plugin relative-motions 2", desc = "Move in relative steps" },
+	{ on = "3", run = "plugin relative-motions 3", desc = "Move in relative steps" },
+	{ on = "4", run = "plugin relative-motions 4", desc = "Move in relative steps" },
+	{ on = "5", run = "plugin relative-motions 5", desc = "Move in relative steps" },
+	{ on = "6", run = "plugin relative-motions 6", desc = "Move in relative steps" },
+	{ on = "7", run = "plugin relative-motions 7", desc = "Move in relative steps" },
+	{ on = "8", run = "plugin relative-motions 8", desc = "Move in relative steps" },
+	{ on = "9", run = "plugin relative-motions 9", desc = "Move in relative steps" },
+
+	{ on = "<A-1>", run = "tab_switch 0", desc = "Switch to tab 1" },
+	{ on = "<A-2>", run = "tab_switch 1", desc = "Switch to tab 2" },
+	{ on = "<A-3>", run = "tab_switch 2", desc = "Switch to tab 3" },
+	{ on = "<A-4>", run = "tab_switch 3", desc = "Switch to tab 4" },
+	{ on = "<A-5>", run = "tab_switch 4", desc = "Switch to tab 5" },
+	{ on = "<A-6>", run = "tab_switch 5", desc = "Switch to tab 6" },
+	{ on = "<A-7>", run = "tab_switch 6", desc = "Switch to tab 7" },
+	{ on = "<A-8>", run = "tab_switch 7", desc = "Switch to tab 8" },
+	{ on = "<A-9>", run = "tab_switch 8", desc = "Switch to tab 9" },
+
+	{ on = [ "M", "m" ], run = "plugin gvfs -- select-then-mount --jump",    desc = "Mount device/share + jump" },
+	{ on = [ "M", "u" ], run = "plugin gvfs -- select-then-unmount --eject", desc = "Unmount / eject" },
+	{ on = [ "M", "a" ], run = "plugin gvfs -- add-mount",                   desc = "Add mount: smb:// sftp:// nfs://" },
+	{ on = [ "M", "r" ], run = "plugin gvfs -- remove-mount",                desc = "Remove saved mount" },
+	{ on = [ "g", "m" ], run = "plugin gvfs -- jump-to-device",              desc = "Jump to device" },
+
+	{ on = "<C-y>", run = 'shell -- magick %h png:- | xclip -selection clipboard -t image/png',                         desc = "Copy image to clipboard" },
+	{ on = "<A-y>", run = 'shell -- printf "file://%s" "$(realpath %h)" | xclip -selection clipboard -t text/uri-list', desc = "Copy file reference (Thunar-style)" },
+	{ on = "<Tab>", run = "spot",                                                                                       desc = "Spot: image dimensions + metadata" },
+]

@@ -1,4 +1,4 @@
--- Plugin-free, Neovim 0.12+. Needs: ripgrep fzf git lazygit scooter glow xclip (wl-clipboard on Wayland)
+-- Plugin-free, Neovim 0.12+. Needs: ripgrep fzf git lazygit scooter glow yazi xclip (wl-clipboard on Wayland)
 
 vim.g.mapleader = ' '
 vim.g.loaded_tutor_mode_plugin = 1
@@ -229,6 +229,13 @@ local function pick_grep(query)
     .. " --preview 'cat -n -- {1}' --preview-window '+{2}/2' > \"$LIM_PICK\"")
 end
 
+-- Opens on the current file; Enter on a file opens it here, q just closes
+local function pick_yazi()
+  local path = vim.fn.expand('%:p')
+  if vim.bo.buftype ~= '' or path == '' then path = vim.fn.getcwd() end
+  term('yazi --chooser-file "$LIM_PICK" ' .. vim.fn.shellescape(path))
+end
+
 local function blame_line()
   local out = vim.fn.systemlist({
     'git', '-C', vim.fn.expand('%:p:h'), 'blame', '-L', vim.fn.line('.') .. ',+1', '--', vim.fn.expand('%:p'),
@@ -237,6 +244,7 @@ local function blame_line()
 end
 
 map('n', '<leader>e', '<cmd>Lexplore!<CR>', { desc = 'Toggle File Explorer' })
+map('n', '<leader>y', pick_yazi, { desc = 'Yazi File Manager' })
 map('n', '<leader>ff', pick_files, { desc = 'Find Files' })
 map('n', '<leader>fg', pick_grep, { desc = 'Live Grep' })
 map('n', '<leader>fc', function() pick_grep(vim.fn.expand('<cword>')) end, { desc = 'Grep Word Under Cursor' })
