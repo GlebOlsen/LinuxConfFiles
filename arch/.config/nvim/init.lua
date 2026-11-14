@@ -1,4 +1,4 @@
--- Plugin-free, Neovim 0.12+. Needs: ripgrep fzf git lazygit scooter glow xclip
+-- Plugin-free, Neovim 0.12+. Needs: ripgrep fzf git lazygit scooter glow xclip (wl-clipboard on Wayland)
 
 vim.g.mapleader = ' '
 vim.g.loaded_tutor_mode_plugin = 1
@@ -62,6 +62,7 @@ autocmd('ColorScheme', {
     hl('Visual',        { bg = '#3A4A00' })
     hl('Pmenu',         { bg = '#1e2d22' })
     hl('PmenuSel',      { bg = '#3A4A00' })
+    -- javaScriptBraces: JS has no bundled treesitter parser; legacy syntax links braces to Function
     for fg, groups in pairs({
       ['#FFFFFF'] = { 'Identifier', 'Special', 'Delimiter', '@variable', 'javaScriptBraces' },
       ['#FF00FF'] = { 'Statement', 'PreProc' },
@@ -120,6 +121,7 @@ opt.statusline = table.concat({
   ' %P ',
 })
 
+-- BufEnter: branch is per buffer; FocusGained: branch switched outside nvim; DirChanged: unnamed buffers
 autocmd({ 'BufEnter', 'FocusGained', 'DirChanged' }, {
   callback = function(args)
     if vim.bo[args.buf].buftype ~= '' then return end
@@ -144,6 +146,7 @@ autocmd('VimEnter', {
   end,
 })
 
+-- BufEnter: built-in autoread only rechecks the buffer being entered, not files open in other windows
 autocmd({ 'FocusGained', 'BufEnter' }, {
   desc = 'Reload files changed outside Neovim',
   callback = function()
@@ -251,6 +254,7 @@ map('n', '<leader>fh', ':help ', { desc = 'Help Tags' })
 
 map('n', '<leader>gg', function() term({ 'lazygit' }) end, { desc = 'Lazygit' })
 map('n', '<leader>gb', blame_line, { desc = 'Git Blame Line' })
+-- silent!: plain wall aborts with E141 when an unnamed buffer is modified
 map('n', '<leader>S', function() vim.cmd('silent! wall') term({ 'scooter' }) end, { desc = 'Scooter Search/Replace' })
 map('n', '<leader>M', function() term({ 'glow', '-s', 'dark', '-p', vim.fn.expand('%:p') }) end, { desc = 'Markdown Preview (glow)' })
 
@@ -272,6 +276,7 @@ map('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up and center' })
 map('n', 'n', 'nzzzv', { desc = 'Next search result and center' })
 map('n', 'N', 'Nzzzv', { desc = 'Previous search result and center' })
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlighting' })
+-- remap: % is itself a matchit mapping (if/endif, tags)
 map({ 'n', 'x', 'o' }, 'mm', '%', { remap = true, desc = 'Jump to matching bracket' })
 
 map('n', '<A-j>', '<cmd>m .+1<CR>==', { desc = 'Move line down' })
