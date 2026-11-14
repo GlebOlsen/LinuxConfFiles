@@ -1,5 +1,6 @@
 alias vi='nvim'
 alias vim='nvim'
+alias y='yazi'
 
 #Git branches
 parse_git_branch() {
