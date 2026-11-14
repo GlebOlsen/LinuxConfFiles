@@ -57,13 +57,18 @@ vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
 autocmd('ColorScheme', {
   callback = function()
-    local hl = function(name, val) vim.api.nvim_set_hl(0, name, val) end
-    hl('CursorLine',    { bg = '#1e2d22' })
-    hl('Visual',        { bg = '#3A4A00' })
-    hl('Pmenu',         { bg = '#1e2d22' })
-    hl('PmenuSel',      { bg = '#3A4A00' })
+    local function hl(key, colors)
+      for color, groups in pairs(colors) do
+        for _, group in ipairs(groups) do vim.api.nvim_set_hl(0, group, { [key] = color }) end
+      end
+    end
+    hl('bg', {
+      ['#1e2d22'] = { 'CursorLine', 'Pmenu' },
+      ['#3A4A00'] = { 'Visual', 'PmenuSel' },
+      NONE = { 'SignColumn', 'Normal', 'NormalNC', 'NormalFloat', 'EndOfBuffer' },
+    })
     -- javaScriptBraces: JS has no bundled treesitter parser; legacy syntax links braces to Function
-    for fg, groups in pairs({
+    hl('fg', {
       ['#FFFFFF'] = { 'Identifier', 'Special', 'Delimiter', '@variable', 'javaScriptBraces' },
       ['#FF00FF'] = { 'Statement', 'PreProc' },
       ['#00FF00'] = { 'Function', '@function.builtin' },
@@ -72,17 +77,10 @@ autocmd('ColorScheme', {
       ['#FF8000'] = { 'String', 'Character' },
       ['#00FFFF'] = { 'Operator' },
       ['#808080'] = { 'Comment' },
-    }) do
-      for _, group in ipairs(groups) do hl(group, { fg = fg }) end
-    end
-    hl('LineNrBelow',   { fg = '#00ffaa' })
-    hl('LineNrAbove',   { fg = '#ffaaff' })
-    hl('CursorLineNr',  { fg = '#B3FF00', bold = true })
-    hl('SignColumn',    { bg = 'NONE' })
-    hl('Normal',        { bg = 'NONE' })
-    hl('NormalNC',      { bg = 'NONE' })
-    hl('NormalFloat',   { bg = 'NONE' })
-    hl('EndOfBuffer',   { bg = 'NONE' })
+      ['#00ffaa'] = { 'LineNrBelow' },
+      ['#ffaaff'] = { 'LineNrAbove' },
+    })
+    vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#B3FF00', bold = true })
   end,
 })
 vim.cmd.colorscheme 'vim'
@@ -204,28 +202,22 @@ local function pick_files()
   term('rg --files --hidden --glob "!.git" | fzf' .. fzf_preview .. ' > "$LIM_PICK"')
 end
 
-local function pick_list(items)
+-- Paths are shown relative to cwd
+local function pick_list(paths)
   local src = vim.fn.tempname()
-  vim.fn.writefile(items, src)
+  vim.fn.writefile(vim.tbl_map(function(p) return vim.fn.fnamemodify(p, ':.') end, paths), src)
   term('fzf' .. fzf_preview .. ' < ' .. vim.fn.shellescape(src) .. ' > "$LIM_PICK"')
 end
 
 local function pick_buffers()
   local bufs = vim.fn.getbufinfo({ buflisted = 1 })
   table.sort(bufs, function(a, b) return a.lastused > b.lastused end)
-  local names = {}
-  for _, b in ipairs(bufs) do
-    if b.name ~= '' then names[#names + 1] = vim.fn.fnamemodify(b.name, ':.') end
-  end
-  pick_list(names)
+  local names = vim.tbl_map(function(b) return b.name end, bufs)
+  pick_list(vim.tbl_filter(function(name) return name ~= '' end, names))
 end
 
 local function pick_recent()
-  local names = {}
-  for _, f in ipairs(vim.v.oldfiles) do
-    if vim.fn.filereadable(f) == 1 then names[#names + 1] = vim.fn.fnamemodify(f, ':.') end
-  end
-  pick_list(names)
+  pick_list(vim.tbl_filter(function(f) return vim.fn.filereadable(f) == 1 end, vim.v.oldfiles))
 end
 
 -- Live grep: rg reruns on every keystroke, Enter jumps to the match
@@ -262,14 +254,12 @@ map('n', '<leader>fm', 'mzgg=G`z', { desc = 'Format Buffer (Indent)' })
 map('v', '<leader>fm', '=', { desc = 'Format Selection (Indent)' })
 map('n', '<leader>u', '<cmd>packadd nvim.undotree | Undotree<CR>', { desc = 'Undo Tree' })
 
-map('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
-map('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window' })
-map('n', '<C-k>', '<C-w>k', { desc = 'Move to top window' })
-map('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
-map('n', '<C-Up>', ':resize +2<CR>', { desc = 'Increase window height' })
-map('n', '<C-Down>', ':resize -2<CR>', { desc = 'Decrease window height' })
-map('n', '<C-Left>', ':vertical resize -2<CR>', { desc = 'Decrease window width' })
-map('n', '<C-Right>', ':vertical resize +2<CR>', { desc = 'Increase window width' })
+for key, side in pairs({ h = 'left', j = 'bottom', k = 'top', l = 'right' }) do
+  map('n', '<C-' .. key .. '>', '<C-w>' .. key, { desc = 'Move to ' .. side .. ' window' })
+end
+for key, cmd in pairs({ Up = 'resize +2', Down = 'resize -2', Left = 'vertical resize -2', Right = 'vertical resize +2' }) do
+  map('n', '<C-' .. key .. '>', '<cmd>' .. cmd .. '<CR>', { desc = 'Window: ' .. cmd })
+end
 
 map('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center' })
 map('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up and center' })
