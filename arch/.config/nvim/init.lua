@@ -52,7 +52,6 @@ opt.wildignore:append({ '*/.git/*', '*/node_modules/*', '*/.venv/*' })
 
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
-vim.g.netrw_winsize = 25
 vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
 autocmd('ColorScheme', {
@@ -92,15 +91,6 @@ for i, c in ipairs({
   vim.g['terminal_color_' .. (i - 1)] = c
 end
 
-local modes = {
-  n = 'NORMAL', i = 'INSERT', v = 'VISUAL', V = 'V-LINE', ['\22'] = 'V-BLOCK',
-  c = 'COMMAND', R = 'REPLACE', t = 'TERMINAL', s = 'SELECT', S = 'S-LINE',
-}
-
-function _G.LimStatuslineMode()
-  return modes[vim.fn.mode()] or vim.fn.mode():upper()
-end
-
 function _G.LimStatuslineGit()
   local h = vim.b.git_head
   if h and h ~= '' then return '  ⎇ ' .. h .. ' ' end
@@ -108,7 +98,6 @@ function _G.LimStatuslineGit()
 end
 
 opt.statusline = table.concat({
-  ' %{v:lua.LimStatuslineMode()} ',
   '%{v:lua.LimStatuslineGit()}',
   ' %<%F %m%r',
   '%=',
@@ -236,7 +225,35 @@ local function blame_line()
   vim.notify(out[1] or 'no blame')
 end
 
-map('n', '<leader>e', '<cmd>Lexplore!<CR>', { desc = 'Toggle File Explorer' })
+-- Negative netrw_winsize is absolute columns: 25% of the screen, capped for wide displays
+local function toggle_explorer()
+  vim.g.netrw_winsize = -math.min(math.floor(vim.o.columns * 0.25), 40)
+  vim.cmd('Lexplore!')
+end
+
+-- One shell kept alive across toggles; 30% of the screen, capped for tall displays
+local shell_buf
+local function toggle_shell()
+  local win = shell_buf and vim.fn.bufwinid(shell_buf) or -1
+  if win ~= -1 then
+    pcall(vim.api.nvim_win_close, win, false)
+    return
+  end
+  vim.cmd('botright ' .. math.min(math.floor(vim.o.lines * 0.3), 15) .. 'split')
+  vim.wo.winfixheight = true
+  -- jobwait -1 = still running; a shell that exited non-zero leaves a dead buffer behind
+  if shell_buf and vim.api.nvim_buf_is_valid(shell_buf) and vim.fn.jobwait({ vim.bo[shell_buf].channel }, 0)[1] == -1 then
+    vim.api.nvim_win_set_buf(0, shell_buf)
+  else
+    vim.cmd.terminal()
+    shell_buf = vim.api.nvim_get_current_buf()
+    map('t', '<C-t>', toggle_shell, { buffer = shell_buf, desc = 'Toggle Terminal' })
+  end
+  vim.cmd.startinsert()
+end
+
+map('n', '<leader>e', toggle_explorer, { desc = 'Toggle File Explorer' })
+map('n', '<C-t>', toggle_shell, { desc = 'Toggle Terminal' })
 map('n', '<leader>ff', pick_files, { desc = 'Find Files' })
 map('n', '<leader>fg', pick_grep, { desc = 'Live Grep' })
 map('n', '<leader>fc', function() pick_grep(vim.fn.expand('<cword>')) end, { desc = 'Grep Word Under Cursor' })
@@ -257,8 +274,12 @@ map('n', '<leader>u', '<cmd>packadd nvim.undotree | Undotree<CR>', { desc = 'Und
 for key, side in pairs({ h = 'left', j = 'bottom', k = 'top', l = 'right' }) do
   map('n', '<C-' .. key .. '>', '<C-w>' .. key, { desc = 'Move to ' .. side .. ' window' })
 end
-for key, cmd in pairs({ Up = 'resize +2', Down = 'resize -2', Left = 'vertical resize -2', Right = 'vertical resize +2' }) do
-  map('n', '<C-' .. key .. '>', '<cmd>' .. cmd .. '<CR>', { desc = 'Window: ' .. cmd })
+-- Arrow = the way the divider moves; the far right/bottom window moves its other border, so the sign flips
+for key, v in pairs({ Up = { '', 'j', -5 }, Down = { '', 'j', 5 }, Left = { 'vertical ', 'l', -5 }, Right = { 'vertical ', 'l', 5 } }) do
+  map('n', '<C-' .. key .. '>', function()
+    local last = vim.fn.winnr() == vim.fn.winnr(v[2])
+    vim.cmd(('%sresize %+d'):format(v[1], last and -v[3] or v[3]))
+  end, { desc = 'Window: push divider ' .. key:lower() })
 end
 
 map('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center' })
